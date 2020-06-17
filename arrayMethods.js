@@ -16,12 +16,12 @@ const sampleArray = [1,2,3,4,5,6,7,8,9,10];
 
 
 function mapFn(array, callback) {
-    let newArray = [...array]; //this will only work with arrays that aren't nested (shallow copy)
+    const newArray = [...array]; //this will only work with arrays that aren't nested (shallow copy)
 
     for(let i = 0; i < newArray.length; i++) {
         newArray[i] = callback(newArray[i]);
     }
-    
+
     return newArray;
 } 
 
@@ -29,7 +29,24 @@ const sampleArraySquaredValues = mapFn(sampleArray, element => Math.pow(element,
 console.log(sampleArray);
 console.log(sampleArraySquaredValues); 
 
-function filterFn(array, callback){}
+
+function filterFn(array, callback) {
+    const newArray = [...array];
+    const filteredArray = [];
+
+    for(let i = 0; i < newArray.length; i++) {
+        const currentElement = newArray[i];
+
+        if(callback(currentElement)) {
+            filteredArray.push(currentElement);
+        }
+    }
+
+    return filteredArray;
+}
+
+const arrayWithOddNumebers = filterFn(sampleArray, element => element % 2 != 0);
+console.log(arrayWithOddNumebers);
 
 function reduceFn(array, callback, initial){}
 
