@@ -46,7 +46,7 @@ function filterFn(array, callback) {
 }
 
 const arrayWithOddNumbers = filterFn(sampleArray, element => element % 2 !== 0);
-console.log(arrayWithOddNumebers);
+console.log(arrayWithOddNumbers);
 
 function reduceFn(array, callback, initial){}
 
@@ -67,6 +67,19 @@ function everyFn(array, callback) {
 const isEveryElementTypeOfNumber = everyFn(sampleArray, element => typeof element === "number");
 console.log(isEveryElementTypeOfNumber);
 
-function someFn(array, callback){}
+function someFn(array, callback) { 
+    const newArray = [...array];
+
+    for(let i = 0; i < newArray.length; i++) {
+        if(callback(newArray[i])){
+            return true;
+        }
+    }
+
+    return false;
+}
+
+const isAnyElementBiggerThan5 = someFn(sampleArray, element => element > 5);
+console.log(isAnyElementBiggerThan5);
 
 function entriesFn(array){}
