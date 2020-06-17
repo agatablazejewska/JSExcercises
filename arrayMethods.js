@@ -45,14 +45,27 @@ function filterFn(array, callback) {
     return filteredArray;
 }
 
-const arrayWithOddNumebers = filterFn(sampleArray, element => element % 2 != 0);
+const arrayWithOddNumbers = filterFn(sampleArray, element => element % 2 !== 0);
 console.log(arrayWithOddNumebers);
 
 function reduceFn(array, callback, initial){}
 
 function reduceRightFn(array, callback, initial){}
 
-function everyFn(array, callback){}
+function everyFn(array, callback) {
+    const newArray = [...array];
+
+    for(let i = 0; i < newArray.length; i++) {
+        if(!callback(newArray[i])){
+            return false;
+        }
+    }
+
+    return true;
+}
+
+const isEveryElementTypeOfNumber = everyFn(sampleArray, element => typeof element === "number");
+console.log(isEveryElementTypeOfNumber);
 
 function someFn(array, callback){}
 
