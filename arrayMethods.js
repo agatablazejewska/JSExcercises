@@ -48,9 +48,42 @@ function filterFn(array, callback) {
 const arrayWithOddNumbers = filterFn(sampleArray, element => element % 2 !== 0);
 console.log(arrayWithOddNumbers);
 
-function reduceFn(array, callback, initial){}
+function reduceFn(array, callback, initial) {
+    let isInitialProvided = initial !== undefined;
+    let i = isInitialProvided ? 0 : 1;
+    let currentResult = isInitialProvided ? initial : array[0];
 
-function reduceRightFn(array, callback, initial){}
+    for(i; i < array.length; i++) {
+        currentResult = callback(currentResult, array[i]);
+    }
+
+    return currentResult;
+}
+
+const sampleArraySum = reduceFn(sampleArray, (acc, currentValue) => acc + currentValue);
+console.log(sampleArraySum);
+
+const nestedArray = [[0, 1], [2, 3], [4, 5]];
+const flattened = reduceFn(nestedArray, function(a, b) {
+    return a.concat(b);
+  });
+console.log(flattened);
+
+function reduceRightFn(array, callback, initial) {
+    let lastIndex = array.length - 1;
+    let isInitialProvided = initial !== undefined;
+    let i = isInitialProvided ? lastIndex : lastIndex - 1;
+    let currentResult = isInitialProvided ? initial : array[lastIndex];
+
+    for(i; i >= 0; i--) {
+        currentResult = callback(currentResult, array[i]);
+    }
+
+    return currentResult;
+}
+
+const flattenedBackwards = reduceRightFn(nestedArray, (accumulator, currentValue) => accumulator.concat(currentValue));
+console.log(flattenedBackwards);
 
 function everyFn(array, callback) {
     const newArray = [...array];
@@ -113,6 +146,6 @@ function entriesFn(array) {
 iterator = entriesFn(sampleArray);
 console.log(iterator.next())
 
-for (let e of iterator) {
-    console.log(e);
-  }
+for (let i of iterator) {
+    console.log(i);
+}
