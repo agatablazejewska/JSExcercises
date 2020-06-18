@@ -48,12 +48,14 @@ const arrayWithOddNumbers = filterFn(sampleArray, element => element % 2 !== 0);
 console.log(arrayWithOddNumbers);
 
 function reduceFn(array, callback, initial) {
-    let isInitialProvided = initial !== undefined;
-    let i = isInitialProvided ? 0 : 1;
-    let currentResult = isInitialProvided ? initial : array[0];
+   let currentResult = initial || array[0]; 
 
-    for(i; i < array.length; i++) {
-        currentResult = callback(currentResult, array[i]);
+    for(index of array.keys()) {
+        if(!initial && index === 0){
+            continue;
+        }
+
+        currentResult = callback(currentResult, array[index]);
     }
 
     return currentResult;
@@ -70,16 +72,8 @@ const flattened = reduceFn(nestedArray, function(a, b) {
 console.log(flattened);
 
 function reduceRightFn(array, callback, initial) {
-    let lastIndex = array.length - 1;
-    let isInitialProvided = initial !== undefined;
-    let i = isInitialProvided ? lastIndex : lastIndex - 1;
-    let currentResult = isInitialProvided ? initial : array[lastIndex];
-
-    for(i; i >= 0; i--) {
-        currentResult = callback(currentResult, array[i]);
-    }
-
-    return currentResult;
+    array.reverse();
+    return reduceFn(array, callback, initial);
 }
 
 const flattenedBackwards = reduceRightFn(nestedArray, (accumulator, currentValue) => accumulator.concat(currentValue));
