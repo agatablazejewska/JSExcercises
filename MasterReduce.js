@@ -5,16 +5,20 @@
 // - array.every
 // - array.filter
 // - array.map
+import * as commonFunctions from './commonFunctions.js';
 
 const someFromReduce = function(array, callback) {
+    commonFunctions.validateArrayType(array);
     return array.reduce((acc, element) =>  acc || callback(element), false);
 };
 
 const everyFromReduce = function(array, callback) {
+    commonFunctions.validateArrayType(array);
     return array.reduce((acc, element) =>  acc && callback(element), true);
 };
 
 const filterFromReduce = function(array, callback) {
+    commonFunctions.validateArrayType(array);
     return array.reduce((acc, element) => {
         if(callback(element)) {
             acc.push(element);
@@ -25,6 +29,7 @@ const filterFromReduce = function(array, callback) {
 };
 
 const mapFromReduce = function(array, callback) {
+    commonFunctions.validateArrayType(array);
     return array.reduce((acc, element) => {
         acc.push(callback(element))
 

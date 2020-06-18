@@ -11,11 +11,13 @@
 
 // Stwórz funkcje, które będą działać identycznie co metody wbudowane
 // ale będą działać przy pomocy pętli for lub while
+import * as commonFunctions from './commonFunctions.js';
 
 const sampleArray = [1,2,3,4,5,6,7,8,9,10,11,12];
 
 
 function mapFn(array, callback) {
+    commonFunctions.validateArrayType(array);
     const newArray = [];
 
     for(let index in array) {
@@ -25,12 +27,14 @@ function mapFn(array, callback) {
     return newArray;
 } 
 
-const sampleArraySquaredValues = mapFn(sampleArray, element => Math.pow(element, 2));
+
+const sampleArraySquaredValues = mapFn({}, element => Math.pow(element, 2));
 console.log(sampleArray);
 console.log(sampleArraySquaredValues); 
 
 
 function filterFn(array, callback) {
+    commonFunctions.validateArrayType(array);
     const filteredArray = [];
 
     for(let index in array) {
@@ -48,6 +52,7 @@ const arrayWithOddNumbers = filterFn(sampleArray, element => element % 2 !== 0);
 console.log(arrayWithOddNumbers);
 
 function reduceFn(array, callback, initial) {
+   commonFunctions.validateArrayType(array);
    let currentResult = initial || array[0]; 
 
     for(index of array.keys()) {
@@ -72,6 +77,7 @@ const flattened = reduceFn(nestedArray, function(a, b) {
 console.log(flattened);
 
 function reduceRightFn(array, callback, initial) {
+    commonFunctions.validateArrayType(array);
     array.reverse();
     return reduceFn(array, callback, initial);
 }
@@ -80,6 +86,7 @@ const flattenedBackwards = reduceRightFn(nestedArray, (accumulator, currentValue
 console.log(flattenedBackwards);
 
 function everyFn(array, callback) {
+    commonFunctions.validateArrayType(array);
     for(let index in array) {
         if(!callback(array[index])){
             return false;
@@ -93,6 +100,7 @@ const isEveryElementTypeOfNumber = everyFn(sampleArray, element => typeof elemen
 console.log(isEveryElementTypeOfNumber);
 
 function someFn(array, callback) { 
+    commonFunctions.validateArrayType(array);
     for(let index in array) {
         if(callback(array[index])){
             return true;
@@ -106,6 +114,7 @@ const isAnyElementBiggerThan5 = someFn(sampleArray, element => element > 5);
 console.log(isAnyElementBiggerThan5);
 
 function entriesFn(array) {
+    commonFunctions.validateArrayType(array);
     const iterator = {
         index: -1,
         arr: array,
