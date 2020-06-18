@@ -21,12 +21,11 @@ function mapFn(array, callback) {
     const newArray = [];
 
     for(let index in array) {
-        newArray[index] = callback(array[index]);
+        newArray[index] = callback(array[index], index, array);
     }
 
     return newArray;
 } 
-
 
 const sampleArraySquaredValues = mapFn(sampleArray, element => Math.pow(element, 2));
 console.log(sampleArray);
@@ -40,7 +39,7 @@ function filterFn(array, callback) {
     for(let index in array) {
         const currentElement = array[index];
 
-        if(callback(currentElement)) {
+        if(callback(currentElement, index, array)) {
             filteredArray.push(currentElement);
         }
     }
@@ -60,7 +59,7 @@ function reduceFn(array, callback, initial) {
             continue;
         }
 
-        currentResult = callback(currentResult, array[index]);
+        currentResult = callback(currentResult, array[index], index, array);
     }
 
     return currentResult;
@@ -88,7 +87,7 @@ console.log(flattenedBackwards);
 function everyFn(array, callback) {
     commonFunctions.validate(array, callback)
     for(let index in array) {
-        if(!callback(array[index])){
+        if(!callback(array[index], index, array)){
             return false;
         }
     }
@@ -115,30 +114,22 @@ console.log(isAnyElementBiggerThan5);
 
 function entriesFn(array) {
     commonFunctions.validateArrayType(array);
+
+    function next() {
+        this.index++;
+        return this.index >= this.arr.length 
+        ? { value: undefined, done: true }
+        : { value: [this.index, this.arr[this.index]], done: false}
+    };
+
     const iterator = {
         index: -1,
         arr: array,
-        next() {
-            this.index++;
-            return this.index >= this.arr.length 
-            ? { value: undefined, done: true }
-            : { value: [this.index, this.arr[this.index]], done: false}
-        },
-    
-        [Symbol.iterator]() {
-            let index = -1;
-            const arr = this.arr;
-    
-            return {
-                next() {
-                    index++;
-                    return index >= arr.length 
-                    ? { value: undefined, done: true } 
-                    : {value: [index, arr[index]], done: false };
-                }
-            }
-        }
     }
+    iterator.next = next.bind(iterator);
+    iterator[Symbol.iterator] = () => {
+        return { next: next.bind(iterator)}
+    };
     return iterator;
 };
  
