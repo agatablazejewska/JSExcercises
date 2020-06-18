@@ -16,10 +16,10 @@ const sampleArray = [1,2,3,4,5,6,7,8,9,10,11,12];
 
 
 function mapFn(array, callback) {
-    const newArray = [...array]; //this will only work with arrays that aren't nested (shallow copy)
+    const newArray = [];
 
-    for(let i = 0; i < newArray.length; i++) {
-        newArray[i] = callback(newArray[i]);
+    for(let index in array) {
+        newArray[index] = callback(array[index]);
     }
 
     return newArray;
@@ -31,11 +31,10 @@ console.log(sampleArraySquaredValues);
 
 
 function filterFn(array, callback) {
-    const newArray = [...array];
     const filteredArray = [];
 
-    for(let i = 0; i < newArray.length; i++) {
-        const currentElement = newArray[i];
+    for(let index in array) {
+        const currentElement = array[index];
 
         if(callback(currentElement)) {
             filteredArray.push(currentElement);
@@ -87,10 +86,8 @@ const flattenedBackwards = reduceRightFn(nestedArray, (accumulator, currentValue
 console.log(flattenedBackwards);
 
 function everyFn(array, callback) {
-    const newArray = [...array];
-
-    for(let i = 0; i < newArray.length; i++) {
-        if(!callback(newArray[i])){
+    for(let index in array) {
+        if(!callback(array[index])){
             return false;
         }
     }
@@ -102,10 +99,8 @@ const isEveryElementTypeOfNumber = everyFn(sampleArray, element => typeof elemen
 console.log(isEveryElementTypeOfNumber);
 
 function someFn(array, callback) { 
-    const newArray = [...array];
-
-    for(let i = 0; i < newArray.length; i++) {
-        if(callback(newArray[i])){
+    for(let index in array) {
+        if(callback(array[index])){
             return true;
         }
     }
