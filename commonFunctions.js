@@ -10,3 +10,22 @@ export function validateArrayType(array) {
         }
     }
 }
+
+export function validateCallbackType(callback) {
+    try {
+        if(typeof callback !== "function"){
+            throw TypeError("Provided callback is not a function");
+        }
+    }
+    catch {
+        if(error instanceof TypeError) {
+            console.error(error.stack);
+        }
+    }
+    
+}
+
+export function validate(array, callback){ 
+    validateCallbackType(callback);
+    validateArrayType(array);
+}

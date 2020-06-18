@@ -17,7 +17,7 @@ const sampleArray = [1,2,3,4,5,6,7,8,9,10,11,12];
 
 
 function mapFn(array, callback) {
-    commonFunctions.validateArrayType(array);
+    commonFunctions.validate(array, callback)
     const newArray = [];
 
     for(let index in array) {
@@ -28,13 +28,13 @@ function mapFn(array, callback) {
 } 
 
 
-const sampleArraySquaredValues = mapFn({}, element => Math.pow(element, 2));
+const sampleArraySquaredValues = mapFn(sampleArray, element => Math.pow(element, 2));
 console.log(sampleArray);
 console.log(sampleArraySquaredValues); 
 
 
 function filterFn(array, callback) {
-    commonFunctions.validateArrayType(array);
+    commonFunctions.validate(array, callback)
     const filteredArray = [];
 
     for(let index in array) {
@@ -52,10 +52,10 @@ const arrayWithOddNumbers = filterFn(sampleArray, element => element % 2 !== 0);
 console.log(arrayWithOddNumbers);
 
 function reduceFn(array, callback, initial) {
-   commonFunctions.validateArrayType(array);
+   commonFunctions.validate(array, callback)
    let currentResult = initial || array[0]; 
 
-    for(index of array.keys()) {
+    for(let index of array.keys()) {
         if(!initial && index === 0){
             continue;
         }
@@ -77,7 +77,7 @@ const flattened = reduceFn(nestedArray, function(a, b) {
 console.log(flattened);
 
 function reduceRightFn(array, callback, initial) {
-    commonFunctions.validateArrayType(array);
+    commonFunctions.validate(array, callback)
     array.reverse();
     return reduceFn(array, callback, initial);
 }
@@ -86,7 +86,7 @@ const flattenedBackwards = reduceRightFn(nestedArray, (accumulator, currentValue
 console.log(flattenedBackwards);
 
 function everyFn(array, callback) {
-    commonFunctions.validateArrayType(array);
+    commonFunctions.validate(array, callback)
     for(let index in array) {
         if(!callback(array[index])){
             return false;
@@ -100,7 +100,7 @@ const isEveryElementTypeOfNumber = everyFn(sampleArray, element => typeof elemen
 console.log(isEveryElementTypeOfNumber);
 
 function someFn(array, callback) { 
-    commonFunctions.validateArrayType(array);
+    commonFunctions.validate(array, callback)
     for(let index in array) {
         if(callback(array[index])){
             return true;
@@ -142,7 +142,7 @@ function entriesFn(array) {
     return iterator;
 };
  
-iterator = entriesFn(sampleArray);
+const iterator = entriesFn(sampleArray);
 console.log(iterator.next())
 
 for (let i of iterator) {
