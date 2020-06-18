@@ -14,13 +14,13 @@ const someFromReduce = function(array, callback) {
 
 const everyFromReduce = function(array, callback) {
     commonFunctions.validate(array, callback)
-    return array.reduce((acc, element) =>  acc && callback(element), true);
+    return array.reduce((acc, element) =>  acc && callback(element, index, array), true);
 };
 
 const filterFromReduce = function(array, callback) {
     commonFunctions.validate(array, callback)
     return array.reduce((acc, element) => {
-        if(callback(element)) {
+        if(callback(element, index, array)) {
             acc.push(element);
         }
 
@@ -31,7 +31,7 @@ const filterFromReduce = function(array, callback) {
 const mapFromReduce = function(array, callback) {
     commonFunctions.validate(array, callback)
     return array.reduce((acc, element) => {
-        acc.push(callback(element))
+        acc.push(callback(element, index, array))
 
         return acc;
     }, []);
