@@ -130,6 +130,7 @@ function entriesFn(array) {
     iterator[Symbol.iterator] = () => {
         return { next: next.bind(iterator)}
     };
+    
     return iterator;
 };
  
