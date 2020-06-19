@@ -20,3 +20,15 @@ export function validateNumber(number) {
         throw TypeError("Provided variable is not of type number");
     }
 };
+
+export function validateString(string) {
+    if(typeof string !== 'string') {
+        throw TypeError("Provided variable is not of type string");
+    }
+};
+
+export function validateBoolean(boolean) {
+    if(typeof boolean !== 'boolean') {
+        throw TypeError("Provided variable is not of type boolean");
+    }
+};
