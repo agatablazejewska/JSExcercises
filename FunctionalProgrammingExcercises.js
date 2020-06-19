@@ -95,4 +95,20 @@ const constainsWordPhrase = function(array, phrase, caseSenstive = true) {
 const containsDoneString = constainsWordPhrase(wordsArray, 'emerge', false);
 console.log(containsDoneString);
 
+const numbers = [2, 5, 7, 10, 34, 16, 879, 1]
+const filterByEvenNumbers = function(array) {
+    const arrayEvenNumbers = [];
+
+    for(let elem of array) {
+        if(elem %2 === 0) {
+            arrayEvenNumbers.push(elem);
+        }
+    }
+
+    return arrayEvenNumbers;
+}
+
+const arrayEvenNumbers = filterByEvenNumbers(numbers);
+console.log(arrayEvenNumbers);
+
 
