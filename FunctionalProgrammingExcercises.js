@@ -1,5 +1,6 @@
 import * as commonFunctions from './commonFunctions.js';
 
+// Excercise 1
 const calculateAge = function(birthYear) {
     birthYear = parseInt(birthYear);
     commonFunctions.validateNumber(birthYear);
@@ -10,6 +11,7 @@ const calculateAge = function(birthYear) {
 
 console.log(calculateAge(1996));
 
+// Excercise 2
 const canBuildRightAngledTraingle = function(sideA, sideB, sideC) {
     commonFunctions.validateNumber(sideA);
     commonFunctions.validateNumber(sideB);
@@ -26,10 +28,11 @@ const canBuildRightAngledTraingle = function(sideA, sideB, sideC) {
 console.log(canBuildRightAngledTraingle(3, 4, 5));
 console.log(canBuildRightAngledTraingle(3, 5, 5));
 
-
+// Excercise 3
 const arrayRandomValues = Array.from({length: 10}, () => Math.floor(Math.random() * 100));
 console.log(arrayRandomValues);
 
+// Excercise 4
 const createArrayWithCoupleArraysWithin = function(howManyArrays) {
     howManyArrays = parseInt(howManyArrays);
     commonFunctions.validateNumber(howManyArrays);
@@ -46,6 +49,7 @@ const createArrayWithCoupleArraysWithin = function(howManyArrays) {
 const nestedArray = createArrayWithCoupleArraysWithin(10);
 console.log(nestedArray);
 
+// Excercise 5 with some higher difficulty level
 const wordsArray = ['anticipate', 'Done', 'Layer', 'paper', 'McDonalds', 'guinea pig', 
 'vitamins', 'piano', 'Mirror', 'tackle', 'it doesn\'t float my boat', 'busy bee',
 'Emerge', 'xenotransplantation', 'Emerge'];
@@ -95,6 +99,7 @@ const constainsWordPhrase = function(array, phrase, caseSenstive = true) {
 const containsDoneString = constainsWordPhrase(wordsArray, 'emerge', false);
 console.log(containsDoneString);
 
+// Excercise 6
 const numbers = [2, 5, 7, 10, 34, 16, 879, 1]
 const filterByEvenNumbers = function(array) {
     const arrayEvenNumbers = [];
@@ -111,4 +116,47 @@ const filterByEvenNumbers = function(array) {
 const arrayEvenNumbers = filterByEvenNumbers(numbers);
 console.log(arrayEvenNumbers);
 
+
+
+
+
+//Functional Programming excercises
+const polishAlphabetArray = Array.from('aąbcćdeęfghijklłmnńoóprsśtuwxyzźż');
+
+
+
+// Excercise: korzystając z funkcji .reduce stwórz agregację liter alfabetu (...)
+const randomIntFromInterval = function(min, max) { 
+    return Math.floor(Math.random() * (max - min + 1) + min);
+};
+
+const findIndexToStopAt = function(currentIndex) {
+    const howManyItems = randomIntFromInterval(4, 7);
+    const indexToStopAt = currentIndex + howManyItems;
+
+    return indexToStopAt;
+}
+
+const createArrayOfArraysLogic = function(acc, element, index, array) {
+    if(index < acc.lastUsedIndexOrinigalArray) {
+        return acc;
+    }
+    
+    const originalArrayIndexToStopAt = findIndexToStopAt(index);
+    const subArray = array.slice(index, originalArrayIndexToStopAt);
+    acc.arrayOfArrays.push(subArray);
+
+    acc.lastUsedIndexOrinigalArray = originalArrayIndexToStopAt;
+
+    return acc;
+}
+
+const createArrayOfArrays = function(array) {
+    const objWithArrayInside = array.reduce(createArrayOfArraysLogic, { arrayOfArrays: [], lastUsedIndexOrinigalArray: -1 });
+
+    return objWithArrayInside.arrayOfArrays;
+} 
+
+const polishAlphabetArrayOfArrays = createArrayOfArrays(polishAlphabetArray);
+console.log(polishAlphabetArrayOfArrays);
 
