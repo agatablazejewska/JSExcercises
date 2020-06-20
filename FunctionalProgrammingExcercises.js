@@ -137,7 +137,7 @@ const findIndexToStopAt = function(currentIndex) {
     return indexToStopAt;
 }
 
-const createArrayOfArraysLogic = function(acc, element, index, array) {
+const createArrayOfArraysCallback = function(acc, element, index, array) {
     if(index < acc.lastUsedIndexOrinigalArray) {
         return acc;
     }
@@ -152,7 +152,7 @@ const createArrayOfArraysLogic = function(acc, element, index, array) {
 }
 
 const createArrayOfArrays = function(array) {
-    const objWithArrayInside = array.reduce(createArrayOfArraysLogic, { arrayOfArrays: [], lastUsedIndexOrinigalArray: -1 });
+    const objWithArrayInside = array.reduce(createArrayOfArraysCallback, { arrayOfArrays: [], lastUsedIndexOrinigalArray: -1 });
 
     return objWithArrayInside.arrayOfArrays;
 } 
