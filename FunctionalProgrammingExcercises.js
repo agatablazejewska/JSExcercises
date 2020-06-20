@@ -192,7 +192,9 @@ const filterWith = function(arr, filter) {
     }
 
     if(filterLength > 3) {
-        return filteredArray = arr.filter(element => element.name.startsWith('M') && element.age > 25 && element.animal === 'cat');
+        return filteredArray = arr.filter(element => element.name.startsWith('M') 
+            && element.age > 25 
+            && element.animal === 'cat');
     }
 }
 
