@@ -1,31 +1,34 @@
 export function validateArrayType(array) {
-    try {
-        if(!Array.isArray(array)) {
-            throw TypeError("Provided array variable isn't of type array");
-        }
-    }
-    catch(error) {
-        if(error instanceof TypeError) {
-            console.error(error.stack);
-        }
-    }
+    if(!Array.isArray(array)) {
+        throw TypeError("Provided array variable isn't of type array");
+    };
 }
 
 export function validateCallbackType(callback) {
-    try {
-        if(typeof callback !== "function"){
-            throw TypeError("Provided callback is not a function");
-        }
-    }
-    catch {
-        if(error instanceof TypeError) {
-            console.error(error.stack);
-        }
-    }
-    
-}
+    if(typeof callback !== "function") {
+        throw TypeError("Provided callback is not a function"); 
+    } 
+};
 
-export function validate(array, callback){ 
+export function validate(array, callback) { 
     validateCallbackType(callback);
     validateArrayType(array);
-}
+};
+
+export function validateNumber(number) {
+    if(typeof number !== 'number') {
+        throw TypeError("Provided variable is not of type number");
+    }
+};
+
+export function validateString(string) {
+    if(typeof string !== 'string') {
+        throw TypeError("Provided variable is not of type string");
+    }
+};
+
+export function validateBoolean(boolean) {
+    if(typeof boolean !== 'boolean') {
+        throw TypeError("Provided variable is not of type boolean");
+    }
+};
