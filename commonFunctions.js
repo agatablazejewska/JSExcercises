@@ -32,3 +32,9 @@ export function validateBoolean(boolean) {
         throw TypeError("Provided variable is not of type boolean");
     }
 };
+
+export function isNumberPositive(number) {
+    if(number < 0) {
+        throw Exception(`Value should be positive and was: ${number}`);
+    }
+}
