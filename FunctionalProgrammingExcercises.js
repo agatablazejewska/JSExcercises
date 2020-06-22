@@ -12,21 +12,7 @@ const calculateAge = function(birthYear) {
 console.log(calculateAge(1996));
 
 // Excercise 2
-const canBuildRightAngledTraingle = function(sideA, sideB, sideC) {
-    commonFunctions.validateNumber(sideA);
-    commonFunctions.validateNumber(sideB);
-    commonFunctions.validateNumber(sideC);
 
-    const sideASquared = Math.pow(sideA, 2);
-    const sideBSquared = Math.pow(sideB, 2);
-    const sideCSquared = Math.pow(sideC, 2);
-
-    return sideASquared + sideBSquared === sideCSquared
-        || sideASquared + sideCSquared === sideBSquared
-        || sideBSquared + sideCSquared === sideASquared;
-}
-console.log(canBuildRightAngledTraingle(3, 4, 5));
-console.log(canBuildRightAngledTraingle(3, 5, 5));
 
 // Excercise 3
 const arrayRandomValues = Array.from({length: 10}, () => Math.floor(Math.random() * 100));
