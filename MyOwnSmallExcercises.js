@@ -5,9 +5,7 @@ const isPalindrome = function(string) {
     commonFunctions.validateString(string);
     
     const lowerCase = string.toLowerCase();
-    let lowerCaseArray = lowerCase.split('');
-
-    const lowerCaseReversed = lowerCaseArray.reverse().join('');
+    const lowerCaseReversed = lowerCase.split('').reverse().join('');
 
     return lowerCase === lowerCaseReversed;
 }
