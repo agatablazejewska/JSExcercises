@@ -11,8 +11,6 @@ const calculateAge = function(birthYear) {
 
 console.log(calculateAge(1996));
 
-// Excercise 2
-
 
 // Excercise 3
 const arrayRandomValues = Array.from({length: 10}, () => Math.floor(Math.random() * 100));
