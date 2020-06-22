@@ -12,21 +12,7 @@ const calculateAge = function(birthYear) {
 console.log(calculateAge(1996));
 
 // Excercise 6
-const numbers = [2, 5, 7, 10, 34, 16, 879, 1]
-const filterByEvenNumbers = function(array) {
-    const arrayEvenNumbers = [];
 
-    for(let elem of array) {
-        if(elem %2 === 0) {
-            arrayEvenNumbers.push(elem);
-        }
-    }
-
-    return arrayEvenNumbers;
-}
-
-const arrayEvenNumbers = filterByEvenNumbers(numbers);
-console.log(arrayEvenNumbers);
 
 
 
