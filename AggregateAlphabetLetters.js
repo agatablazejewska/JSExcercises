@@ -4,6 +4,9 @@ import * as commonFunctions from './commonFunctions.js';
 const polishAlphabetArray = Array.from('aąbcćdeęfghijklłmnńoóprsśtuwxyzźż');
 // Excercise: korzystając z funkcji .reduce stwórz agregację liter alfabetu (...)
 const randomIntFromInterval = function(min, max) { 
+    commonFunctions.isNumberPositive(min);
+    commonFunctions.isNumberPositive(max);
+
     return Math.floor(Math.random() * (max - min + 1) + min);
 };
 
