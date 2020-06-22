@@ -15,40 +15,6 @@ console.log(calculateAge(1996));
 const polishAlphabetArray = Array.from('aąbcćdeęfghijklłmnńoóprsśtuwxyzźż');
 
 
-// Excercise: korzystając z funkcji .reduce stwórz agregację liter alfabetu (...)
-const randomIntFromInterval = function(min, max) { 
-    return Math.floor(Math.random() * (max - min + 1) + min);
-};
-
-const findIndexToStopAt = function(currentIndex) {
-    const howManyItems = randomIntFromInterval(4, 7);
-    const indexToStopAt = currentIndex + howManyItems;
-
-    return indexToStopAt;
-}
-
-const createArrayOfArraysCallback = function(acc, element, index, array) {
-    if(index < acc.lastUsedIndexOrinigalArray) {
-        return acc;
-    }
-    
-    const originalArrayIndexToStopAt = findIndexToStopAt(index);
-    const subArray = array.slice(index, originalArrayIndexToStopAt);
-    acc.arrayOfArrays.push(subArray);
-
-    acc.lastUsedIndexOrinigalArray = originalArrayIndexToStopAt;
-
-    return acc;
-}
-
-const createArrayOfArrays = function(array) {
-    const objWithArrayInside = array.reduce(createArrayOfArraysCallback, { arrayOfArrays: [], lastUsedIndexOrinigalArray: -1 });
-
-    return objWithArrayInside.arrayOfArrays;
-} 
-
-const polishAlphabetArrayOfArrays = createArrayOfArrays(polishAlphabetArray);
-console.log(polishAlphabetArrayOfArrays);
 
 //Excercise:korzystając z funkcji .filter stwórz funkcję filterWith(arr, filter) filtrowanie arraya z obiektami po stringu (...)
 function Person(name, age, animal) {
