@@ -5,7 +5,7 @@ import { randomIntFromInterval } from './AggregateAlphabetLettersExcercise.js';
 const takeRandomValue = function(array) {
     commonFunctions.validateArrayType(array);
 
-    const randomIndex = randomIntFromInterval(0, array.length);
+    const randomIndex = randomIntFromInterval(0, array.length - 1);
     return array[randomIndex];
 }
 
