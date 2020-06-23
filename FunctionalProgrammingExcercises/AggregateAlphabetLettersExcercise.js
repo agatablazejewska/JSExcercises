@@ -1,9 +1,9 @@
-import * as commonFunctions from './commonFunctions.js';
+import * as commonFunctions from '../commonFunctions.js';
 
 
 const polishAlphabetArray = Array.from('aąbcćdeęfghijklłmnńoóprsśtuwxyzźż');
 // Excercise: korzystając z funkcji .reduce stwórz agregację liter alfabetu (...)
-const randomIntFromInterval = function(min, max) { 
+export const randomIntFromInterval = function(min, max) { 
     commonFunctions.isNumberPositive(min);
     commonFunctions.isNumberPositive(max);
 

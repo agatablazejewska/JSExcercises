@@ -1,4 +1,4 @@
-import * as commonFunctions from './commonFunctions.js';
+import * as commonFunctions from '../commonFunctions.js';
 
 // Excercise 3
 const arrayRandomValues = function(length) {
@@ -13,7 +13,7 @@ const arrayRandomValues = function(length) {
 // Excercise 4
 const createArray10ArraysWithin = function() {
     const basicArray = Array.from({length: 10});
-    const arrayWithArraysInside = basicArray.map(element =>  element = arrayRandomValues(10));
+    const arrayWithArraysInside = basicArray.map(() => arrayRandomValues(10));
 
     return arrayWithArraysInside;
 }
