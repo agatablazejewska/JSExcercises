@@ -1,8 +1,8 @@
 import * as commonFunctions from '../../commonFunctions.js';
 
 class Contact {
-    constructor(name, surname, email) {
-        this.setName(name);
+    constructor(firstName, surname, email) {
+        this.setFirstName(firstName);
         this.setSurname(surname);
         this.setEmail(email);
     }
@@ -18,15 +18,15 @@ class Contact {
         return this._email;
     }
 
-    setName(value) {
+    setFirstName(value) {
         commonFunctions.validateString(value);
        
-        this._name = value;
+        this._firstName = value;
         this._modifyDate = this._todaysDate();
     } 
 
-    getName() {
-        return this._name;
+    getFirstName() {
+        return this._firstName;
     }
 
     setSurname(value) {
@@ -45,7 +45,7 @@ class Contact {
     }
 
     showContact() {
-        console.log(`Name: ${this.getName()}
+        console.log(`Name: ${this.getFirstName()}
         Surname: ${this.getSurname()}
         E-mail: ${this.getEmail()}
         Last modified: ${this._formatDate(this.getModifyDate())}`);
