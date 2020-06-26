@@ -1,4 +1,4 @@
-import * as commonFunctions from '../commonFunctions.js';
+import * as commonFunctions from '../../commonFunctions.js';
 
 class Contact {
     constructor(name, surname, email) {
@@ -11,7 +11,7 @@ class Contact {
       commonFunctions.validateEmail(value);
     
       this._email = value;
-      this._moodifiedDate = Date.now();
+      this._modifyDate = this._todaysDate();
     }
 
     getEmail(){
@@ -22,7 +22,7 @@ class Contact {
         commonFunctions.validateString(value);
        
         this._name = value;
-        this._moodifiedDate = Date.now();
+        this._modifyDate = this._todaysDate();
     } 
 
     getName() {
@@ -33,24 +33,35 @@ class Contact {
         commonFunctions.validateString(value);
        
         this._surname = value;
-        this._moodifiedDate = Date.now();
+        this._modifyDate = this._todaysDate();
     }
 
     getSurname() {
         return this._surname;
     }
 
-    getModifiedDate() {
-        return this._moodifiedDate;
+    getModifyDate() {
+        return this._modifyDate;
     }
 
     showContact() {
         console.log(`Name: ${this.getName()}
         Surname: ${this.getSurname()}
         E-mail: ${this.getEmail()}
-        Last modified: ${this.getModifiedDate()}`);
+        Last modified: ${this._formatDate(this.getModifyDate())}`);
+    }
+
+    _todaysDate() {
+        return new Date();
+    }
+
+    _formatDate(date) {
+        if(!date instanceof Date) {
+            throw Error("Provided value is not instance of Date");
+        }
+
+        const fullDate = `${date.getDate()}-${(date.getMonth()+1)}-${date.getFullYear()}`;
+        const time = `${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;
+        return `${fullDate} ${time}`;
     }
 }
-
-const contact1 = new Contact('Agata', 'Sokol', 'agatS@gmail.com');
-contact1.showContact();
