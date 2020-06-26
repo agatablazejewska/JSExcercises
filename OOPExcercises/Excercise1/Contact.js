@@ -67,3 +67,5 @@ class Contact {
     return `${fullDate} ${time}`;
   }
 }
+
+export { Contact };
