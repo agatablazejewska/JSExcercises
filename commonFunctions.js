@@ -35,6 +35,13 @@ export function validateBoolean(boolean) {
 
 export function isNumberPositive(number) {
     if(number < 0) {
-        throw Exception(`Value should be positive and was: ${number}`);
+        throw Error(`Value should be positive and was: ${number}`);
     }
+}
+
+export function validateEmail(email) {
+    const emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/i;
+     if(!emailRegex.test(email)) {
+         throw new Error("Provided value is not a valid e-mail");
+     };
 }
