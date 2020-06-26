@@ -1,5 +1,5 @@
 import * as commonFunctions from "../../commonFunctions.js";
-import { Contact } from "./Contact.js";
+import { Contact } from "./Contact";
 
 class ContactGroup {
   constructor() {
@@ -23,6 +23,12 @@ class ContactGroup {
       this._contactArray.splice(index, 1);
     }
   }
+
+  read() {
+    this._contactArray.forEach((contact) => contact.showInfo());
+  }
+
+  update() {}
 
   _containsContact(contact) {
     return this._contactArray.includes(contact);

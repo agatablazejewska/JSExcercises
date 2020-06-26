@@ -1,7 +1,9 @@
-import * as commonFunctions from "../../commonFunctions.js";
+import { v4 as uuidv4 } from "../../npm/node_modules/uuid";
+import * as commonFunctions from "../../commonFunctions";
 
 class Contact {
   constructor(firstName, surname, email) {
+    this._id = uuidv4();
     this.setFirstName(firstName);
     this.setSurname(surname);
     this.setEmail(email);
