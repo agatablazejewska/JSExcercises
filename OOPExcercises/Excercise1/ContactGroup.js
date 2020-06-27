@@ -11,12 +11,6 @@ class ContactGroup {
     return this._name;
   }
 
-  _setName(value) {
-    commonFunctions.validateString(value);
-
-    this._name = value;
-  }
-
   add(contact) {
     this._validateContact(contact);
 
@@ -47,6 +41,12 @@ class ContactGroup {
 
   update(name) {
     this._setName(name);
+  }
+
+  _setName(value) {
+    commonFunctions.validateString(value);
+
+    this._name = value;
   }
 
   _getMembersCount() {
