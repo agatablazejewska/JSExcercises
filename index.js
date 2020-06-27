@@ -1,6 +1,10 @@
-import { Contact } from "./OOPExcercises/Excercise1/Contact";
-import { generateHuman } from "./FunctionalProgrammingExcercises/FPExcercise8";
+import { PhoneBook } from "./OOPExcercises/Excercise1/PhoneBook";
 
-console.log(new Contact("Aga", "Sokolowska", "agaS@gmail.com"));
+const phoneBook = new PhoneBook();
 
-console.log(generateHuman());
+phoneBook.createContact("Aga", "Soesk", "aserha@gmail.com");
+phoneBook.createContact("Marc", "Lokes", "marclos@gmail.com");
+phoneBook.createContact("Sid", "Mejer", "sidmej@gmail.com");
+phoneBook.createContact("Kasler", "Powkes", "kaslerpowkes@gmail.com");
+
+phoneBook.showContacts();
