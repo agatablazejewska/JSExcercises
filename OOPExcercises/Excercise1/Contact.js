@@ -9,9 +9,9 @@ class Contact {
     }
 
     this._id = uuidv4();
-    this.firstName = firstName;
-    this.surname = surname;
-    this.email = email;
+    this._firstName = firstName;
+    this._surname = surname;
+    this._email = email;
     this._modifyDate = this._todaysDate();
   }
 
@@ -37,6 +37,18 @@ class Contact {
 
   update(newFirstName = "", newSurname = "", newEmail = "") {
     this._validateAllFields(newFirstName, newSurname, newEmail);
+
+    if (newFirstName) {
+      this._firstName = newFirstName;
+    }
+
+    if (newSurname) {
+      this._surname = newSurname;
+    }
+
+    if (newEmail) {
+      this._email = newEmail;
+    }
 
     this._modifyDate = this._todaysDate();
   }
