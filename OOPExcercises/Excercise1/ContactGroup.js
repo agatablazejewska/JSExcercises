@@ -1,5 +1,5 @@
 import * as commonFunctions from "../../commonFunctions.js";
-import { Contact } from "./Contact";
+import { validateContact } from "./HelperClasses/validateContact";
 
 class ContactGroup {
   constructor(name) {
@@ -12,7 +12,7 @@ class ContactGroup {
   }
 
   add(contact) {
-    this._validateContact(contact);
+    validateContact(contact);
 
     if (!this._containsContact(contact)) {
       this._contactArray.push(contact);
@@ -20,7 +20,7 @@ class ContactGroup {
   }
 
   remove(contact) {
-    this._validateContact(contact);
+    validateContact(contact);
 
     const index = this._contactArray.indexOf(contact);
 
@@ -55,12 +55,6 @@ class ContactGroup {
 
   _containsContact(contact) {
     return this._contactArray.includes(contact);
-  }
-
-  _validateContact(contact) {
-    if (!contact instanceof Contact) {
-      throw new Error("Provided object is not a contact");
-    }
   }
 }
 

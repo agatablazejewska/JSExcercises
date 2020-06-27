@@ -1,6 +1,7 @@
 import * as commonFunctions from "../../commonFunctions.js";
 import { ContactGroup } from "./ContactGroup";
 import { Contact } from "./Contact";
+import { validateContact } from "./HelperClasses/validateContact";
 
 class PhoneBook {
   constructor() {
@@ -16,19 +17,19 @@ class PhoneBook {
   }
 
   removeContact(contact) {
-    this._validateContact(contact);
+    validateContact(contact);
 
     this._removeFromArray(contact, this._contactList);
   }
 
   updateContact(contact, firstName, surname, email) {
-    this._validateContact(contact);
+    validateContact(contact);
 
     contact.update(firstName, surname, email);
   }
 
   showContact(contact) {
-    this._validateContact(contact);
+    validateContact(contact);
 
     contact.showAllInfo();
   }
@@ -117,12 +118,6 @@ class PhoneBook {
     }
 
     return 0;
-  }
-
-  _validateContact(contact) {
-    if (!contact instanceof Contact) {
-      throw new Error("Provided object is not a contact");
-    }
   }
 
   _validateContactGroup(group) {
