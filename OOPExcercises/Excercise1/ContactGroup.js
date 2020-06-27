@@ -3,7 +3,7 @@ import { Contact } from "./Contact";
 
 class ContactGroup {
   constructor(name) {
-    this.name = name;
+    this._name = name;
     this._contactArray = new Array();
   }
 
@@ -11,7 +11,7 @@ class ContactGroup {
     return this._name;
   }
 
-  set name(value) {
+  _setName(value) {
     commonFunctions.validateString(value);
 
     this._name = value;
@@ -35,12 +35,22 @@ class ContactGroup {
     }
   }
 
-  read() {
-    this._contactArray.forEach((contact) => contact.showInfo());
+  showAllInfo() {
+    this.show();
+    this._contactArray.forEach((contact) => contact.show());
+  }
+
+  show() {
+    console.log(`Group name: ${this.name}`);
+    console.log(`Members: ${this._getMembersCount}`);
   }
 
   update(name) {
-    this.name = name;
+    this._setName(name);
+  }
+
+  _getMembersCount() {
+    return this._contactArray.length;
   }
 
   _containsContact(contact) {
