@@ -28,7 +28,21 @@ class ContactGroup {
     this._contactArray.forEach((contact) => contact.showInfo());
   }
 
-  update() {}
+  update(contact, newName = "", newSurname = "", newEmail = "") {
+    this._validateContact(contact);
+
+    if (newName) {
+      contact.firstName = newName;
+    }
+
+    if (newSurname) {
+      contact.surname = newSurname;
+    }
+
+    if (newEmail) {
+      contact.email = newEmail;
+    }
+  }
 
   _containsContact(contact) {
     return this._contactArray.includes(contact);
