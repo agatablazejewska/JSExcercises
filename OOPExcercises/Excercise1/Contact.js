@@ -15,10 +15,6 @@ class Contact {
     this._modifyDate = this._todaysDate();
   }
 
-  get id() {
-    return this._id;
-  }
-
   get email() {
     return this._email;
   }
@@ -53,7 +49,7 @@ class Contact {
     this._modifyDate = this._todaysDate();
   }
 
-  showContact() {
+  show() {
     console.log(`Name: ${this.getFirstName()}
         Surname: ${this.getSurname()}
         E-mail: ${this.getEmail()}
