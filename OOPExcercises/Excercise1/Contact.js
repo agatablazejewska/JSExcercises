@@ -9,40 +9,47 @@ class Contact {
     this.setEmail(email);
   }
 
-  setEmail(value) {
+  get id() {
+    return this._id;
+  }
+
+  set email(value) {
     commonFunctions.validateEmail(value);
 
     this._email = value;
     this._modifyDate = this._todaysDate();
   }
 
-  getEmail() {
+  get email() {
     return this._email;
   }
 
-  setFirstName(value) {
+  set firstName(value) {
     commonFunctions.validateString(value);
+    if (!value) {
+      throw new Error("Firt name has to have a value");
+    }
 
     this._firstName = value;
     this._modifyDate = this._todaysDate();
   }
 
-  getFirstName() {
+  get firstName() {
     return this._firstName;
   }
 
-  setSurname(value) {
+  set surname(value) {
     commonFunctions.validateString(value);
 
     this._surname = value;
     this._modifyDate = this._todaysDate();
   }
 
-  getSurname() {
+  get surname() {
     return this._surname;
   }
 
-  getModifyDate() {
+  get modifyDate() {
     return this._modifyDate;
   }
 
