@@ -3,46 +3,28 @@ import * as commonFunctions from "../../commonFunctions";
 
 class Contact {
   constructor(firstName, surname, email) {
+    this._validateAllFields(firstName, surname, email);
+    if (!firstName) {
+      throw new Error("First name has to have a value");
+    }
+
     this._id = uuidv4();
-    this.setFirstName(firstName);
-    this.setSurname(surname);
-    this.setEmail(email);
+    this.firstName = firstName;
+    this.surname = surname;
+    this.email = email;
+    this._modifyDate = this._todaysDate();
   }
 
   get id() {
     return this._id;
   }
 
-  set email(value) {
-    commonFunctions.validateEmail(value);
-
-    this._email = value;
-    this._modifyDate = this._todaysDate();
-  }
-
   get email() {
     return this._email;
   }
 
-  set firstName(value) {
-    commonFunctions.validateString(value);
-    if (!value) {
-      throw new Error("Firt name has to have a value");
-    }
-
-    this._firstName = value;
-    this._modifyDate = this._todaysDate();
-  }
-
   get firstName() {
     return this._firstName;
-  }
-
-  set surname(value) {
-    commonFunctions.validateString(value);
-
-    this._surname = value;
-    this._modifyDate = this._todaysDate();
   }
 
   get surname() {
@@ -51,6 +33,12 @@ class Contact {
 
   get modifyDate() {
     return this._modifyDate;
+  }
+
+  update(newFirstName = "", newSurname = "", newEmail = "") {
+    this._validateAllFields(newFirstName, newSurname, newEmail);
+
+    this._modifyDate = this._todaysDate();
   }
 
   showContact() {
@@ -76,6 +64,12 @@ class Contact {
     const time = `${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;
 
     return `${fullDate} ${time}`;
+  }
+
+  _validateAllFields(firstName, surname, email) {
+    commonFunctions.validateString(firstName);
+    commonFunctions.validateString(surname);
+    commonFunctions.validateEmail(email);
   }
 }
 
