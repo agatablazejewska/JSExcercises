@@ -1,5 +1,6 @@
 import { v4 as uuidv4 } from "../../npm/node_modules/uuid";
 import * as commonFunctions from "../../commonFunctions";
+import { DateHandler } from "./HelperClasses/DateHandler";
 
 class Contact {
   constructor(firstName, surname, email) {
@@ -12,7 +13,8 @@ class Contact {
     this._firstName = firstName;
     this._surname = surname;
     this._email = email;
-    this._modifyDate = this._todaysDate();
+    this._dateHandler = new DateHandler();
+    this._modifyDate = this._dateHandler.todaysDate();
   }
 
   get email() {
@@ -46,7 +48,7 @@ class Contact {
       this._email = newEmail;
     }
 
-    this._modifyDate = this._todaysDate();
+    this._modifyDate = this._dateHandler.todaysDate();
   }
 
   get fullName() {
@@ -61,25 +63,7 @@ class Contact {
     console.log(`First name: ${this.firstName}
     Surname: ${this.surname}
     E-mail: ${this.email}
-    Last modified: ${this._formatDate(this.modifyDate)}`);
-  }
-
-  _todaysDate() {
-    return new Date();
-  }
-
-  _formatDate(date) {
-    if (!date instanceof Date) {
-      throw Error("Provided value is not a date");
-    }
-
-    const fullDate = `${date.getDate()}-${
-      date.getMonth() + 1
-    }-${date.getFullYear()}`;
-
-    const time = `${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;
-
-    return `${fullDate} ${time}`;
+    Last modified: ${this._dateHandler.formatDate(this.modifyDate)}`);
   }
 
   _validateAllFields(firstName, surname, email) {
