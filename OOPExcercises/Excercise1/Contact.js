@@ -49,15 +49,19 @@ class Contact {
     this._modifyDate = this._todaysDate();
   }
 
+  get fullName() {
+    return `${this.firstName} ${this.surname}`;
+  }
+
   show() {
-    console.log(`Name: ${this.getFirstName()} ${this.getSurname()}`);
+    console.log(`Name: ${this.fullName}`);
   }
 
   showAllInfo() {
-    console.log(`First name: ${this.getFirstName()}
-    Surname: ${this.getSurname()}
-    E-mail: ${this.getEmail()}
-    Last modified: ${this._formatDate(this.getModifyDate())}`);
+    console.log(`First name: ${this.firstName}
+    Surname: ${this.surname}
+    E-mail: ${this.email}
+    Last modified: ${this._formatDate(this.modifyDate)}`);
   }
 
   _todaysDate() {
