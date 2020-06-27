@@ -53,3 +53,5 @@ class ContactGroup {
     }
   }
 }
+
+export { ContactGroup };
