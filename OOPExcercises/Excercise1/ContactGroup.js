@@ -2,8 +2,19 @@ import * as commonFunctions from "../../commonFunctions.js";
 import { Contact } from "./Contact";
 
 class ContactGroup {
-  constructor() {
+  constructor(name) {
+    this.name = name;
     this._contactArray = new Array();
+  }
+
+  get name() {
+    return this._name;
+  }
+
+  set name(value) {
+    commonFunctions.validateString(value);
+
+    this._name = value;
   }
 
   add(contact) {
@@ -28,20 +39,8 @@ class ContactGroup {
     this._contactArray.forEach((contact) => contact.showInfo());
   }
 
-  update(contact, newName = "", newSurname = "", newEmail = "") {
-    this._validateContact(contact);
-
-    if (newName) {
-      contact.firstName = newName;
-    }
-
-    if (newSurname) {
-      contact.surname = newSurname;
-    }
-
-    if (newEmail) {
-      contact.email = newEmail;
-    }
+  update(name) {
+    this.name = name;
   }
 
   _containsContact(contact) {
