@@ -50,10 +50,14 @@ class Contact {
   }
 
   show() {
-    console.log(`Name: ${this.getFirstName()}
-        Surname: ${this.getSurname()}
-        E-mail: ${this.getEmail()}
-        Last modified: ${this._formatDate(this.getModifyDate())}`);
+    console.log(`Name: ${this.getFirstName()} ${this.getSurname()}`);
+  }
+
+  showAllInfo() {
+    console.log(`First name: ${this.getFirstName()}
+    Surname: ${this.getSurname()}
+    E-mail: ${this.getEmail()}
+    Last modified: ${this._formatDate(this.getModifyDate())}`);
   }
 
   _todaysDate() {
