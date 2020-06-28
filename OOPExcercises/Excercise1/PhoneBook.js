@@ -10,8 +10,8 @@ class PhoneBook {
   }
 
   //Handle conacts
-  createContact(firstName, surname, email) {
-    const contact = new Contact(firstName, surname, email);
+  addContact(contact) {
+    validateContact(contact);
 
     this._contactList.push(contact);
   }
@@ -35,8 +35,8 @@ class PhoneBook {
   }
 
   //Handle contacts group
-  createContactGroup(name) {
-    const group = new ContactGroup(name);
+  addContactGroup(group) {
+    this._validateContactGroup(group);
 
     this._contactGroupList.push(group);
   }
