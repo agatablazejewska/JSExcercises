@@ -69,7 +69,7 @@ export class PhoneBook {
         if (phrase) {
           const filteredContactList = this.filterByPhrase(phrase);
     
-          filteredContactList.forEach((contact) => contact.show());
+          filteredContactList.forEach(contact => contact.show());
         }
       }
     
