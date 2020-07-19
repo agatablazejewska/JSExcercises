@@ -65,7 +65,7 @@ export class PhoneBook {
     }
 
     //Filter
-    showFilteredByPhrase(phrase : string) {
+    showFilteredByPhrase(phrase : string) : void {
         if (phrase) {
           const filteredContactList = this.filterByPhrase(phrase);
     
@@ -73,7 +73,7 @@ export class PhoneBook {
         }
       }
     
-      filterByPhrase(phrase : string) {    
+      filterByPhrase(phrase : string) : Array<IContact> {    
         const phraseLowerCase = phrase.toLowerCase();
 
         return this._contactList.filter(contact =>
