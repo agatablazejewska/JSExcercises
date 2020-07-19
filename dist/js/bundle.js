@@ -81,213 +81,226 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = "../index.js");
+/******/ 	return __webpack_require__(__webpack_require__.s = "./JSExcercises/index.ts");
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ "../OOPExcercises/Excercise1/Contact.js":
-/*!**********************************************!*\
-  !*** ../OOPExcercises/Excercise1/Contact.js ***!
-  \**********************************************/
-/*! exports provided: Contact */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"Contact\", function() { return Contact; });\n/* harmony import */ var _npm_node_modules_uuid__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../npm/node_modules/uuid */ \"./node_modules/uuid/dist/esm-browser/index.js\");\n/* harmony import */ var _commonFunctions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../commonFunctions */ \"../commonFunctions.js\");\n/* harmony import */ var _HelperClasses_DateHandler__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./HelperClasses/DateHandler */ \"../OOPExcercises/Excercise1/HelperClasses/DateHandler.js\");\n\r\n\r\n\r\n\r\nclass Contact {\r\n  constructor(firstName, surname, email) {\r\n    this._validateAllFields(firstName, surname, email);\r\n    if (!firstName) {\r\n      throw new Error(\"First name has to have a value\");\r\n    }\r\n\r\n    this._id = Object(_npm_node_modules_uuid__WEBPACK_IMPORTED_MODULE_0__[\"v4\"])();\r\n    this._firstName = firstName;\r\n    this._surname = surname;\r\n    this._email = email;\r\n    this._dateHandler = new _HelperClasses_DateHandler__WEBPACK_IMPORTED_MODULE_2__[\"DateHandler\"]();\r\n    this._modifyDate = this._dateHandler.todaysDate();\r\n  }\r\n\r\n  get email() {\r\n    return this._email;\r\n  }\r\n\r\n  get firstName() {\r\n    return this._firstName;\r\n  }\r\n\r\n  get surname() {\r\n    return this._surname;\r\n  }\r\n\r\n  get modifyDate() {\r\n    return this._modifyDate;\r\n  }\r\n\r\n  update(newFirstName = \"\", newSurname = \"\", newEmail = \"\") {\r\n    this._validateAllFields(newFirstName, newSurname, newEmail);\r\n\r\n    if (newFirstName) {\r\n      this._firstName = newFirstName;\r\n    }\r\n\r\n    if (newSurname) {\r\n      this._surname = newSurname;\r\n    }\r\n\r\n    if (newEmail) {\r\n      this._email = newEmail;\r\n    }\r\n\r\n    this._modifyDate = this._dateHandler.todaysDate();\r\n  }\r\n\r\n  get fullName() {\r\n    return `${this.firstName} ${this.surname}`;\r\n  }\r\n\r\n  show() {\r\n    console.log(`Name: ${this.fullName}`);\r\n  }\r\n\r\n  showAllInfo() {\r\n    console.log(`First name: ${this.firstName}\r\n    Surname: ${this.surname}\r\n    E-mail: ${this.email}\r\n    Last modified: ${this._dateHandler.formatDate(this.modifyDate)}`);\r\n  }\r\n\r\n  _validateAllFields(firstName, surname, email) {\r\n    _commonFunctions__WEBPACK_IMPORTED_MODULE_1__[\"validateString\"](firstName);\r\n    _commonFunctions__WEBPACK_IMPORTED_MODULE_1__[\"validateString\"](surname);\r\n    _commonFunctions__WEBPACK_IMPORTED_MODULE_1__[\"validateEmail\"](email);\r\n  }\r\n}\r\n\r\n\r\n\n\n//# sourceURL=webpack:///../OOPExcercises/Excercise1/Contact.js?");
-
-/***/ }),
-
-/***/ "../OOPExcercises/Excercise1/ContactGroup.js":
-/*!***************************************************!*\
-  !*** ../OOPExcercises/Excercise1/ContactGroup.js ***!
-  \***************************************************/
-/*! exports provided: ContactGroup */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"ContactGroup\", function() { return ContactGroup; });\n/* harmony import */ var _commonFunctions_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../commonFunctions.js */ \"../commonFunctions.js\");\n/* harmony import */ var _HelperClasses_validateContact__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./HelperClasses/validateContact */ \"../OOPExcercises/Excercise1/HelperClasses/validateContact.js\");\n\r\n\r\n\r\nclass ContactGroup {\r\n  constructor(name) {\r\n    this._name = name;\r\n    this._contactArray = new Array();\r\n  }\r\n\r\n  get name() {\r\n    return this._name;\r\n  }\r\n\r\n  add(contact) {\r\n    Object(_HelperClasses_validateContact__WEBPACK_IMPORTED_MODULE_1__[\"validateContact\"])(contact);\r\n\r\n    if (!this._containsContact(contact)) {\r\n      this._contactArray.push(contact);\r\n    }\r\n  }\r\n\r\n  remove(contact) {\r\n    Object(_HelperClasses_validateContact__WEBPACK_IMPORTED_MODULE_1__[\"validateContact\"])(contact);\r\n\r\n    const index = this._contactArray.indexOf(contact);\r\n\r\n    if (index > -1) {\r\n      this._contactArray.splice(index, 1);\r\n    }\r\n  }\r\n\r\n  showAllInfo() {\r\n    this.show();\r\n    this._contactArray.forEach((contact) => contact.show());\r\n  }\r\n\r\n  show() {\r\n    console.log(`Group name: ${this.name}`);\r\n    console.log(`Members: ${this._getMembersCount}`);\r\n  }\r\n\r\n  update(name) {\r\n    this._setName(name);\r\n  }\r\n\r\n  _setName(value) {\r\n    _commonFunctions_js__WEBPACK_IMPORTED_MODULE_0__[\"validateString\"](value);\r\n\r\n    this._name = value;\r\n  }\r\n\r\n  _getMembersCount() {\r\n    return this._contactArray.length;\r\n  }\r\n\r\n  _containsContact(contact) {\r\n    return this._contactArray.includes(contact);\r\n  }\r\n}\r\n\r\n\r\n\n\n//# sourceURL=webpack:///../OOPExcercises/Excercise1/ContactGroup.js?");
-
-/***/ }),
-
-/***/ "../OOPExcercises/Excercise1/HelperClasses/DateHandler.js":
-/*!****************************************************************!*\
-  !*** ../OOPExcercises/Excercise1/HelperClasses/DateHandler.js ***!
-  \****************************************************************/
-/*! exports provided: DateHandler */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"DateHandler\", function() { return DateHandler; });\nclass DateHandler {\r\n  todaysDate() {\r\n    return new Date();\r\n  }\r\n\r\n  formatDate(date) {\r\n    if (!date instanceof Date) {\r\n      throw Error(\"Provided value is not a date\");\r\n    }\r\n\r\n    const fullDate = `${date.getDate()}-${\r\n      date.getMonth() + 1\r\n    }-${date.getFullYear()}`;\r\n\r\n    const time = `${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;\r\n\r\n    return `${fullDate} ${time}`;\r\n  }\r\n}\r\n\r\n\r\n\n\n//# sourceURL=webpack:///../OOPExcercises/Excercise1/HelperClasses/DateHandler.js?");
-
-/***/ }),
-
-/***/ "../OOPExcercises/Excercise1/HelperClasses/validateContact.js":
+/***/ "./JSExcercises/OOPExcercises/Excercise1TS/Contact/Contact.ts":
 /*!********************************************************************!*\
-  !*** ../OOPExcercises/Excercise1/HelperClasses/validateContact.js ***!
+  !*** ./JSExcercises/OOPExcercises/Excercise1TS/Contact/Contact.ts ***!
   \********************************************************************/
-/*! exports provided: validateContact */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"validateContact\", function() { return validateContact; });\n/* harmony import */ var _Contact__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../Contact */ \"../OOPExcercises/Excercise1/Contact.js\");\n\r\n\r\nfunction validateContact(contact) {\r\n  if (!contact instanceof _Contact__WEBPACK_IMPORTED_MODULE_0__[\"Contact\"]) {\r\n    throw new Error(\"Provided object is not a contact\");\r\n  }\r\n}\r\n\n\n//# sourceURL=webpack:///../OOPExcercises/Excercise1/HelperClasses/validateContact.js?");
+
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.Contact = void 0;
+const DateHandler_1 = __webpack_require__(/*! ../HelperClasses/DateHandler */ "./JSExcercises/OOPExcercises/Excercise1TS/HelperClasses/DateHandler.ts");
+const ValidateEmail_1 = __webpack_require__(/*! ../HelperClasses/ValidateEmail */ "./JSExcercises/OOPExcercises/Excercise1TS/HelperClasses/ValidateEmail.ts");
+class Contact {
+    constructor(firstName, surname, email) {
+        ValidateEmail_1.validateEmail(email);
+        if (!firstName) {
+            throw new Error("First name has to have a value");
+        }
+        this.firstName = firstName;
+        this.surname = surname;
+        this.email = email;
+        this._dateHandler = new DateHandler_1.DateHandler();
+        this.modifyDate = this._dateHandler.todaysDate();
+    }
+    get fullName() {
+        return `${this.firstName} ${this.surname}`;
+    }
+    update(source) {
+        Object.assign(this, source);
+        this.modifyDate = this._dateHandler.todaysDate();
+    }
+    show() {
+        console.log(`Name: ${this.fullName}, email: ${this.email}`);
+    }
+    showAllInfo() {
+        console.log(`First name: ${this.firstName}
+        Surname: ${this.surname}
+        E-mail: ${this.email}
+        Last modified: ${this._dateHandler.formatDate(this.modifyDate)}`);
+    }
+}
+exports.Contact = Contact;
+
 
 /***/ }),
 
-/***/ "../OOPExcercises/Excercise1/PhoneBook.js":
-/*!************************************************!*\
-  !*** ../OOPExcercises/Excercise1/PhoneBook.js ***!
-  \************************************************/
-/*! exports provided: PhoneBook */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ "./JSExcercises/OOPExcercises/Excercise1TS/HelperClasses/DateHandler.ts":
+/*!******************************************************************************!*\
+  !*** ./JSExcercises/OOPExcercises/Excercise1TS/HelperClasses/DateHandler.ts ***!
+  \******************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"PhoneBook\", function() { return PhoneBook; });\n/* harmony import */ var _commonFunctions_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../commonFunctions.js */ \"../commonFunctions.js\");\n/* harmony import */ var _ContactGroup__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ContactGroup */ \"../OOPExcercises/Excercise1/ContactGroup.js\");\n/* harmony import */ var _Contact__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Contact */ \"../OOPExcercises/Excercise1/Contact.js\");\n/* harmony import */ var _HelperClasses_validateContact__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./HelperClasses/validateContact */ \"../OOPExcercises/Excercise1/HelperClasses/validateContact.js\");\n\r\n\r\n\r\n\r\n\r\nclass PhoneBook {\r\n  constructor() {\r\n    this._contactList = new Array();\r\n    this._contactGroupList = new Array();\r\n  }\r\n\r\n  //Handle conacts\r\n  addContact(contact) {\r\n    Object(_HelperClasses_validateContact__WEBPACK_IMPORTED_MODULE_3__[\"validateContact\"])(contact);\r\n\r\n    this._contactList.push(contact);\r\n  }\r\n\r\n  removeContact(contact) {\r\n    Object(_HelperClasses_validateContact__WEBPACK_IMPORTED_MODULE_3__[\"validateContact\"])(contact);\r\n\r\n    this._removeFromArray(contact, this._contactList);\r\n  }\r\n\r\n  updateContact(contact, firstName, surname, email) {\r\n    Object(_HelperClasses_validateContact__WEBPACK_IMPORTED_MODULE_3__[\"validateContact\"])(contact);\r\n\r\n    contact.update(firstName, surname, email);\r\n  }\r\n\r\n  showContact(contact) {\r\n    Object(_HelperClasses_validateContact__WEBPACK_IMPORTED_MODULE_3__[\"validateContact\"])(contact);\r\n\r\n    contact.showAllInfo();\r\n  }\r\n\r\n  //Handle contacts group\r\n  addContactGroup(group) {\r\n    this._validateContactGroup(group);\r\n\r\n    this._contactGroupList.push(group);\r\n  }\r\n\r\n  addContactToGroup(contact, group) {\r\n    this._validateContactGroup(group);\r\n\r\n    group.add(contact);\r\n  }\r\n\r\n  removeContactFromGroup(contact, group) {\r\n    this._validateContactGroup(group);\r\n\r\n    group.remove(contact);\r\n  }\r\n\r\n  showContactGroup(group) {\r\n    this._validateContactGroup(group);\r\n\r\n    group.showAllInfo();\r\n  }\r\n\r\n  updateContactGroupName(group, name) {\r\n    this._validateContactGroup(group);\r\n\r\n    group.update(name);\r\n  }\r\n\r\n  removeContactGroup(group) {\r\n    this._validateContactGroup(group);\r\n\r\n    this._removeFromArray(group, this._contactGroupList);\r\n  }\r\n\r\n  //Show lists\r\n  showContacts() {\r\n    this._sortContactsAlphabetically();\r\n    this._contactList.forEach((contact) => contact.show());\r\n  }\r\n\r\n  showGroups() {\r\n    this._contactGroupList.forEach((group) => group.show());\r\n  }\r\n\r\n  showFilteredByPhrase(phrase) {\r\n    if (phrase) {\r\n      const filteredContactList = this.filterByPhrase(phrase);\r\n\r\n      filteredContactList.forEach((contact) => contact.show());\r\n    }\r\n  }\r\n\r\n  filterByPhrase(phrase) {\r\n    _commonFunctions_js__WEBPACK_IMPORTED_MODULE_0__[\"validateString\"](phrase);\r\n\r\n    const phraseLowerCase = phrase.toLowerCase();\r\n    return this._contactList.filter((contact) =>\r\n      contact.fullName.toLowerCase().includes(phraseLowerCase)\r\n    );\r\n  }\r\n\r\n  //Sort\r\n  _sortContactsAlphabetically() {\r\n    this._contactList = this._contactList.sort(\r\n      this._sortContactsAlphabeticallyLogic\r\n    );\r\n  }\r\n\r\n  _sortContactsAlphabeticallyLogic(contactA, contactB) {\r\n    const contactAName = contactA.fullName.toUpperCase();\r\n    const contactBName = contactB.fullName.toUpperCase();\r\n\r\n    if (contactAName < contactBName) {\r\n      return -1;\r\n    }\r\n\r\n    if (contactAName > contactBName) {\r\n      return 1;\r\n    }\r\n\r\n    return 0;\r\n  }\r\n\r\n  _validateContactGroup(group) {\r\n    if (!group instanceof _ContactGroup__WEBPACK_IMPORTED_MODULE_1__[\"ContactGroup\"]) {\r\n      throw new Error(\"Provided object is not a group of contacts\");\r\n    }\r\n  }\r\n\r\n  _removeFromArray(element, array) {\r\n    const index = array.indexOf(element);\r\n\r\n    if (index > -1) {\r\n      array.splice(index, 1);\r\n    }\r\n  }\r\n}\r\n\r\n\r\n\n\n//# sourceURL=webpack:///../OOPExcercises/Excercise1/PhoneBook.js?");
+
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.DateHandler = void 0;
+class DateHandler {
+    todaysDate() {
+        return new Date();
+    }
+    formatDate(date) {
+        const fullDate = `${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()}`;
+        const time = `${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;
+        return `${fullDate} ${time}`;
+    }
+}
+exports.DateHandler = DateHandler;
+
 
 /***/ }),
 
-/***/ "../commonFunctions.js":
-/*!*****************************!*\
-  !*** ../commonFunctions.js ***!
-  \*****************************/
-/*! exports provided: validateArrayType, validateCallbackType, validate, validateNumber, validateString, validateBoolean, isNumberPositive, validateEmail */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ "./JSExcercises/OOPExcercises/Excercise1TS/HelperClasses/ValidateEmail.ts":
+/*!********************************************************************************!*\
+  !*** ./JSExcercises/OOPExcercises/Excercise1TS/HelperClasses/ValidateEmail.ts ***!
+  \********************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"validateArrayType\", function() { return validateArrayType; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"validateCallbackType\", function() { return validateCallbackType; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"validate\", function() { return validate; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"validateNumber\", function() { return validateNumber; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"validateString\", function() { return validateString; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"validateBoolean\", function() { return validateBoolean; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"isNumberPositive\", function() { return isNumberPositive; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"validateEmail\", function() { return validateEmail; });\nfunction validateArrayType(array) {\r\n    if(!Array.isArray(array)) {\r\n        throw TypeError(\"Provided array variable isn't of type array\");\r\n    };\r\n}\r\n\r\nfunction validateCallbackType(callback) {\r\n    if(typeof callback !== \"function\") {\r\n        throw TypeError(\"Provided callback is not a function\"); \r\n    } \r\n};\r\n\r\nfunction validate(array, callback) { \r\n    validateCallbackType(callback);\r\n    validateArrayType(array);\r\n};\r\n\r\nfunction validateNumber(number) {\r\n    if(typeof number !== 'number') {\r\n        throw TypeError(\"Provided variable is not of type number\");\r\n    }\r\n};\r\n\r\nfunction validateString(string) {\r\n    if(typeof string !== 'string') {\r\n        throw TypeError(\"Provided variable is not of type string\");\r\n    }\r\n};\r\n\r\nfunction validateBoolean(boolean) {\r\n    if(typeof boolean !== 'boolean') {\r\n        throw TypeError(\"Provided variable is not of type boolean\");\r\n    }\r\n};\r\n\r\nfunction isNumberPositive(number) {\r\n    if(number < 0) {\r\n        throw Error(`Value should be positive and was: ${number}`);\r\n    }\r\n}\r\n\r\nfunction validateEmail(email) {\r\n    const emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/i;\r\n     if(!emailRegex.test(email)) {\r\n         throw new Error(\"Provided value is not a valid e-mail\");\r\n     };\r\n}\n\n//# sourceURL=webpack:///../commonFunctions.js?");
+
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.validateEmail = void 0;
+function validateEmail(email) {
+    const emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/i;
+    if (!emailRegex.test(email)) {
+        throw new Error("Provided value is not a valid e-mail");
+    }
+    ;
+}
+exports.validateEmail = validateEmail;
+
 
 /***/ }),
 
-/***/ "../index.js":
-/*!*******************!*\
-  !*** ../index.js ***!
-  \*******************/
-/*! no exports provided */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ "./JSExcercises/OOPExcercises/Excercise1TS/PhoneBook/PhoneBook.ts":
+/*!************************************************************************!*\
+  !*** ./JSExcercises/OOPExcercises/Excercise1TS/PhoneBook/PhoneBook.ts ***!
+  \************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _OOPExcercises_Excercise1_PhoneBook__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./OOPExcercises/Excercise1/PhoneBook */ \"../OOPExcercises/Excercise1/PhoneBook.js\");\n/* harmony import */ var _OOPExcercises_Excercise1_Contact__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./OOPExcercises/Excercise1/Contact */ \"../OOPExcercises/Excercise1/Contact.js\");\n\r\n\r\n\r\nconst phoneBook = new _OOPExcercises_Excercise1_PhoneBook__WEBPACK_IMPORTED_MODULE_0__[\"PhoneBook\"]();\r\n\r\nphoneBook.addContact(new _OOPExcercises_Excercise1_Contact__WEBPACK_IMPORTED_MODULE_1__[\"Contact\"](\"Aga\", \"Soesk\", \"aserha@gmail.com\"));\r\nphoneBook.addContact(new _OOPExcercises_Excercise1_Contact__WEBPACK_IMPORTED_MODULE_1__[\"Contact\"](\"Marc\", \"Lokes\", \"marclos@gmail.com\"));\r\nphoneBook.addContact(new _OOPExcercises_Excercise1_Contact__WEBPACK_IMPORTED_MODULE_1__[\"Contact\"](\"Sid\", \"Mejer\", \"sidmej@gmail.com\"));\r\nphoneBook.addContact(new _OOPExcercises_Excercise1_Contact__WEBPACK_IMPORTED_MODULE_1__[\"Contact\"](\"Kasler\", \"Powkes\", \"kaslerpowkes@gmail.com\"));\r\n\r\nphoneBook.showContacts();\r\n\n\n//# sourceURL=webpack:///../index.js?");
+
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.PhoneBook = void 0;
+class PhoneBook {
+    constructor() {
+        this._contactList = new Array();
+        this._contactGroupList = new Array();
+    }
+    //Handle conacts
+    addContact(contact) {
+        this._contactList.push(contact);
+    }
+    removeContact(contact) {
+        this._removeFromArray(contact, this._contactList);
+    }
+    updateContact(contact, newContactData) {
+        contact.update(newContactData);
+    }
+    showContact(contact) {
+        contact.showAllInfo();
+    }
+    //Handle contacts group
+    addContactGroup(group) {
+        this._contactGroupList.push(group);
+    }
+    addContactToGroup(contact, group) {
+        group.add(contact);
+    }
+    removeContactFromGroup(contact, group) {
+        group.remove(contact);
+    }
+    showContactGroup(group) {
+        group.showAllInfo();
+    }
+    updateContactGroup(group, newGroupData) {
+        group.update(newGroupData);
+    }
+    removeContactGroup(group) {
+        this._removeFromArray(group, this._contactGroupList);
+    }
+    //Show lists
+    showContacts() {
+        this._sortContactsAlphabetically();
+        this._contactList.forEach((contact) => contact.show());
+    }
+    showGroups() {
+        this._contactGroupList.forEach((group) => group.show());
+    }
+    //Filter
+    showFilteredByPhrase(phrase) {
+        if (phrase) {
+            const filteredContactList = this.filterByPhrase(phrase);
+            filteredContactList.forEach(contact => contact.show());
+        }
+    }
+    filterByPhrase(phrase) {
+        const phraseLowerCase = phrase.toLowerCase();
+        return this._contactList.filter(contact => contact.fullName.toLowerCase().includes(phraseLowerCase));
+    }
+    //Sort
+    _sortContactsAlphabetically() {
+        this._contactList = this._contactList.sort(this._sortContactsAlphabeticallyLogic);
+    }
+    _sortContactsAlphabeticallyLogic(contactA, contactB) {
+        const contactAName = contactA.fullName.toUpperCase();
+        const contactBName = contactB.fullName.toUpperCase();
+        if (contactAName < contactBName) {
+            return -1;
+        }
+        if (contactAName > contactBName) {
+            return 1;
+        }
+        return 0;
+    }
+    _removeFromArray(element, array) {
+        const index = array.indexOf(element);
+        if (index > -1) {
+            array.splice(index, 1);
+        }
+    }
+}
+exports.PhoneBook = PhoneBook;
+
 
 /***/ }),
 
-/***/ "./node_modules/uuid/dist/esm-browser/bytesToUuid.js":
-/*!***********************************************************!*\
-  !*** ./node_modules/uuid/dist/esm-browser/bytesToUuid.js ***!
-  \***********************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ "./JSExcercises/index.ts":
+/*!*******************************!*\
+  !*** ./JSExcercises/index.ts ***!
+  \*******************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/**\n * Convert array of 16 byte values to UUID string format of the form:\n * XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX\n */\nvar byteToHex = [];\n\nfor (var i = 0; i < 256; ++i) {\n  byteToHex.push((i + 0x100).toString(16).substr(1));\n}\n\nfunction bytesToUuid(buf, offset_) {\n  var offset = offset_ || 0; // Note: Be careful editing this code!  It's been tuned for performance\n  // and works in ways you may not expect. See https://github.com/uuidjs/uuid/pull/434\n\n  return (byteToHex[buf[offset + 0]] + byteToHex[buf[offset + 1]] + byteToHex[buf[offset + 2]] + byteToHex[buf[offset + 3]] + '-' + byteToHex[buf[offset + 4]] + byteToHex[buf[offset + 5]] + '-' + byteToHex[buf[offset + 6]] + byteToHex[buf[offset + 7]] + '-' + byteToHex[buf[offset + 8]] + byteToHex[buf[offset + 9]] + '-' + byteToHex[buf[offset + 10]] + byteToHex[buf[offset + 11]] + byteToHex[buf[offset + 12]] + byteToHex[buf[offset + 13]] + byteToHex[buf[offset + 14]] + byteToHex[buf[offset + 15]]).toLowerCase();\n}\n\n/* harmony default export */ __webpack_exports__[\"default\"] = (bytesToUuid);\n\n//# sourceURL=webpack:///./node_modules/uuid/dist/esm-browser/bytesToUuid.js?");
 
-/***/ }),
+Object.defineProperty(exports, "__esModule", { value: true });
+const PhoneBook_1 = __webpack_require__(/*! ./OOPExcercises/Excercise1TS/PhoneBook/PhoneBook */ "./JSExcercises/OOPExcercises/Excercise1TS/PhoneBook/PhoneBook.ts");
+const Contact_1 = __webpack_require__(/*! ./OOPExcercises/Excercise1TS/Contact/Contact */ "./JSExcercises/OOPExcercises/Excercise1TS/Contact/Contact.ts");
+const phoneBook = new PhoneBook_1.PhoneBook();
+let contact1 = new Contact_1.Contact("Aga", "Soesk", "aserha@gmail.com");
+phoneBook.addContact(contact1);
+phoneBook.addContact(new Contact_1.Contact("Marc", "Lokes", "marclos@gmail.com"));
+phoneBook.addContact(new Contact_1.Contact("Sid", "Mejer", "sidmej@gmail.com"));
+phoneBook.addContact(new Contact_1.Contact("Kasler", "Powkes", "kaslerpowkes@gmail.com"));
+phoneBook.showContacts();
+phoneBook.updateContact(contact1, { firstName: "Adersn", surname: "MArsoel", email: "aserha@gmail.com" });
+console.log("update CONTACT");
+phoneBook.showContacts();
 
-/***/ "./node_modules/uuid/dist/esm-browser/index.js":
-/*!*****************************************************!*\
-  !*** ./node_modules/uuid/dist/esm-browser/index.js ***!
-  \*****************************************************/
-/*! exports provided: v1, v3, v4, v5 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _v1_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./v1.js */ \"./node_modules/uuid/dist/esm-browser/v1.js\");\n/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, \"v1\", function() { return _v1_js__WEBPACK_IMPORTED_MODULE_0__[\"default\"]; });\n\n/* harmony import */ var _v3_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./v3.js */ \"./node_modules/uuid/dist/esm-browser/v3.js\");\n/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, \"v3\", function() { return _v3_js__WEBPACK_IMPORTED_MODULE_1__[\"default\"]; });\n\n/* harmony import */ var _v4_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./v4.js */ \"./node_modules/uuid/dist/esm-browser/v4.js\");\n/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, \"v4\", function() { return _v4_js__WEBPACK_IMPORTED_MODULE_2__[\"default\"]; });\n\n/* harmony import */ var _v5_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./v5.js */ \"./node_modules/uuid/dist/esm-browser/v5.js\");\n/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, \"v5\", function() { return _v5_js__WEBPACK_IMPORTED_MODULE_3__[\"default\"]; });\n\n\n\n\n\n\n//# sourceURL=webpack:///./node_modules/uuid/dist/esm-browser/index.js?");
-
-/***/ }),
-
-/***/ "./node_modules/uuid/dist/esm-browser/md5.js":
-/*!***************************************************!*\
-  !*** ./node_modules/uuid/dist/esm-browser/md5.js ***!
-  \***************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/*\n * Browser-compatible JavaScript MD5\n *\n * Modification of JavaScript MD5\n * https://github.com/blueimp/JavaScript-MD5\n *\n * Copyright 2011, Sebastian Tschan\n * https://blueimp.net\n *\n * Licensed under the MIT license:\n * https://opensource.org/licenses/MIT\n *\n * Based on\n * A JavaScript implementation of the RSA Data Security, Inc. MD5 Message\n * Digest Algorithm, as defined in RFC 1321.\n * Version 2.2 Copyright (C) Paul Johnston 1999 - 2009\n * Other contributors: Greg Holt, Andrew Kepert, Ydnar, Lostinet\n * Distributed under the BSD License\n * See http://pajhome.org.uk/crypt/md5 for more info.\n */\nfunction md5(bytes) {\n  if (typeof bytes === 'string') {\n    var msg = unescape(encodeURIComponent(bytes)); // UTF8 escape\n\n    bytes = new Uint8Array(msg.length);\n\n    for (var i = 0; i < msg.length; ++i) {\n      bytes[i] = msg.charCodeAt(i);\n    }\n  }\n\n  return md5ToHexEncodedArray(wordsToMd5(bytesToWords(bytes), bytes.length * 8));\n}\n/*\n * Convert an array of little-endian words to an array of bytes\n */\n\n\nfunction md5ToHexEncodedArray(input) {\n  var output = [];\n  var length32 = input.length * 32;\n  var hexTab = '0123456789abcdef';\n\n  for (var i = 0; i < length32; i += 8) {\n    var x = input[i >> 5] >>> i % 32 & 0xff;\n    var hex = parseInt(hexTab.charAt(x >>> 4 & 0x0f) + hexTab.charAt(x & 0x0f), 16);\n    output.push(hex);\n  }\n\n  return output;\n}\n/**\n * Calculate output length with padding and bit length\n */\n\n\nfunction getOutputLength(inputLength8) {\n  return (inputLength8 + 64 >>> 9 << 4) + 14 + 1;\n}\n/*\n * Calculate the MD5 of an array of little-endian words, and a bit length.\n */\n\n\nfunction wordsToMd5(x, len) {\n  /* append padding */\n  x[len >> 5] |= 0x80 << len % 32;\n  x[getOutputLength(len) - 1] = len;\n  var a = 1732584193;\n  var b = -271733879;\n  var c = -1732584194;\n  var d = 271733878;\n\n  for (var i = 0; i < x.length; i += 16) {\n    var olda = a;\n    var oldb = b;\n    var oldc = c;\n    var oldd = d;\n    a = md5ff(a, b, c, d, x[i], 7, -680876936);\n    d = md5ff(d, a, b, c, x[i + 1], 12, -389564586);\n    c = md5ff(c, d, a, b, x[i + 2], 17, 606105819);\n    b = md5ff(b, c, d, a, x[i + 3], 22, -1044525330);\n    a = md5ff(a, b, c, d, x[i + 4], 7, -176418897);\n    d = md5ff(d, a, b, c, x[i + 5], 12, 1200080426);\n    c = md5ff(c, d, a, b, x[i + 6], 17, -1473231341);\n    b = md5ff(b, c, d, a, x[i + 7], 22, -45705983);\n    a = md5ff(a, b, c, d, x[i + 8], 7, 1770035416);\n    d = md5ff(d, a, b, c, x[i + 9], 12, -1958414417);\n    c = md5ff(c, d, a, b, x[i + 10], 17, -42063);\n    b = md5ff(b, c, d, a, x[i + 11], 22, -1990404162);\n    a = md5ff(a, b, c, d, x[i + 12], 7, 1804603682);\n    d = md5ff(d, a, b, c, x[i + 13], 12, -40341101);\n    c = md5ff(c, d, a, b, x[i + 14], 17, -1502002290);\n    b = md5ff(b, c, d, a, x[i + 15], 22, 1236535329);\n    a = md5gg(a, b, c, d, x[i + 1], 5, -165796510);\n    d = md5gg(d, a, b, c, x[i + 6], 9, -1069501632);\n    c = md5gg(c, d, a, b, x[i + 11], 14, 643717713);\n    b = md5gg(b, c, d, a, x[i], 20, -373897302);\n    a = md5gg(a, b, c, d, x[i + 5], 5, -701558691);\n    d = md5gg(d, a, b, c, x[i + 10], 9, 38016083);\n    c = md5gg(c, d, a, b, x[i + 15], 14, -660478335);\n    b = md5gg(b, c, d, a, x[i + 4], 20, -405537848);\n    a = md5gg(a, b, c, d, x[i + 9], 5, 568446438);\n    d = md5gg(d, a, b, c, x[i + 14], 9, -1019803690);\n    c = md5gg(c, d, a, b, x[i + 3], 14, -187363961);\n    b = md5gg(b, c, d, a, x[i + 8], 20, 1163531501);\n    a = md5gg(a, b, c, d, x[i + 13], 5, -1444681467);\n    d = md5gg(d, a, b, c, x[i + 2], 9, -51403784);\n    c = md5gg(c, d, a, b, x[i + 7], 14, 1735328473);\n    b = md5gg(b, c, d, a, x[i + 12], 20, -1926607734);\n    a = md5hh(a, b, c, d, x[i + 5], 4, -378558);\n    d = md5hh(d, a, b, c, x[i + 8], 11, -2022574463);\n    c = md5hh(c, d, a, b, x[i + 11], 16, 1839030562);\n    b = md5hh(b, c, d, a, x[i + 14], 23, -35309556);\n    a = md5hh(a, b, c, d, x[i + 1], 4, -1530992060);\n    d = md5hh(d, a, b, c, x[i + 4], 11, 1272893353);\n    c = md5hh(c, d, a, b, x[i + 7], 16, -155497632);\n    b = md5hh(b, c, d, a, x[i + 10], 23, -1094730640);\n    a = md5hh(a, b, c, d, x[i + 13], 4, 681279174);\n    d = md5hh(d, a, b, c, x[i], 11, -358537222);\n    c = md5hh(c, d, a, b, x[i + 3], 16, -722521979);\n    b = md5hh(b, c, d, a, x[i + 6], 23, 76029189);\n    a = md5hh(a, b, c, d, x[i + 9], 4, -640364487);\n    d = md5hh(d, a, b, c, x[i + 12], 11, -421815835);\n    c = md5hh(c, d, a, b, x[i + 15], 16, 530742520);\n    b = md5hh(b, c, d, a, x[i + 2], 23, -995338651);\n    a = md5ii(a, b, c, d, x[i], 6, -198630844);\n    d = md5ii(d, a, b, c, x[i + 7], 10, 1126891415);\n    c = md5ii(c, d, a, b, x[i + 14], 15, -1416354905);\n    b = md5ii(b, c, d, a, x[i + 5], 21, -57434055);\n    a = md5ii(a, b, c, d, x[i + 12], 6, 1700485571);\n    d = md5ii(d, a, b, c, x[i + 3], 10, -1894986606);\n    c = md5ii(c, d, a, b, x[i + 10], 15, -1051523);\n    b = md5ii(b, c, d, a, x[i + 1], 21, -2054922799);\n    a = md5ii(a, b, c, d, x[i + 8], 6, 1873313359);\n    d = md5ii(d, a, b, c, x[i + 15], 10, -30611744);\n    c = md5ii(c, d, a, b, x[i + 6], 15, -1560198380);\n    b = md5ii(b, c, d, a, x[i + 13], 21, 1309151649);\n    a = md5ii(a, b, c, d, x[i + 4], 6, -145523070);\n    d = md5ii(d, a, b, c, x[i + 11], 10, -1120210379);\n    c = md5ii(c, d, a, b, x[i + 2], 15, 718787259);\n    b = md5ii(b, c, d, a, x[i + 9], 21, -343485551);\n    a = safeAdd(a, olda);\n    b = safeAdd(b, oldb);\n    c = safeAdd(c, oldc);\n    d = safeAdd(d, oldd);\n  }\n\n  return [a, b, c, d];\n}\n/*\n * Convert an array bytes to an array of little-endian words\n * Characters >255 have their high-byte silently ignored.\n */\n\n\nfunction bytesToWords(input) {\n  if (input.length === 0) {\n    return [];\n  }\n\n  var length8 = input.length * 8;\n  var output = new Uint32Array(getOutputLength(length8));\n\n  for (var i = 0; i < length8; i += 8) {\n    output[i >> 5] |= (input[i / 8] & 0xff) << i % 32;\n  }\n\n  return output;\n}\n/*\n * Add integers, wrapping at 2^32. This uses 16-bit operations internally\n * to work around bugs in some JS interpreters.\n */\n\n\nfunction safeAdd(x, y) {\n  var lsw = (x & 0xffff) + (y & 0xffff);\n  var msw = (x >> 16) + (y >> 16) + (lsw >> 16);\n  return msw << 16 | lsw & 0xffff;\n}\n/*\n * Bitwise rotate a 32-bit number to the left.\n */\n\n\nfunction bitRotateLeft(num, cnt) {\n  return num << cnt | num >>> 32 - cnt;\n}\n/*\n * These functions implement the four basic operations the algorithm uses.\n */\n\n\nfunction md5cmn(q, a, b, x, s, t) {\n  return safeAdd(bitRotateLeft(safeAdd(safeAdd(a, q), safeAdd(x, t)), s), b);\n}\n\nfunction md5ff(a, b, c, d, x, s, t) {\n  return md5cmn(b & c | ~b & d, a, b, x, s, t);\n}\n\nfunction md5gg(a, b, c, d, x, s, t) {\n  return md5cmn(b & d | c & ~d, a, b, x, s, t);\n}\n\nfunction md5hh(a, b, c, d, x, s, t) {\n  return md5cmn(b ^ c ^ d, a, b, x, s, t);\n}\n\nfunction md5ii(a, b, c, d, x, s, t) {\n  return md5cmn(c ^ (b | ~d), a, b, x, s, t);\n}\n\n/* harmony default export */ __webpack_exports__[\"default\"] = (md5);\n\n//# sourceURL=webpack:///./node_modules/uuid/dist/esm-browser/md5.js?");
-
-/***/ }),
-
-/***/ "./node_modules/uuid/dist/esm-browser/rng.js":
-/*!***************************************************!*\
-  !*** ./node_modules/uuid/dist/esm-browser/rng.js ***!
-  \***************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"default\", function() { return rng; });\n// Unique ID creation requires a high quality random # generator. In the browser we therefore\n// require the crypto API and do not support built-in fallback to lower quality random number\n// generators (like Math.random()).\n// getRandomValues needs to be invoked in a context where \"this\" is a Crypto implementation. Also,\n// find the complete implementation of crypto (msCrypto) on IE11.\nvar getRandomValues = typeof crypto !== 'undefined' && crypto.getRandomValues && crypto.getRandomValues.bind(crypto) || typeof msCrypto !== 'undefined' && typeof msCrypto.getRandomValues === 'function' && msCrypto.getRandomValues.bind(msCrypto);\nvar rnds8 = new Uint8Array(16);\nfunction rng() {\n  if (!getRandomValues) {\n    throw new Error('crypto.getRandomValues() not supported. See https://github.com/uuidjs/uuid#getrandomvalues-not-supported');\n  }\n\n  return getRandomValues(rnds8);\n}\n\n//# sourceURL=webpack:///./node_modules/uuid/dist/esm-browser/rng.js?");
-
-/***/ }),
-
-/***/ "./node_modules/uuid/dist/esm-browser/sha1.js":
-/*!****************************************************!*\
-  !*** ./node_modules/uuid/dist/esm-browser/sha1.js ***!
-  \****************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n// Adapted from Chris Veness' SHA1 code at\n// http://www.movable-type.co.uk/scripts/sha1.html\nfunction f(s, x, y, z) {\n  switch (s) {\n    case 0:\n      return x & y ^ ~x & z;\n\n    case 1:\n      return x ^ y ^ z;\n\n    case 2:\n      return x & y ^ x & z ^ y & z;\n\n    case 3:\n      return x ^ y ^ z;\n  }\n}\n\nfunction ROTL(x, n) {\n  return x << n | x >>> 32 - n;\n}\n\nfunction sha1(bytes) {\n  var K = [0x5a827999, 0x6ed9eba1, 0x8f1bbcdc, 0xca62c1d6];\n  var H = [0x67452301, 0xefcdab89, 0x98badcfe, 0x10325476, 0xc3d2e1f0];\n\n  if (typeof bytes === 'string') {\n    var msg = unescape(encodeURIComponent(bytes)); // UTF8 escape\n\n    bytes = [];\n\n    for (var i = 0; i < msg.length; ++i) {\n      bytes.push(msg.charCodeAt(i));\n    }\n  }\n\n  bytes.push(0x80);\n  var l = bytes.length / 4 + 2;\n  var N = Math.ceil(l / 16);\n  var M = new Array(N);\n\n  for (var _i = 0; _i < N; ++_i) {\n    var arr = new Uint32Array(16);\n\n    for (var j = 0; j < 16; ++j) {\n      arr[j] = bytes[_i * 64 + j * 4] << 24 | bytes[_i * 64 + j * 4 + 1] << 16 | bytes[_i * 64 + j * 4 + 2] << 8 | bytes[_i * 64 + j * 4 + 3];\n    }\n\n    M[_i] = arr;\n  }\n\n  M[N - 1][14] = (bytes.length - 1) * 8 / Math.pow(2, 32);\n  M[N - 1][14] = Math.floor(M[N - 1][14]);\n  M[N - 1][15] = (bytes.length - 1) * 8 & 0xffffffff;\n\n  for (var _i2 = 0; _i2 < N; ++_i2) {\n    var W = new Uint32Array(80);\n\n    for (var t = 0; t < 16; ++t) {\n      W[t] = M[_i2][t];\n    }\n\n    for (var _t = 16; _t < 80; ++_t) {\n      W[_t] = ROTL(W[_t - 3] ^ W[_t - 8] ^ W[_t - 14] ^ W[_t - 16], 1);\n    }\n\n    var a = H[0];\n    var b = H[1];\n    var c = H[2];\n    var d = H[3];\n    var e = H[4];\n\n    for (var _t2 = 0; _t2 < 80; ++_t2) {\n      var s = Math.floor(_t2 / 20);\n      var T = ROTL(a, 5) + f(s, b, c, d) + e + K[s] + W[_t2] >>> 0;\n      e = d;\n      d = c;\n      c = ROTL(b, 30) >>> 0;\n      b = a;\n      a = T;\n    }\n\n    H[0] = H[0] + a >>> 0;\n    H[1] = H[1] + b >>> 0;\n    H[2] = H[2] + c >>> 0;\n    H[3] = H[3] + d >>> 0;\n    H[4] = H[4] + e >>> 0;\n  }\n\n  return [H[0] >> 24 & 0xff, H[0] >> 16 & 0xff, H[0] >> 8 & 0xff, H[0] & 0xff, H[1] >> 24 & 0xff, H[1] >> 16 & 0xff, H[1] >> 8 & 0xff, H[1] & 0xff, H[2] >> 24 & 0xff, H[2] >> 16 & 0xff, H[2] >> 8 & 0xff, H[2] & 0xff, H[3] >> 24 & 0xff, H[3] >> 16 & 0xff, H[3] >> 8 & 0xff, H[3] & 0xff, H[4] >> 24 & 0xff, H[4] >> 16 & 0xff, H[4] >> 8 & 0xff, H[4] & 0xff];\n}\n\n/* harmony default export */ __webpack_exports__[\"default\"] = (sha1);\n\n//# sourceURL=webpack:///./node_modules/uuid/dist/esm-browser/sha1.js?");
-
-/***/ }),
-
-/***/ "./node_modules/uuid/dist/esm-browser/v1.js":
-/*!**************************************************!*\
-  !*** ./node_modules/uuid/dist/esm-browser/v1.js ***!
-  \**************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _rng_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./rng.js */ \"./node_modules/uuid/dist/esm-browser/rng.js\");\n/* harmony import */ var _bytesToUuid_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./bytesToUuid.js */ \"./node_modules/uuid/dist/esm-browser/bytesToUuid.js\");\n\n // **`v1()` - Generate time-based UUID**\n//\n// Inspired by https://github.com/LiosK/UUID.js\n// and http://docs.python.org/library/uuid.html\n\nvar _nodeId;\n\nvar _clockseq; // Previous uuid creation time\n\n\nvar _lastMSecs = 0;\nvar _lastNSecs = 0; // See https://github.com/uuidjs/uuid for API details\n\nfunction v1(options, buf, offset) {\n  var i = buf && offset || 0;\n  var b = buf || new Array(16);\n  options = options || {};\n  var node = options.node || _nodeId;\n  var clockseq = options.clockseq !== undefined ? options.clockseq : _clockseq; // node and clockseq need to be initialized to random values if they're not\n  // specified.  We do this lazily to minimize issues related to insufficient\n  // system entropy.  See #189\n\n  if (node == null || clockseq == null) {\n    var seedBytes = options.random || (options.rng || _rng_js__WEBPACK_IMPORTED_MODULE_0__[\"default\"])();\n\n    if (node == null) {\n      // Per 4.5, create and 48-bit node id, (47 random bits + multicast bit = 1)\n      node = _nodeId = [seedBytes[0] | 0x01, seedBytes[1], seedBytes[2], seedBytes[3], seedBytes[4], seedBytes[5]];\n    }\n\n    if (clockseq == null) {\n      // Per 4.2.2, randomize (14 bit) clockseq\n      clockseq = _clockseq = (seedBytes[6] << 8 | seedBytes[7]) & 0x3fff;\n    }\n  } // UUID timestamps are 100 nano-second units since the Gregorian epoch,\n  // (1582-10-15 00:00).  JSNumbers aren't precise enough for this, so\n  // time is handled internally as 'msecs' (integer milliseconds) and 'nsecs'\n  // (100-nanoseconds offset from msecs) since unix epoch, 1970-01-01 00:00.\n\n\n  var msecs = options.msecs !== undefined ? options.msecs : Date.now(); // Per 4.2.1.2, use count of uuid's generated during the current clock\n  // cycle to simulate higher resolution clock\n\n  var nsecs = options.nsecs !== undefined ? options.nsecs : _lastNSecs + 1; // Time since last uuid creation (in msecs)\n\n  var dt = msecs - _lastMSecs + (nsecs - _lastNSecs) / 10000; // Per 4.2.1.2, Bump clockseq on clock regression\n\n  if (dt < 0 && options.clockseq === undefined) {\n    clockseq = clockseq + 1 & 0x3fff;\n  } // Reset nsecs if clock regresses (new clockseq) or we've moved onto a new\n  // time interval\n\n\n  if ((dt < 0 || msecs > _lastMSecs) && options.nsecs === undefined) {\n    nsecs = 0;\n  } // Per 4.2.1.2 Throw error if too many uuids are requested\n\n\n  if (nsecs >= 10000) {\n    throw new Error(\"uuid.v1(): Can't create more than 10M uuids/sec\");\n  }\n\n  _lastMSecs = msecs;\n  _lastNSecs = nsecs;\n  _clockseq = clockseq; // Per 4.1.4 - Convert from unix epoch to Gregorian epoch\n\n  msecs += 12219292800000; // `time_low`\n\n  var tl = ((msecs & 0xfffffff) * 10000 + nsecs) % 0x100000000;\n  b[i++] = tl >>> 24 & 0xff;\n  b[i++] = tl >>> 16 & 0xff;\n  b[i++] = tl >>> 8 & 0xff;\n  b[i++] = tl & 0xff; // `time_mid`\n\n  var tmh = msecs / 0x100000000 * 10000 & 0xfffffff;\n  b[i++] = tmh >>> 8 & 0xff;\n  b[i++] = tmh & 0xff; // `time_high_and_version`\n\n  b[i++] = tmh >>> 24 & 0xf | 0x10; // include version\n\n  b[i++] = tmh >>> 16 & 0xff; // `clock_seq_hi_and_reserved` (Per 4.2.2 - include variant)\n\n  b[i++] = clockseq >>> 8 | 0x80; // `clock_seq_low`\n\n  b[i++] = clockseq & 0xff; // `node`\n\n  for (var n = 0; n < 6; ++n) {\n    b[i + n] = node[n];\n  }\n\n  return buf || Object(_bytesToUuid_js__WEBPACK_IMPORTED_MODULE_1__[\"default\"])(b);\n}\n\n/* harmony default export */ __webpack_exports__[\"default\"] = (v1);\n\n//# sourceURL=webpack:///./node_modules/uuid/dist/esm-browser/v1.js?");
-
-/***/ }),
-
-/***/ "./node_modules/uuid/dist/esm-browser/v3.js":
-/*!**************************************************!*\
-  !*** ./node_modules/uuid/dist/esm-browser/v3.js ***!
-  \**************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _v35_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./v35.js */ \"./node_modules/uuid/dist/esm-browser/v35.js\");\n/* harmony import */ var _md5_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./md5.js */ \"./node_modules/uuid/dist/esm-browser/md5.js\");\n\n\nvar v3 = Object(_v35_js__WEBPACK_IMPORTED_MODULE_0__[\"default\"])('v3', 0x30, _md5_js__WEBPACK_IMPORTED_MODULE_1__[\"default\"]);\n/* harmony default export */ __webpack_exports__[\"default\"] = (v3);\n\n//# sourceURL=webpack:///./node_modules/uuid/dist/esm-browser/v3.js?");
-
-/***/ }),
-
-/***/ "./node_modules/uuid/dist/esm-browser/v35.js":
-/*!***************************************************!*\
-  !*** ./node_modules/uuid/dist/esm-browser/v35.js ***!
-  \***************************************************/
-/*! exports provided: DNS, URL, default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"DNS\", function() { return DNS; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"URL\", function() { return URL; });\n/* harmony import */ var _bytesToUuid_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./bytesToUuid.js */ \"./node_modules/uuid/dist/esm-browser/bytesToUuid.js\");\n\n\nfunction uuidToBytes(uuid) {\n  // Note: We assume we're being passed a valid uuid string\n  var bytes = [];\n  uuid.replace(/[a-fA-F0-9]{2}/g, function (hex) {\n    bytes.push(parseInt(hex, 16));\n  });\n  return bytes;\n}\n\nfunction stringToBytes(str) {\n  str = unescape(encodeURIComponent(str)); // UTF8 escape\n\n  var bytes = [];\n\n  for (var i = 0; i < str.length; ++i) {\n    bytes.push(str.charCodeAt(i));\n  }\n\n  return bytes;\n}\n\nvar DNS = '6ba7b810-9dad-11d1-80b4-00c04fd430c8';\nvar URL = '6ba7b811-9dad-11d1-80b4-00c04fd430c8';\n/* harmony default export */ __webpack_exports__[\"default\"] = (function (name, version, hashfunc) {\n  function generateUUID(value, namespace, buf, offset) {\n    if (typeof value === 'string') {\n      value = stringToBytes(value);\n    }\n\n    if (typeof namespace === 'string') {\n      namespace = uuidToBytes(namespace);\n    }\n\n    if (!Array.isArray(value)) {\n      throw TypeError('value must be an array of bytes');\n    }\n\n    if (!Array.isArray(namespace) || namespace.length !== 16) {\n      throw TypeError('namespace must be uuid string or an Array of 16 byte values');\n    } // Per 4.3\n\n\n    var bytes = hashfunc(namespace.concat(value));\n    bytes[6] = bytes[6] & 0x0f | version;\n    bytes[8] = bytes[8] & 0x3f | 0x80;\n\n    if (buf) {\n      offset = offset || 0;\n\n      for (var i = 0; i < 16; ++i) {\n        buf[offset + i] = bytes[i];\n      }\n\n      return buf;\n    }\n\n    return Object(_bytesToUuid_js__WEBPACK_IMPORTED_MODULE_0__[\"default\"])(bytes);\n  } // Function#name is not settable on some platforms (#270)\n\n\n  try {\n    generateUUID.name = name; // eslint-disable-next-line no-empty\n  } catch (err) {} // For CommonJS default export support\n\n\n  generateUUID.DNS = DNS;\n  generateUUID.URL = URL;\n  return generateUUID;\n});\n\n//# sourceURL=webpack:///./node_modules/uuid/dist/esm-browser/v35.js?");
-
-/***/ }),
-
-/***/ "./node_modules/uuid/dist/esm-browser/v4.js":
-/*!**************************************************!*\
-  !*** ./node_modules/uuid/dist/esm-browser/v4.js ***!
-  \**************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _rng_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./rng.js */ \"./node_modules/uuid/dist/esm-browser/rng.js\");\n/* harmony import */ var _bytesToUuid_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./bytesToUuid.js */ \"./node_modules/uuid/dist/esm-browser/bytesToUuid.js\");\n\n\n\nfunction v4(options, buf, offset) {\n  options = options || {};\n  var rnds = options.random || (options.rng || _rng_js__WEBPACK_IMPORTED_MODULE_0__[\"default\"])(); // Per 4.4, set bits for version and `clock_seq_hi_and_reserved`\n\n  rnds[6] = rnds[6] & 0x0f | 0x40;\n  rnds[8] = rnds[8] & 0x3f | 0x80; // Copy bytes to buffer, if provided\n\n  if (buf) {\n    offset = offset || 0;\n\n    for (var i = 0; i < 16; ++i) {\n      buf[offset + i] = rnds[i];\n    }\n\n    return buf;\n  }\n\n  return Object(_bytesToUuid_js__WEBPACK_IMPORTED_MODULE_1__[\"default\"])(rnds);\n}\n\n/* harmony default export */ __webpack_exports__[\"default\"] = (v4);\n\n//# sourceURL=webpack:///./node_modules/uuid/dist/esm-browser/v4.js?");
-
-/***/ }),
-
-/***/ "./node_modules/uuid/dist/esm-browser/v5.js":
-/*!**************************************************!*\
-  !*** ./node_modules/uuid/dist/esm-browser/v5.js ***!
-  \**************************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _v35_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./v35.js */ \"./node_modules/uuid/dist/esm-browser/v35.js\");\n/* harmony import */ var _sha1_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./sha1.js */ \"./node_modules/uuid/dist/esm-browser/sha1.js\");\n\n\nvar v5 = Object(_v35_js__WEBPACK_IMPORTED_MODULE_0__[\"default\"])('v5', 0x50, _sha1_js__WEBPACK_IMPORTED_MODULE_1__[\"default\"]);\n/* harmony default export */ __webpack_exports__[\"default\"] = (v5);\n\n//# sourceURL=webpack:///./node_modules/uuid/dist/esm-browser/v5.js?");
 
 /***/ })
 
 /******/ });
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIndlYnBhY2s6Ly8vd2VicGFjay9ib290c3RyYXAiLCJ3ZWJwYWNrOi8vLy4vSlNFeGNlcmNpc2VzL09PUEV4Y2VyY2lzZXMvRXhjZXJjaXNlMVRTL0NvbnRhY3QvQ29udGFjdC50cyIsIndlYnBhY2s6Ly8vLi9KU0V4Y2VyY2lzZXMvT09QRXhjZXJjaXNlcy9FeGNlcmNpc2UxVFMvSGVscGVyQ2xhc3Nlcy9EYXRlSGFuZGxlci50cyIsIndlYnBhY2s6Ly8vLi9KU0V4Y2VyY2lzZXMvT09QRXhjZXJjaXNlcy9FeGNlcmNpc2UxVFMvSGVscGVyQ2xhc3Nlcy9WYWxpZGF0ZUVtYWlsLnRzIiwid2VicGFjazovLy8uL0pTRXhjZXJjaXNlcy9PT1BFeGNlcmNpc2VzL0V4Y2VyY2lzZTFUUy9QaG9uZUJvb2svUGhvbmVCb29rLnRzIiwid2VicGFjazovLy8uL0pTRXhjZXJjaXNlcy9pbmRleC50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiO1FBQUE7UUFDQTs7UUFFQTtRQUNBOztRQUVBO1FBQ0E7UUFDQTtRQUNBO1FBQ0E7UUFDQTtRQUNBO1FBQ0E7UUFDQTtRQUNBOztRQUVBO1FBQ0E7O1FBRUE7UUFDQTs7UUFFQTtRQUNBO1FBQ0E7OztRQUdBO1FBQ0E7O1FBRUE7UUFDQTs7UUFFQTtRQUNBO1FBQ0E7UUFDQSwwQ0FBMEMsZ0NBQWdDO1FBQzFFO1FBQ0E7O1FBRUE7UUFDQTtRQUNBO1FBQ0Esd0RBQXdELGtCQUFrQjtRQUMxRTtRQUNBLGlEQUFpRCxjQUFjO1FBQy9EOztRQUVBO1FBQ0E7UUFDQTtRQUNBO1FBQ0E7UUFDQTtRQUNBO1FBQ0E7UUFDQTtRQUNBO1FBQ0E7UUFDQSx5Q0FBeUMsaUNBQWlDO1FBQzFFLGdIQUFnSCxtQkFBbUIsRUFBRTtRQUNySTtRQUNBOztRQUVBO1FBQ0E7UUFDQTtRQUNBLDJCQUEyQiwwQkFBMEIsRUFBRTtRQUN2RCxpQ0FBaUMsZUFBZTtRQUNoRDtRQUNBO1FBQ0E7O1FBRUE7UUFDQSxzREFBc0QsK0RBQStEOztRQUVySDtR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Q0FBQztBQUM5QixTQUFTLENBQUMsWUFBWSxFQUFFLENBQUMiLCJmaWxlIjoiYnVuZGxlLmpzIiwic291cmNlc0NvbnRlbnQiOlsiIFx0Ly8gVGhlIG1vZHVsZSBjYWNoZVxuIFx0dmFyIGluc3RhbGxlZE1vZHVsZXMgPSB7fTtcblxuIFx0Ly8gVGhlIHJlcXVpcmUgZnVuY3Rpb25cbiBcdGZ1bmN0aW9uIF9fd2VicGFja19yZXF1aXJlX18obW9kdWxlSWQpIHtcblxuIFx0XHQvLyBDaGVjayBpZiBtb2R1bGUgaXMgaW4gY2FjaGVcbiBcdFx0aWYoaW5zdGFsbGVkTW9kdWxlc1ttb2R1bGVJZF0pIHtcbiBcdFx0XHRyZXR1cm4gaW5zdGFsbGVkTW9kdWxlc1ttb2R1bGVJZF0uZXhwb3J0cztcbiBcdFx0fVxuIFx0XHQvLyBDcmVhdGUgYSBuZXcgbW9kdWxlIChhbmQgcHV0IGl0IGludG8gdGhlIGNhY2hlKVxuIFx0XHR2YXIgbW9kdWxlID0gaW5zdGFsbGVkTW9kdWxlc1ttb2R1bGVJZF0gPSB7XG4gXHRcdFx0aTogbW9kdWxlSWQsXG4gXHRcdFx0bDogZmFsc2UsXG4gXHRcdFx0ZXhwb3J0czoge31cbiBcdFx0fTtcblxuIFx0XHQvLyBFeGVjdXRlIHRoZSBtb2R1bGUgZnVuY3Rpb25cbiBcdFx0bW9kdWxlc1ttb2R1bGVJZF0uY2FsbChtb2R1bGUuZXhwb3J0cywgbW9kdWxlLCBtb2R1bGUuZXhwb3J0cywgX193ZWJwYWNrX3JlcXVpcmVfXyk7XG5cbiBcdFx0Ly8gRmxhZyB0aGUgbW9kdWxlIGFzIGxvYWRlZFxuIFx0XHRtb2R1bGUubCA9IHRydWU7XG5cbiBcdFx0Ly8gUmV0dXJuIHRoZSBleHBvcnRzIG9mIHRoZSBtb2R1bGVcbiBcdFx0cmV0dXJuIG1vZHVsZS5leHBvcnRzO1xuIFx0fVxuXG5cbiBcdC8vIGV4cG9zZSB0aGUgbW9kdWxlcyBvYmplY3QgKF9fd2VicGFja19tb2R1bGVzX18pXG4gXHRfX3dlYnBhY2tfcmVxdWlyZV9fLm0gPSBtb2R1bGVzO1xuXG4gXHQvLyBleHBvc2UgdGhlIG1vZHVsZSBjYWNoZVxuIFx0X193ZWJwYWNrX3JlcXVpcmVfXy5jID0gaW5zdGFsbGVkTW9kdWxlcztcblxuIFx0Ly8gZGVmaW5lIGdldHRlciBmdW5jdGlvbiBmb3IgaGFybW9ueSBleHBvcnRzXG4gXHRfX3dlYnBhY2tfcmVxdWlyZV9fLmQgPSBmdW5jdGlvbihleHBvcnRzLCBuYW1lLCBnZXR0ZXIpIHtcbiBcdFx0aWYoIV9fd2VicGFja19yZXF1aXJlX18ubyhleHBvcnRzLCBuYW1lKSkge1xuIFx0XHRcdE9iamVjdC5kZWZpbmVQcm9wZXJ0eShleHBvcnRzLCBuYW1lLCB7IGVudW1lcmFibGU6IHRydWUsIGdldDogZ2V0dGVyIH0pO1xuIFx0XHR9XG4gXHR9O1xuXG4gXHQvLyBkZWZpbmUgX19lc01vZHVsZSBvbiBleHBvcnRzXG4gXHRfX3dlYnBhY2tfcmVxdWlyZV9fLnIgPSBmdW5jdGlvbihleHBvcnRzKSB7XG4gXHRcdGlmKHR5cGVvZiBTeW1ib2wgIT09ICd1bmRlZmluZWQnICYmIFN5bWJvbC50b1N0cmluZ1RhZykge1xuIFx0XHRcdE9iamVjdC5kZWZpbmVQcm9wZXJ0eShleHBvcnRzLCBTeW1ib2wudG9TdHJpbmdUYWcsIHsgdmFsdWU6ICdNb2R1bGUnIH0pO1xuIFx0XHR9XG4gXHRcdE9iamVjdC5kZWZpbmVQcm9wZXJ0eShleHBvcnRzLCAnX19lc01vZHVsZScsIHsgdmFsdWU6IHRydWUgfSk7XG4gXHR9O1xuXG4gXHQvLyBjcmVhdGUgYSBmYWtlIG5hbWVzcGFjZSBvYmplY3RcbiBcdC8vIG1vZGUgJiAxOiB2YWx1ZSBpcyBhIG1vZHVsZSBpZCwgcmVxdWlyZSBpdFxuIFx0Ly8gbW9kZSAmIDI6IG1lcmdlIGFsbCBwcm9wZXJ0aWVzIG9mIHZhbHVlIGludG8gdGhlIG5zXG4gXHQvLyBtb2RlICYgNDogcmV0dXJuIHZhbHVlIHdoZW4gYWxyZWFkeSBucyBvYmplY3RcbiBcdC8vIG1vZGUgJiA4fDE6IGJlaGF2ZSBsaWtlIHJlcXVpcmVcbiBcdF9fd2VicGFja19yZXF1aXJlX18udCA9IGZ1bmN0aW9uKHZhbHVlLCBtb2RlKSB7XG4gXHRcdGlmKG1vZGUgJiAxKSB2YWx1ZSA9IF9fd2VicGFja19yZXF1aXJlX18odmFsdWUpO1xuIFx0XHRpZihtb2RlICYgOCkgcmV0dXJuIHZhbHVlO1xuIFx0XHRpZigobW9kZSAmIDQpICYmIHR5cGVvZiB2YWx1ZSA9PT0gJ29iamVjdCcgJiYgdmFsdWUgJiYgdmFsdWUuX19lc01vZHVsZSkgcmV0dXJuIHZhbHVlO1xuIFx0XHR2YXIgbnMgPSBPYmplY3QuY3JlYXRlKG51bGwpO1xuIFx0XHRfX3dlYnBhY2tfcmVxdWlyZV9fLnIobnMpO1xuIFx0XHRPYmplY3QuZGVmaW5lUHJvcGVydHkobnMsICdkZWZhdWx0JywgeyBlbnVtZXJhYmxlOiB0cnVlLCB2YWx1ZTogdmFsdWUgfSk7XG4gXHRcdGlmKG1vZGUgJiAyICYmIHR5cGVvZiB2YWx1ZSAhPSAnc3RyaW5nJykgZm9yKHZhciBrZXkgaW4gdmFsdWUpIF9fd2VicGFja19yZXF1aXJlX18uZChucywga2V5LCBmdW5jdGlvbihrZXkpIHsgcmV0dXJuIHZhbHVlW2tleV07IH0uYmluZChudWxsLCBrZXkpKTtcbiBcdFx0cmV0dXJuIG5zO1xuIFx0fTtcblxuIFx0Ly8gZ2V0RGVmYXVsdEV4cG9ydCBmdW5jdGlvbiBmb3IgY29tcGF0aWJpbGl0eSB3aXRoIG5vbi1oYXJtb255IG1vZHVsZXNcbiBcdF9fd2VicGFja19yZXF1aXJlX18ubiA9IGZ1bmN0aW9uKG1vZHVsZSkge1xuIFx0XHR2YXIgZ2V0dGVyID0gbW9kdWxlICYmIG1vZHVsZS5fX2VzTW9kdWxlID9cbiBcdFx0XHRmdW5jdGlvbiBnZXREZWZhdWx0KCkgeyByZXR1cm4gbW9kdWxlWydkZWZhdWx0J107IH0gOlxuIFx0XHRcdGZ1bmN0aW9uIGdldE1vZHVsZUV4cG9ydHMoKSB7IHJldHVybiBtb2R1bGU7IH07XG4gXHRcdF9fd2VicGFja19yZXF1aXJlX18uZChnZXR0ZXIsICdhJywgZ2V0dGVyKTtcbiBcdFx0cmV0dXJuIGdldHRlcjtcbiBcdH07XG5cbiBcdC8vIE9iamVjdC5wcm90b3R5cGUuaGFzT3duUHJvcGVydHkuY2FsbFxuIFx0X193ZWJwYWNrX3JlcXVpcmVfXy5vID0gZnVuY3Rpb24ob2JqZWN0LCBwcm9wZXJ0eSkgeyByZXR1cm4gT2JqZWN0LnByb3RvdHlwZS5oYXNPd25Qcm9wZXJ0eS5jYWxsKG9iamVjdCwgcHJvcGVydHkpOyB9O1xuXG4gXHQvLyBfX3dlYnBhY2tfcHVibGljX3BhdGhfX1xuIFx0X193ZWJwYWNrX3JlcXVpcmVfXy5wID0gXCJcIjtcblxuXG4gXHQvLyBMb2FkIGVudHJ5IG1vZHVsZSBhbmQgcmV0dXJuIGV4cG9ydHNcbiBcdHJldHVybiBfX3dlYnBhY2tfcmVxdWlyZV9fKF9fd2VicGFja19yZXF1aXJlX18ucyA9IFwiLi9KU0V4Y2VyY2lzZXMvaW5kZXgudHNcIik7XG4iLCJpbXBvcnQgeyBEYXRlSGFuZGxlciB9IGZyb20gXCIuLi9IZWxwZXJDbGFzc2VzL0RhdGVIYW5kbGVyXCI7XHJcbmltcG9ydCB7IHZhbGlkYXRlRW1haWwgfSBmcm9tIFwiLi4vSGVscGVyQ2xhc3Nlcy9WYWxpZGF0ZUVtYWlsXCI7XHJcbmltcG9ydCB7IElDb250YWN0IH0gZnJvbSBcIi4uL0ludGVyZmFjZXMvQ29udGFjdC9JQ29udGFjdFwiO1xyXG5cclxuZXhwb3J0IGNsYXNzIENvbnRhY3QgaW1wbGVtZW50cyBJQ29udGFjdCB7XHJcbiAgICBwcml2YXRlIF9kYXRlSGFuZGxlcjogRGF0ZUhhbmRsZXI7XHJcbiAgICBmaXJzdE5hbWU6IHN0cmluZztcclxuICAgIHN1cm5hbWU6IHN0cmluZztcclxuICAgIGVtYWlsOiBzdHJpbmc7XHJcbiAgICBtb2RpZnlEYXRlOiBEYXRlO1xyXG4gICAgXHJcbiAgICBjb25zdHJ1Y3RvcihmaXJzdE5hbWUgOiBzdHJpbmcsIHN1cm5hbWUgOiBzdHJpbmcsIGVtYWlsIDogc3RyaW5nKSB7XHJcbiAgICAgICAgdmFsaWRhdGVFbWFpbChlbWFpbCk7XHJcblxyXG4gICAgICAgIGlmICghZmlyc3ROYW1lKSB7XHJcbiAgICAgICAgICB0aHJvdyBuZXcgRXJyb3IoXCJGaXJzdCBuYW1lIGhhcyB0byBoYXZlIGEgdmFsdWVcIik7XHJcbiAgICAgICAgfVxyXG5cclxuICAgICAgICB0aGlzLmZpcnN0TmFtZSA9IGZpcnN0TmFtZTtcclxuICAgICAgICB0aGlzLnN1cm5hbWUgPSBzdXJuYW1lO1xyXG4gICAgICAgIHRoaXMuZW1haWwgPSBlbWFpbDtcclxuICAgICAgICB0aGlzLl9kYXRlSGFuZGxlciA9IG5ldyBEYXRlSGFuZGxlcigpO1xyXG4gICAgICAgIHRoaXMubW9kaWZ5RGF0ZSA9IHRoaXMuX2RhdGVIYW5kbGVyLnRvZGF5c0RhdGUoKTtcclxuICAgIH1cclxuICAgIFxyXG4gICAgZ2V0IGZ1bGxOYW1lKCkgOiBzdHJpbmcge1xyXG4gICAgICAgIHJldHVybiBgJHt0aGlzLmZpcnN0TmFtZX0gJHt0aGlzLnN1cm5hbWV9YDtcclxuICAgIH1cclxuXHJcbiAgICB1cGRhdGU8SUNvbnRhY3REYXRhPihzb3VyY2U6IElDb250YWN0RGF0YSk6IHZvaWQge1xyXG4gICAgICAgIE9iamVjdC5hc3NpZ24odGhpcywgc291cmNlKTsgXHJcbiAgICAgICAgdGhpcy5tb2RpZnlEYXRlID0gdGhpcy5fZGF0ZUhhbmRsZXIudG9kYXlzRGF0ZSgpOyAgICBcclxuICAgIH1cclxuXHJcbiAgICBzaG93KCk6IHZvaWQge1xyXG4gICAgICAgIGNvbnNvbGUubG9nKGBOYW1lOiAke3RoaXMuZnVsbE5hbWV9LCBlbWFpbDogJHt0aGlzLmVtYWlsfWApO1xyXG4gICAgfVxyXG5cclxuICAgIHNob3dBbGxJbmZvKCk6IHZvaWQge1xyXG4gICAgICAgIGNvbnNvbGUubG9nKGBGaXJzdCBuYW1lOiAke3RoaXMuZmlyc3ROYW1lfVxyXG4gICAgICAgIFN1cm5hbWU6ICR7dGhpcy5zdXJuYW1lfVxyXG4gICAgICAgIEUtbWFpbDogJHt0aGlzLmVtYWlsfVxyXG4gICAgICAgIExhc3QgbW9kaWZpZWQ6ICR7dGhpcy5fZGF0ZUhhbmRsZXIuZm9ybWF0RGF0ZSh0aGlzLm1vZGlmeURhdGUpfWApO1xyXG4gICAgfVxyXG59XHJcblxyXG5cclxuIiwiY2xhc3MgRGF0ZUhhbmRsZXIge1xyXG4gICAgdG9kYXlzRGF0ZSgpIDogRGF0ZSB7XHJcbiAgICAgIHJldHVybiBuZXcgRGF0ZSgpO1xyXG4gICAgfVxyXG4gIFxyXG4gICAgZm9ybWF0RGF0ZShkYXRlIDogRGF0ZSkgOiBzdHJpbmcge1xyXG4gIFxyXG4gICAgY29uc3QgZnVsbERhdGUgOiBzdHJpbmcgPSBgJHtkYXRlLmdldERhdGUoKX0tJHtcclxuICAgICAgICBkYXRlLmdldE1vbnRoKCkgKyAxXHJcbiAgICAgIH0tJHtkYXRlLmdldEZ1bGxZZWFyKCl9YDtcclxuICBcclxuICAgICAgY29uc3QgdGltZSA6IHN0cmluZyA9IGAke2RhdGUuZ2V0SG91cnMoKX06JHtkYXRlLmdldE1pbnV0ZXMoKX06JHtkYXRlLmdldFNlY29uZHMoKX1gO1xyXG4gIFxyXG4gICAgICByZXR1cm4gYCR7ZnVsbERhdGV9ICR7dGltZX1gO1xyXG4gICAgfVxyXG4gIH1cclxuICBcclxuICBleHBvcnQgeyBEYXRlSGFuZGxlciB9OyIsImV4cG9ydCBmdW5jdGlvbiB2YWxpZGF0ZUVtYWlsKGVtYWlsIDogc3RyaW5nKSA6IHZvaWQge1xyXG4gICAgY29uc3QgZW1haWxSZWdleCA9IC9eW2EtekEtWjAtOS4hIyQlJicqKy89P15fYHt8fX4tXStAW2EtekEtWjAtOV0oPzpbYS16QS1aMC05LV17MCw2MX1bYS16QS1aMC05XSk/KD86XFwuW2EtekEtWjAtOV0oPzpbYS16QS1aMC05LV17MCw2MX1bYS16QS1aMC05XSk/KSokL2k7XHJcbiAgICAgaWYoIWVtYWlsUmVnZXgudGVzdChlbWFpbCkpIHtcclxuICAgICAgICAgdGhyb3cgbmV3IEVycm9yKFwiUHJvdmlkZWQgdmFsdWUgaXMgbm90IGEgdmFsaWQgZS1tYWlsXCIpO1xyXG4gICAgIH07XHJcbn0iLCJpbXBvcnQgeyBJQ29udGFjdEdyb3VwRGF0YSB9IGZyb20gXCIuLi9JbnRlcmZhY2VzL0NvbnRhY3RHcm91cC9JQ29udGFjdEdyb3VwRGF0YVwiO1xyXG5pbXBvcnQgeyBJQ29udGFjdCB9IGZyb20gXCIuLi9JbnRlcmZhY2VzL0NvbnRhY3QvSUNvbnRhY3RcIjtcclxuaW1wb3J0IHsgSUNvbnRhY3RHcm91cCB9IGZyb20gXCIuLi9JbnRlcmZhY2VzL0NvbnRhY3RHcm91cC9JQ29udGFjdEdyb3VwXCI7XHJcbmltcG9ydCB7IElDb250YWN0RGF0YSB9IGZyb20gXCIuLi9JbnRlcmZhY2VzL0NvbnRhY3QvSUNvbnRhY3REYXRhXCI7XHJcblxyXG5leHBvcnQgY2xhc3MgUGhvbmVCb29rIHtcclxuICAgIHByaXZhdGUgX2NvbnRhY3RMaXN0IDogQXJyYXk8SUNvbnRhY3Q+O1xyXG4gICAgcHJpdmF0ZSBfY29udGFjdEdyb3VwTGlzdCA6IEFycmF5PElDb250YWN0R3JvdXA+O1xyXG5cclxuICAgIGNvbnN0cnVjdG9yKCkge1xyXG4gICAgICAgIHRoaXMuX2NvbnRhY3RMaXN0ID0gbmV3IEFycmF5PElDb250YWN0PigpO1xyXG4gICAgICAgIHRoaXMuX2NvbnRhY3RHcm91cExpc3QgPSBuZXcgQXJyYXk8SUNvbnRhY3RHcm91cD4oKTtcclxuICAgIH1cclxuXHJcbiAgICAgICAgLy9IYW5kbGUgY29uYWN0c1xyXG4gICAgYWRkQ29udGFjdChjb250YWN0IDogSUNvbnRhY3QpIDogdm9pZCB7XHJcbiAgICAgICAgdGhpcy5fY29udGFjdExpc3QucHVzaChjb250YWN0KTtcclxuICAgIH1cclxuXHJcbiAgICByZW1vdmVDb250YWN0KGNvbnRhY3QgOiBJQ29udGFjdCkgOiB2b2lkIHtcclxuICAgICAgICB0aGlzLl9yZW1vdmVGcm9tQXJyYXkoY29udGFjdCwgdGhpcy5fY29udGFjdExpc3QpO1xyXG4gICAgfVxyXG5cclxuICAgIHVwZGF0ZUNvbnRhY3QoY29udGFjdCA6IElDb250YWN0LCBuZXdDb250YWN0RGF0YSA6IElDb250YWN0RGF0YSkgOiB2b2lkIHtcclxuICAgICAgICBjb250YWN0LnVwZGF0ZShuZXdDb250YWN0RGF0YSk7XHJcbiAgICB9XHJcblxyXG4gICAgc2hvd0NvbnRhY3QoY29udGFjdCA6IElDb250YWN0KSA6IHZvaWQge1xyXG4gICAgICAgIGNvbnRhY3Quc2hvd0FsbEluZm8oKTtcclxuICAgIH1cclxuXHJcbiAgICAvL0hhbmRsZSBjb250YWN0cyBncm91cFxyXG4gICAgYWRkQ29udGFjdEdyb3VwKGdyb3VwIDogSUNvbnRhY3RHcm91cCkgOiB2b2lkIHtcclxuICAgICAgICB0aGlzLl9jb250YWN0R3JvdXBMaXN0LnB1c2goZ3JvdXApO1xyXG4gICAgfVxyXG5cclxuICAgIGFkZENvbnRhY3RUb0dyb3VwKGNvbnRhY3QgOiBJQ29udGFjdCwgZ3JvdXAgOiBJQ29udGFjdEdyb3VwKSA6IHZvaWQge1xyXG4gICAgICAgIGdyb3VwLmFkZChjb250YWN0KTtcclxuICAgIH1cclxuXHJcbiAgICByZW1vdmVDb250YWN0RnJvbUdyb3VwKGNvbnRhY3QgOiBJQ29udGFjdCwgZ3JvdXAgOiBJQ29udGFjdEdyb3VwKSA6IHZvaWQge1xyXG4gICAgICAgIGdyb3VwLnJlbW92ZShjb250YWN0KTtcclxuICAgIH1cclxuXHJcbiAgICBzaG93Q29udGFjdEdyb3VwKGdyb3VwIDogSUNvbnRhY3RHcm91cCkgOiB2b2lkIHtcclxuICAgICAgICBncm91cC5zaG93QWxsSW5mbygpO1xyXG4gICAgfVxyXG5cclxuICAgIHVwZGF0ZUNvbnRhY3RHcm91cChncm91cCA6IElDb250YWN0R3JvdXAsIG5ld0dyb3VwRGF0YSA6IElDb250YWN0R3JvdXBEYXRhKSA6IHZvaWQge1xyXG4gICAgICAgIGdyb3VwLnVwZGF0ZShuZXdHcm91cERhdGEpO1xyXG4gICAgfVxyXG5cclxuICAgIHJlbW92ZUNvbnRhY3RHcm91cChncm91cCA6IElDb250YWN0R3JvdXApIDogdm9pZCB7XHJcbiAgICAgICAgdGhpcy5fcmVtb3ZlRnJvbUFycmF5KGdyb3VwLCB0aGlzLl9jb250YWN0R3JvdXBMaXN0KTtcclxuICAgIH1cclxuXHJcbiAgICAvL1Nob3cgbGlzdHNcclxuICAgIHNob3dDb250YWN0cygpIDogdm9pZCB7XHJcbiAgICAgICAgdGhpcy5fc29ydENvbnRhY3RzQWxwaGFiZXRpY2FsbHkoKTtcclxuICAgICAgICB0aGlzLl9jb250YWN0TGlzdC5mb3JFYWNoKChjb250YWN0KSA9PiBjb250YWN0LnNob3coKSk7XHJcbiAgICB9XHJcblxyXG4gICAgc2hvd0dyb3VwcygpIDogdm9pZCB7XHJcbiAgICAgICAgdGhpcy5fY29udGFjdEdyb3VwTGlzdC5mb3JFYWNoKChncm91cCkgPT4gZ3JvdXAuc2hvdygpKTtcclxuICAgIH1cclxuXHJcbiAgICAvL0ZpbHRlclxyXG4gICAgc2hvd0ZpbHRlcmVkQnlQaHJhc2UocGhyYXNlIDogc3RyaW5nKSA6IHZvaWQge1xyXG4gICAgICAgIGlmIChwaHJhc2UpIHtcclxuICAgICAgICAgIGNvbnN0IGZpbHRlcmVkQ29udGFjdExpc3QgPSB0aGlzLmZpbHRlckJ5UGhyYXNlKHBocmFzZSk7XHJcbiAgICBcclxuICAgICAgICAgIGZpbHRlcmVkQ29udGFjdExpc3QuZm9yRWFjaChjb250YWN0ID0+IGNvbnRhY3Quc2hvdygpKTtcclxuICAgICAgICB9XHJcbiAgICAgIH1cclxuICAgIFxyXG4gICAgICBmaWx0ZXJCeVBocmFzZShwaHJhc2UgOiBzdHJpbmcpIDogQXJyYXk8SUNvbnRhY3Q+IHsgICAgXHJcbiAgICAgICAgY29uc3QgcGhyYXNlTG93ZXJDYXNlID0gcGhyYXNlLnRvTG93ZXJDYXNlKCk7XHJcblxyXG4gICAgICAgIHJldHVybiB0aGlzLl9jb250YWN0TGlzdC5maWx0ZXIoY29udGFjdCA9PlxyXG4gICAgICAgICAgY29udGFjdC5mdWxsTmFtZS50b0xvd2VyQ2FzZSgpLmluY2x1ZGVzKHBocmFzZUxvd2VyQ2FzZSlcclxuICAgICAgICApO1xyXG4gICAgICB9XHJcblxyXG4gICAgLy9Tb3J0XHJcbiAgICBfc29ydENvbnRhY3RzQWxwaGFiZXRpY2FsbHkoKSA6IHZvaWQge1xyXG4gICAgICAgIHRoaXMuX2NvbnRhY3RMaXN0ID0gdGhpcy5fY29udGFjdExpc3Quc29ydChcclxuICAgICAgICB0aGlzLl9zb3J0Q29udGFjdHNBbHBoYWJldGljYWxseUxvZ2ljXHJcbiAgICAgICAgKTtcclxuICAgIH1cclxuXHJcbiAgICBfc29ydENvbnRhY3RzQWxwaGFiZXRpY2FsbHlMb2dpYyhjb250YWN0QSA6IElDb250YWN0LCBjb250YWN0QiA6IElDb250YWN0KSA6IG51bWJlciB7XHJcbiAgICAgICAgY29uc3QgY29udGFjdEFOYW1lID0gY29udGFjdEEuZnVsbE5hbWUudG9VcHBlckNhc2UoKTtcclxuICAgICAgICBjb25zdCBjb250YWN0Qk5hbWUgPSBjb250YWN0Qi5mdWxsTmFtZS50b1VwcGVyQ2FzZSgpO1xyXG5cclxuICAgICAgICBpZiAoY29udGFjdEFOYW1lIDwgY29udGFjdEJOYW1lKSB7XHJcbiAgICAgICAgcmV0dXJuIC0xO1xyXG4gICAgICAgIH1cclxuXHJcbiAgICAgICAgaWYgKGNvbnRhY3RBTmFtZSA+IGNvbnRhY3RCTmFtZSkge1xyXG4gICAgICAgIHJldHVybiAxO1xyXG4gICAgICAgIH1cclxuXHJcbiAgICAgICAgcmV0dXJuIDA7XHJcbiAgICB9XHJcblxyXG4gICAgX3JlbW92ZUZyb21BcnJheTxUIGV4dGVuZHMgSUNvbnRhY3RHcm91cCB8IElDb250YWN0RGF0YT4oZWxlbWVudDogVCwgYXJyYXkgOiBBcnJheTxUPikgOiB2b2lkIHtcclxuICAgICAgICBjb25zdCBpbmRleCA9IGFycmF5LmluZGV4T2YoZWxlbWVudCk7XHJcblxyXG4gICAgICAgIGlmIChpbmRleCA+IC0xKSB7XHJcbiAgICAgICAgYXJyYXkuc3BsaWNlKGluZGV4LCAxKTtcclxuICAgICAgICB9XHJcbiAgICB9XHJcblxyXG59IiwiaW1wb3J0IHsgUGhvbmVCb29rIH0gZnJvbSBcIi4vT09QRXhjZXJjaXNlcy9FeGNlcmNpc2UxVFMvUGhvbmVCb29rL1Bob25lQm9va1wiXHJcbmltcG9ydCB7IENvbnRhY3QgfSBmcm9tIFwiLi9PT1BFeGNlcmNpc2VzL0V4Y2VyY2lzZTFUUy9Db250YWN0L0NvbnRhY3RcIjtcclxuXHJcbmNvbnN0IHBob25lQm9vayA9IG5ldyBQaG9uZUJvb2soKTtcclxuXHJcblxyXG5sZXQgY29udGFjdDEgPSBuZXcgQ29udGFjdChcIkFnYVwiLCBcIlNvZXNrXCIsIFwiYXNlcmhhQGdtYWlsLmNvbVwiKTtcclxuXHJcbnBob25lQm9vay5hZGRDb250YWN0KGNvbnRhY3QxKTtcclxucGhvbmVCb29rLmFkZENvbnRhY3QobmV3IENvbnRhY3QoXCJNYXJjXCIsIFwiTG9rZXNcIiwgXCJtYXJjbG9zQGdtYWlsLmNvbVwiKSk7XHJcbnBob25lQm9vay5hZGRDb250YWN0KG5ldyBDb250YWN0KFwiU2lkXCIsIFwiTWVqZXJcIiwgXCJzaWRtZWpAZ21haWwuY29tXCIpKTtcclxucGhvbmVCb29rLmFkZENvbnRhY3QobmV3IENvbnRhY3QoXCJLYXNsZXJcIiwgXCJQb3drZXNcIiwgXCJrYXNsZXJwb3drZXNAZ21haWwuY29tXCIpKTtcclxuXHJcbnBob25lQm9vay5zaG93Q29udGFjdHMoKTtcclxuXHJcbnBob25lQm9vay51cGRhdGVDb250YWN0KGNvbnRhY3QxLCB7Zmlyc3ROYW1lOiBcIkFkZXJzblwiLCBzdXJuYW1lOiBcIk1BcnNvZWxcIiwgZW1haWw6IFwiYXNlcmhhQGdtYWlsLmNvbVwifSk7XHJcbmNvbnNvbGUubG9nKFwidXBkYXRlIENPTlRBQ1RcIik7XHJcbnBob25lQm9vay5zaG93Q29udGFjdHMoKTsiXSwic291cmNlUm9vdCI6IiJ9
