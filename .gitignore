@@ -358,3 +358,4 @@ MigrationBackup/
 *.code-workspace
 
 /**/*.js
+*.js.map
