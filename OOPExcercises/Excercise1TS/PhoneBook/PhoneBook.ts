@@ -64,6 +64,23 @@ export class PhoneBook {
         this._contactGroupList.forEach((group) => group.show());
     }
 
+    //Filter
+    showFilteredByPhrase(phrase : string) {
+        if (phrase) {
+          const filteredContactList = this.filterByPhrase(phrase);
+    
+          filteredContactList.forEach((contact) => contact.show());
+        }
+      }
+    
+      filterByPhrase(phrase : string) {    
+        const phraseLowerCase = phrase.toLowerCase();
+
+        return this._contactList.filter(contact =>
+          contact.fullName.toLowerCase().includes(phraseLowerCase)
+        );
+      }
+
     //Sort
     _sortContactsAlphabetically() : void {
         this._contactList = this._contactList.sort(

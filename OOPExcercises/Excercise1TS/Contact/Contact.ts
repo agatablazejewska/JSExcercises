@@ -1,4 +1,3 @@
-
 import { DateHandler } from "../HelperClasses/DateHandler";
 import { validateEmail } from "../HelperClasses/ValidateEmail";
 import { IContact } from "../Interfaces/Contact/IContact";
@@ -44,9 +43,5 @@ export class Contact implements IContact {
         Last modified: ${this._dateHandler.formatDate(this.modifyDate)}`);
     }
 }
-
-let contact = new Contact("Agata", "Sok", "aga@gmail.com");
-
-contact.update({firstName: "Maria", surname: "Misia", email: "aga@gmail.com"});
 
 

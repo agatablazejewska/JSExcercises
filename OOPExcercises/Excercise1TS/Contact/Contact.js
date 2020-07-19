@@ -33,6 +33,4 @@ class Contact {
     }
 }
 exports.Contact = Contact;
-let contact = new Contact("Agata", "Sok", "aga@gmail.com");
-contact.update({ firstName: "Maria", surname: "Misia", email: "aga@gmail.com" });
 //# sourceMappingURL=Contact.js.map
