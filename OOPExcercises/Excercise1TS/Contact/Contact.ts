@@ -1,10 +1,9 @@
 import uuid4 from "uuid4";
-import { DateFormatter } from "../HelperClasses/DateFormatter";
-import { validateEmail } from "../HelperClasses/ValidateEmail";
+import { formatDate } from "../Helpers/HelperFunctions";
+import { validateEmail } from "../Helpers/HelperFunctions";
 import { IContact } from "../Interfaces/Contact/IContact";
 
 export class Contact implements IContact {
-    private _dateFormatter: DateFormatter;
     id: string;
     firstName: string;
     surname: string;
@@ -22,7 +21,6 @@ export class Contact implements IContact {
         this.firstName = firstName;
         this.surname = surname;
         this.email = email;
-        this._dateFormatter = new DateFormatter();
         this.modifyDate = new Date();
     }
     
@@ -43,7 +41,7 @@ export class Contact implements IContact {
         console.log(`First name: ${this.firstName}
         Surname: ${this.surname}
         E-mail: ${this.email}
-        Last modified: ${this._dateFormatter.formatDate(this.modifyDate)}`);
+        Last modified: ${formatDate(this.modifyDate)}`);
     }
 }
 
