@@ -1,4 +1,4 @@
-import { IUpdatableAndReadable } from "../Common/IUpdatableAndReadable";
+import { IUpdatableAndReadable } from "../../../Common/IUpdatableAndReadable";
 import { IContact } from "../Contact/IContact";
 import { IContactGroupData } from "./IContactGroupData";
 
