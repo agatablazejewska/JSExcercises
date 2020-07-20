@@ -1,9 +1,9 @@
-import { DateHandler } from "../HelperClasses/DateHandler";
+import { DateFormatter } from "../HelperClasses/DateFormatter";
 import { validateEmail } from "../HelperClasses/ValidateEmail";
 import { IContact } from "../Interfaces/Contact/IContact";
 
 export class Contact implements IContact {
-    private _dateHandler: DateHandler;
+    private _dateFormatter: DateFormatter;
     firstName: string;
     surname: string;
     email: string;
@@ -19,17 +19,17 @@ export class Contact implements IContact {
         this.firstName = firstName;
         this.surname = surname;
         this.email = email;
-        this._dateHandler = new DateHandler();
-        this.modifyDate = this._dateHandler.todaysDate();
+        this._dateFormatter = new DateHandler();
+        this.modifyDate = new Date();
     }
     
     get fullName() : string {
         return `${this.firstName} ${this.surname}`;
     }
 
-    update<IContactDataOptional>(source:IContactDataOptional): void {
+    update<IContactDataOptional>(source : IContactDataOptional): void {
         Object.assign(this, source); 
-        this.modifyDate = this._dateHandler.todaysDate();    
+        this.modifyDate = new Date();  
     }
 
     show(): void {
@@ -40,7 +40,7 @@ export class Contact implements IContact {
         console.log(`First name: ${this.firstName}
         Surname: ${this.surname}
         E-mail: ${this.email}
-        Last modified: ${this._dateHandler.formatDate(this.modifyDate)}`);
+        Last modified: ${this._dateFormatter.formatDate(this.modifyDate)}`);
     }
 }
 

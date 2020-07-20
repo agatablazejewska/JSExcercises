@@ -1,8 +1,4 @@
-class DateHandler {
-    todaysDate() : Date {
-      return new Date();
-    }
-  
+class DateFormatter {
     formatDate(date : Date) : string {
   
     const fullDate : string = `${date.getDate()}-${
@@ -15,4 +11,4 @@ class DateHandler {
     }
   }
   
-  export { DateHandler };
+  export { DateFormatter };
