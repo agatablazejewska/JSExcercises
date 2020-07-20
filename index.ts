@@ -13,6 +13,6 @@ phoneBook.addContact(new Contact("Kasler", "Powkes", "kaslerpowkes@gmail.com"));
 
 phoneBook.showContacts();
 
-phoneBook.updateContact(contact1, {firstName: "Adersn", surname: "MArsoel", email: "aserha@gmail.com"});
+phoneBook.updateContact(contact1, {firstName: "Adersn", surname: "MArsoel"});
 console.log("update CONTACT");
 phoneBook.showContacts();

@@ -1,6 +1,8 @@
 import { IUpdatableAndReadable } from "../../../Common/IUpdatableAndReadable";
-import { IContactData } from "./IContactData";
 
-export interface IContact extends IUpdatableAndReadable, IContactData {
+export interface IContact extends IUpdatableAndReadable {
+    readonly firstName : string;
+    readonly surname: string;
+    readonly email : string;
     readonly fullName : string;
 }

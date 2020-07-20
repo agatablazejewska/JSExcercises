@@ -27,7 +27,7 @@ export class Contact implements IContact {
         return `${this.firstName} ${this.surname}`;
     }
 
-    update<IContactData>(source: IContactData): void {
+    update<IContactDataOptional>(source:IContactDataOptional): void {
         Object.assign(this, source); 
         this.modifyDate = this._dateHandler.todaysDate();    
     }

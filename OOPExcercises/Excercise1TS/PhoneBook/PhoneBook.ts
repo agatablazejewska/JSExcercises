@@ -1,7 +1,7 @@
-import { IContactGroupData } from "../Interfaces/ContactGroup/IContactGroupData";
+import { IContactGroupDataOptional } from "../Interfaces/ContactGroup/IContactGroupDataOptional";
 import { IContact } from "../Interfaces/Contact/IContact";
 import { IContactGroup } from "../Interfaces/ContactGroup/IContactGroup";
-import { IContactData } from "../Interfaces/Contact/IContactData";
+import { IContactDataOptional } from "../Interfaces/Contact/IContactDataOptional";
 
 export class PhoneBook {
     private _contactList : Array<IContact>;
@@ -21,7 +21,7 @@ export class PhoneBook {
         this._removeFromArray(contact, this._contactList);
     }
 
-    updateContact(contact : IContact, newContactData : IContactData) : void {
+    updateContact(contact : IContact, newContactData : IContactDataOptional) : void {
         contact.update(newContactData);
     }
 
@@ -46,7 +46,7 @@ export class PhoneBook {
         group.showAllInfo();
     }
 
-    updateContactGroup(group : IContactGroup, newGroupData : IContactGroupData) : void {
+    updateContactGroup(group : IContactGroup, newGroupData : IContactGroupDataOptional) : void {
         group.update(newGroupData);
     }
 
@@ -103,7 +103,7 @@ export class PhoneBook {
         return 0;
     }
 
-    _removeFromArray<T extends IContactGroup | IContactData>(element: T, array : Array<T>) : void {
+    _removeFromArray<T extends IContactGroup | IContact>(element: T, array : Array<T>) : void {
         const index = array.indexOf(element);
 
         if (index > -1) {

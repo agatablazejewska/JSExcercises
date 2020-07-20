@@ -28,7 +28,7 @@ export class ContactGroup implements IContactGroup {
         }
     }
 
-    update<IContactGroupData>(source: IContactGroupData): void {
+    update<IContactGroupDataOptional>(source: IContactGroupDataOptional): void {
         Object.assign(this, source);
     }
 
