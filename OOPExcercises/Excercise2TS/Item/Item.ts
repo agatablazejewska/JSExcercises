@@ -20,15 +20,21 @@ export class Item implements IItem {
         this.discount = this._validateOrChangeToDefault(discount);
     }
 
+    update<IHasDiscount>(source: IHasDiscount) : void
     update<IHasPrice>(source: IHasPrice): void {
         Object.assign(this, source);
     }
 
     show(): void {
-        throw new Error("Method not implemented.");
+        console.log(`${this.name}
+         ${this.price} $`);
     }
+
     showAllInfo(): void {
-        throw new Error("Method not implemented.");
+        console.log(`${this.name}
+         Price: ${this.price} $
+         Category: ${this.category}
+         Discount: ${this.discount}%`);
     }
 
     get ID() {
