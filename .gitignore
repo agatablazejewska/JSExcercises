@@ -359,3 +359,4 @@ MigrationBackup/
 
 /**/*.js
 *.js.map
+bundle.js
