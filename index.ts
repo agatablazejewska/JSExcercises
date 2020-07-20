@@ -1,4 +1,4 @@
-import { PhoneBook } from "./OOPExcercises/Excercise1TS/PhoneBook/PhoneBook"
+import { PhoneBook } from "./OOPExcercises/Excercise1TS/PhoneBook/PhoneBook";
 import { Contact } from "./OOPExcercises/Excercise1TS/Contact/Contact";
 
 const phoneBook = new PhoneBook();
