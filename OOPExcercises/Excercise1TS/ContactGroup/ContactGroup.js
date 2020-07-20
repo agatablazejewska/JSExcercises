@@ -1,8 +1,13 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ContactGroup = void 0;
+const uuid4_1 = __importDefault(require("uuid4"));
 class ContactGroup {
     constructor(name) {
+        this.id = uuid4_1.default();
         this._name = name;
         this._contactArray = new Array();
     }

@@ -1,9 +1,11 @@
+import uuid4 from "uuid4";
 import { DateFormatter } from "../HelperClasses/DateFormatter";
 import { validateEmail } from "../HelperClasses/ValidateEmail";
 import { IContact } from "../Interfaces/Contact/IContact";
 
 export class Contact implements IContact {
     private _dateFormatter: DateFormatter;
+    id: string;
     firstName: string;
     surname: string;
     email: string;
@@ -16,6 +18,7 @@ export class Contact implements IContact {
           throw new Error("First name has to have a value");
         }
 
+        this.id = uuid4();
         this.firstName = firstName;
         this.surname = surname;
         this.email = email;

@@ -1,11 +1,14 @@
+import uuid4 from "uuid4";
 import { IContactGroup } from "../Interfaces/ContactGroup/IContactGroup";
 import { IContact } from "../Interfaces/Contact/IContact";
 
 export class ContactGroup implements IContactGroup {
     private _name : string;
     private _contactArray : Array<IContact>;
+    id: string;
 
     constructor(name : string) {
+        this.id = uuid4();
         this._name = name;
         this._contactArray = new Array<IContact>();
     }
