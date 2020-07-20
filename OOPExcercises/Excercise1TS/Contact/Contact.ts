@@ -22,7 +22,7 @@ export class Contact implements IContact {
         this.firstName = firstName;
         this.surname = surname;
         this.email = email;
-        this._dateFormatter = new DateHandler();
+        this._dateFormatter = new DateFormatter();
         this.modifyDate = new Date();
     }
     
