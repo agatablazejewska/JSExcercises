@@ -1,6 +1,7 @@
 import uuid4 from "uuid4";
 import { IContactGroup } from "../Interfaces/ContactGroup/IContactGroup";
 import { IContact } from "../Interfaces/Contact/IContact";
+import { Helper } from "../../Common/Helper";
 
 export class ContactGroup implements IContactGroup {
     private _name : string;
@@ -28,11 +29,7 @@ export class ContactGroup implements IContactGroup {
     }
 
     remove(id : string) : void {
-        const index = this._contactArray.findIndex(c => c.id === id);
-
-        if (index > -1) {
-        this._contactArray.splice(index, 1);
-        }
+        Helper.removeFromArray(id, this._contactArray);
     }
 
     update<IContactGroupDataOptional>(source: IContactGroupDataOptional) : void {

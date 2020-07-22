@@ -1,7 +1,7 @@
 import { IUpdatableAndReadable } from "../../../Common/IUpdatableAndReadable";
+import { IHasID } from "../../../Common/IHasID";
 
-export interface IContact extends IUpdatableAndReadable {
-    readonly id : string;
+export interface IContact extends IUpdatableAndReadable, IHasID {
     readonly firstName : string;
     readonly surname: string;
     readonly email : string;

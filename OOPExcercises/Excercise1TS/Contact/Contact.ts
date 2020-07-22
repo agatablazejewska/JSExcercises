@@ -1,6 +1,5 @@
-import uuid4 from "uuid4";
-import { formatDate } from "../Helpers/HelperFunctions";
-import { validateEmail } from "../Helpers/HelperFunctions";
+import { v4 as uuidv4 } from 'uuid';
+import { Helper } from "../../Common/Helper";
 import { IContact } from "../Interfaces/Contact/IContact";
 
 export class Contact implements IContact {
@@ -11,13 +10,13 @@ export class Contact implements IContact {
     modifyDate: Date;
     
     constructor(firstName : string, surname : string, email : string) {
-        validateEmail(email);
+        Helper.validateEmail(email);
 
         if (!firstName) {
           throw new Error("First name has to have a value");
         }
 
-        this.id = uuid4();
+        this.id = uuidv4();
         this.firstName = firstName;
         this.surname = surname;
         this.email = email;
@@ -41,7 +40,7 @@ export class Contact implements IContact {
         console.log(`First name: ${this.firstName}
         Surname: ${this.surname}
         E-mail: ${this.email}
-        Last modified: ${formatDate(this.modifyDate)}`);
+        Last modified: ${Helper.formatDate(this.modifyDate)}`);
     }
 }
 
