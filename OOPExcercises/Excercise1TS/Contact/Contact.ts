@@ -3,7 +3,7 @@ import { Helper } from "../../Common/Helper";
 import { IContact } from "../Interfaces/Contact/IContact";
 
 export class Contact implements IContact {
-    id: string;
+    private readonly _id: string;
     firstName: string;
     surname: string;
     email: string;
@@ -16,11 +16,15 @@ export class Contact implements IContact {
           throw new Error("First name has to have a value");
         }
 
-        this.id = uuidv4();
+        this._id = uuidv4();
         this.firstName = firstName;
         this.surname = surname;
         this.email = email;
         this.modifyDate = new Date();
+    }
+
+    get id() : string {
+        return this._id;
     }
     
     get fullName() : string {

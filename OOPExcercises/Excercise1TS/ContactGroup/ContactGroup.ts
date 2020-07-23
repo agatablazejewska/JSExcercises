@@ -6,12 +6,16 @@ import { Helper } from "../../Common/Helper";
 export class ContactGroup implements IContactGroup {
     private _name : string;
     private _contactArray : Array<IContact>;
-    id: string;
+    private readonly _id: string;
 
     constructor(name : string) {
         this.id = uuid4();
         this._name = name;
         this._contactArray = new Array<IContact>();
+    }
+
+    get id() :string {
+        return this._id;
     }
 
     get name() : string {
