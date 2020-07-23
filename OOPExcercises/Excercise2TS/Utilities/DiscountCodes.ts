@@ -2,7 +2,7 @@ import { IDiscountCodes } from "../Interfaces/Discounts/IDiscountCodes";
 import { DiscountValidator } from "../Common/DiscountValidator";
 
 export class DiscountCodes implements IDiscountCodes {
-    private _discountCodes: Map<string, number>;
+    private readonly _discountCodes: Map<string, number>;
     
     constructor() {
         this._discountCodes = new Map<string, number>();
@@ -15,7 +15,7 @@ export class DiscountCodes implements IDiscountCodes {
     add(code: string, percentOff : number) : void {
         DiscountValidator.validateDiscountOrChangeToZero(percentOff);
         
-        if(!this._discountCodes.get(code)) {
+        if(!this._discountCodes.has(code)) {
             this._discountCodes.set(code, percentOff);
         }     
     }
@@ -29,7 +29,7 @@ export class DiscountCodes implements IDiscountCodes {
     }
 
     _checkIfCodePresent(code: string) : boolean {
-        if(!this._discountCodes.get(code)) {
+        if(!this._discountCodes.has(code)) {
             console.log(`Code ${code} is not valid`);
             return false;
         }
