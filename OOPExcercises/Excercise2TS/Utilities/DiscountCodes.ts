@@ -12,10 +12,10 @@ export class DiscountCodes implements IDiscountCodes {
         return this._discountCodes;
     }
 
-    add(code : string, percentOff : number) : void {
+    add(code: string, percentOff : number) : void {
         DiscountValidator.validateDiscountOrChangeToZero(percentOff);
         
-        if(!this._checkIfCodePresent(code)) {
+        if(!this._discountCodes.get(code)) {
             this._discountCodes.set(code, percentOff);
         }     
     }
@@ -25,10 +25,15 @@ export class DiscountCodes implements IDiscountCodes {
     }
 
     getPercentOff(code: string): number {
-       return this._discountCodes.get(code) || 0; 
+       return this._checkIfCodePresent(code) ? this._discountCodes.get(code)! : 0; 
     }
 
-    _checkIfCodePresent(code : string) : boolean {
-        return this._discountCodes.get(code) ? true : false;
+    _checkIfCodePresent(code: string) : boolean {
+        if(!this._discountCodes.get(code)) {
+            console.log(`Code ${code} is not valid`);
+            return false;
+        }
+        
+        return true;
     }
 }
