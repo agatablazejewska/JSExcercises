@@ -1,6 +1,6 @@
 import { IHasID } from "./IHasID";
 
-export class Helper {
+export abstract class Helper {
     static validateEmail(email : string) : void {
         const emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/i;
         if(!emailRegex.test(email)) {
