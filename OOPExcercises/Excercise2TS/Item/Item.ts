@@ -1,6 +1,7 @@
 import uuid4 from "uuid4";
 import { IItem } from "../Interfaces/Item/IItem";
 import { Categories } from "../Utilities/Categories";
+import { DiscountValidator } from "../Common/DiscountValidator";
 
 
 export class Item implements IItem {
@@ -15,7 +16,7 @@ export class Item implements IItem {
         this.name = name;
         this.category = category;
         this.price = price;
-        this.discount = this._validateOrChangeToDefault(discount);
+        this.discount = DiscountValidator.validateDiscountOrChangeToDefault(discount);
     }
 
     get id() {
@@ -41,9 +42,4 @@ export class Item implements IItem {
          Category: ${this.category}
          Discount: ${this.discount}%`);
     }
-
-    _validateOrChangeToDefault(discount : number) : number {
-        return (discount >= 0 && discount <= 100) ? discount : 0;
-    }
-    
 }

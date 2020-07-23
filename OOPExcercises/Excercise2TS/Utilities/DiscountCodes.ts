@@ -13,7 +13,7 @@ export class DiscountCodes implements IDiscountCodes {
     }
 
     add(code : string, percentOff : number) : void {
-        DiscountValidator.validateDiscountOrChangeToDefault(percentOff);
+        DiscountValidator.validateDiscountOrChangeToZero(percentOff);
         
         if(!this._checkIfCodePresent(code)) {
             this._discountCodes.set(code, percentOff);
