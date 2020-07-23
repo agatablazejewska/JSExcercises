@@ -9,12 +9,12 @@ export class ContactGroup implements IContactGroup {
     private readonly _id: string;
 
     constructor(name : string) {
-        this.id = uuid4();
+        this._id = uuid4();
         this._name = name;
         this._contactArray = new Array<IContact>();
     }
 
-    get id() :string {
+    get id() : string {
         return this._id;
     }
 
