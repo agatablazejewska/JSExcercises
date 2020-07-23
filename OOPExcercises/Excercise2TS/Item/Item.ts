@@ -16,7 +16,7 @@ export class Item implements IItem {
         this.name = name;
         this.category = category;
         this.price = price;
-        this.discount = DiscountValidator.validateDiscountOrChangeToDefault(discount);
+        this.discount = DiscountValidator.validateDiscountOrChangeToZero(discount);
     }
 
     get id() {
