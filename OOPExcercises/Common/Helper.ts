@@ -8,6 +8,12 @@ export abstract class Helper {
         };
     }
 
+    static validateEmptyString(text: string) {
+        if(text.trim().length === 0) {
+            throw new Error("Provided text is empty or consists of white spaces");
+        }
+    }
+
     static formatDate(date : Date) : string {
     
         const fullDate : string = `${date.getDate()}-${
