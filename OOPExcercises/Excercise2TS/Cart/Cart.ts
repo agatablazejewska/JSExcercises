@@ -1,6 +1,6 @@
-import { ICart, ItemAmountAndPrice } from "../Interfaces/Cart/ICart";
-import { IItem } from "../Interfaces/Item/IItem";
-import { DiscountCodes } from "../Utilities/DiscountCodes";
+import { ICart, ItemAmountAndPrice } from "../Utilities/Interfaces/Cart/ICart";
+import { IItem } from "../Utilities/Interfaces/Item/IItem";
+import { DiscountCodes } from "../DiscountCodes/DiscountCodes";
 
 export class Cart implements ICart {
     private readonly _items: Array<ItemAmountAndPrice>;

@@ -1,4 +1,4 @@
-import { Categories } from "../../Utilities/Categories";
+import { Categories } from "../../Enums/Categories";
 
 export interface IItemDataOptional {
     name? : string;

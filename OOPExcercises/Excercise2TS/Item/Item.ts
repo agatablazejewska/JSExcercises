@@ -1,6 +1,6 @@
 import uuid4 from "uuid4";
-import { IItem } from "../Interfaces/Item/IItem";
-import { Categories } from "../Utilities/Categories";
+import { IItem } from "../Utilities/Interfaces/Item/IItem";
+import { Categories } from "../Utilities/Enums/Categories";
 import { DiscountValidator } from "../Common/DiscountValidator";
 
 
