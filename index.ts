@@ -1,4 +1,4 @@
-import { PhoneBook } from "./OOPExcercises/Excercise1TS/PhoneBook/PhoneBook"
+import { PhoneBook } from "./OOPExcercises/Excercise1TS/PhoneBook/PhoneBook";
 import { Contact } from "./OOPExcercises/Excercise1TS/Contact/Contact";
 
 const phoneBook = new PhoneBook();
@@ -13,6 +13,6 @@ phoneBook.addContact(new Contact("Kasler", "Powkes", "kaslerpowkes@gmail.com"));
 
 phoneBook.showContacts();
 
-phoneBook.updateContact(contact1, {firstName: "Adersn", surname: "MArsoel", email: "aserha@gmail.com"});
+phoneBook.updateContact(contact1, {firstName: "Adersn", surname: "MArsoel"});
 console.log("update CONTACT");
 phoneBook.showContacts();

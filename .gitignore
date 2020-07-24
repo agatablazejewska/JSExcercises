@@ -358,3 +358,13 @@ MigrationBackup/
 *.code-workspace
 
 /**/*.js
+*.js.map
+*.map
+OOPExcercises/Excercise1TS/ContactGroup/ContactGroup.js.map
+OOPExcercises/Excercise1TS/ContactGroup/ContactGroup.js.map
+OOPExcercises/Excercise1TS/ContactGroup/ContactGroup.js
+*.map
+OOPExcercises/Excercise1TS/ContactGroup/ContactGroup.js.map
+OOPExcercises/Excercise1TS/ContactGroup/ContactGroup.js.map
+OOPExcercises/Excercise1TS/ContactGroup/ContactGroup.js
+*.js

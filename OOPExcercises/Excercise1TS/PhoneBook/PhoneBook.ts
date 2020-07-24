@@ -1,7 +1,8 @@
-import { IContactGroupData } from "../Interfaces/ContactGroup/IContactGroupData";
+import { IContactGroupDataOptional } from "../Interfaces/ContactGroup/IContactGroupDataOptional";
 import { IContact } from "../Interfaces/Contact/IContact";
 import { IContactGroup } from "../Interfaces/ContactGroup/IContactGroup";
-import { IContactData } from "../Interfaces/Contact/IContactData";
+import { IContactDataOptional } from "../Interfaces/Contact/IContactDataOptional";
+import { Helper } from "../../Common/Helper";
 
 export class PhoneBook {
     private _contactList : Array<IContact>;
@@ -12,16 +13,16 @@ export class PhoneBook {
         this._contactGroupList = new Array<IContactGroup>();
     }
 
-        //Handle conacts
+    //Handle contacts
     addContact(contact : IContact) : void {
         this._contactList.push(contact);
     }
 
-    removeContact(contact : IContact) : void {
-        this._removeFromArray(contact, this._contactList);
+    removeContact(contactId : string) : void {
+        Helper.removeFromArray(contactId, this._contactList);     
     }
 
-    updateContact(contact : IContact, newContactData : IContactData) : void {
+    updateContact(contact : IContact, newContactData : IContactDataOptional) : void {
         contact.update(newContactData);
     }
 
@@ -38,25 +39,25 @@ export class PhoneBook {
         group.add(contact);
     }
 
-    removeContactFromGroup(contact : IContact, group : IContactGroup) : void {
-        group.remove(contact);
+    removeContactFromGroup(contactId : string, group : IContactGroup) : void {
+        group.remove(contactId);
     }
 
     showContactGroup(group : IContactGroup) : void {
         group.showAllInfo();
     }
 
-    updateContactGroup(group : IContactGroup, newGroupData : IContactGroupData) : void {
+    updateContactGroup(group : IContactGroup, newGroupData : IContactGroupDataOptional) : void {
         group.update(newGroupData);
     }
 
-    removeContactGroup(group : IContactGroup) : void {
-        this._removeFromArray(group, this._contactGroupList);
+    removeContactGroup(groupId : string) : void {
+        Helper.removeFromArray(groupId, this._contactGroupList);
     }
 
     //Show lists
     showContacts() : void {
-        this._sortContactsAlphabetically();
+        Helper.sortByProperty(this._contactList, "fullName");
         this._contactList.forEach((contact) => contact.show());
     }
 
@@ -64,51 +65,12 @@ export class PhoneBook {
         this._contactGroupList.forEach((group) => group.show());
     }
 
-    //Filter
+    //Filtered
     showFilteredByPhrase(phrase : string) : void {
         if (phrase) {
-          const filteredContactList = this.filterByPhrase(phrase);
+          const filteredContactList = Helper.filterByPhrase(phrase, this._contactList, "fullName");
     
           filteredContactList.forEach(contact => contact.show());
         }
       }
-    
-      filterByPhrase(phrase : string) : Array<IContact> {    
-        const phraseLowerCase = phrase.toLowerCase();
-
-        return this._contactList.filter(contact =>
-          contact.fullName.toLowerCase().includes(phraseLowerCase)
-        );
-      }
-
-    //Sort
-    _sortContactsAlphabetically() : void {
-        this._contactList = this._contactList.sort(
-        this._sortContactsAlphabeticallyLogic
-        );
-    }
-
-    _sortContactsAlphabeticallyLogic(contactA : IContact, contactB : IContact) : number {
-        const contactAName = contactA.fullName.toUpperCase();
-        const contactBName = contactB.fullName.toUpperCase();
-
-        if (contactAName < contactBName) {
-        return -1;
-        }
-
-        if (contactAName > contactBName) {
-        return 1;
-        }
-
-        return 0;
-    }
-
-    _removeFromArray<T extends IContactGroup | IContactData>(element: T, array : Array<T>) : void {
-        const index = array.indexOf(element);
-
-        if (index > -1) {
-        array.splice(index, 1);
-        }
-    }
-
 }
