@@ -22,7 +22,7 @@ export class Item implements IItem {
         this.category = category;
         this.name = name;
         this.price = price;
-        this.discount = DiscountValidator.validateDiscountOrChangeToZero(discount);        
+        this.discount = ItemPropertiesValidator.validateDiscountOrChangeToZero(discount);        
     }
 
     get id() {

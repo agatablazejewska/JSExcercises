@@ -1,4 +1,5 @@
 import { Helper } from "../../Common/Helper";
+import { DiscountValidator } from "../Common/DiscountValidator";
 
 export abstract class ItemPropertiesValidator {
     static validatePrice(price: number): void {
@@ -13,5 +14,9 @@ export abstract class ItemPropertiesValidator {
         } catch(e) {
             throw new Error("Name of product must have a value and can not consist of white spaces");
         }     
+    }
+
+    static validateDiscountOrChangeToZero(discount: number) {
+        return DiscountValidator.validateDiscountOrChangeToZero(discount);
     }
 }
