@@ -2,6 +2,7 @@ import uuid4 from "uuid4";
 import { IContactGroup } from "../Interfaces/ContactGroup/IContactGroup";
 import { IContact } from "../Interfaces/Contact/IContact";
 import { Helper } from "../../Common/Helper";
+import { IContactGroupDataOptional } from "../Interfaces/ContactGroup/IContactGroupDataOptional";
 
 export class ContactGroup implements IContactGroup {
     private _name : string;
@@ -36,7 +37,11 @@ export class ContactGroup implements IContactGroup {
         Helper.removeFromArray(id, this._contactArray);
     }
 
-    update<IContactGroupDataOptional>(source: IContactGroupDataOptional) : void {
+    update(source: IContactGroupDataOptional) : void {
+        if(!Helper.isNullOrUndefined(source.name)) {
+            Helper.validateEmptyString(source.name!);        
+        }
+        
         Object.assign(this, source);
     }
 

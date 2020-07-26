@@ -1,3 +1,3 @@
 export interface IContactGroupDataOptional {
-    readonly name : string;
+    name? : string;
 }
