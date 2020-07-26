@@ -1,4 +1,4 @@
-import { IDiscountCodes, codeAndPercentageOffType } from "../Interfaces/Discounts/IDiscountCodes";
+import { IDiscountCodes, codeAndPercentageOffType } from "../Utilities/Interfaces/Discounts/IDiscountCodes";
 import { DiscountValidator } from "../Common/DiscountValidator";
 
 export class DiscountCodes implements IDiscountCodes {

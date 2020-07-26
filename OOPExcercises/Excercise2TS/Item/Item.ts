@@ -1,7 +1,8 @@
 import uuid4 from "uuid4";
-import { IItem } from "../Interfaces/Item/IItem";
-import { Categories } from "../Utilities/Categories";
+import { IItem } from "../Utilities/Interfaces/Item/IItem";
+import { Categories } from "../Utilities/Enums/Categories";
 import { DiscountValidator } from "../Common/DiscountValidator";
+import { ItemPropertiesValidator } from "./ItemPropertiesValidator";
 
 
 export class Item implements IItem {
@@ -13,10 +14,10 @@ export class Item implements IItem {
 
     constructor(name: string, category : Categories, price : number, discount = 0) {
         this._id = uuid4();
-        this.name = name;
         this.category = category;
-        this.price = price;
-        this.discount = DiscountValidator.validateDiscountOrChangeToZero(discount);
+        this.name = ItemPropertiesValidator.validateNameOrSetToDefault(name, this._id);
+        this.price = ItemPropertiesValidator.validatePriceOrSetToZero(price);
+        this.discount = DiscountValidator.validateDiscountOrChangeToZero(discount);        
     }
 
     get id() {

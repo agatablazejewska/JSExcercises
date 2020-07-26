@@ -67,10 +67,15 @@ export class PhoneBook {
 
     //Filtered
     showFilteredByPhrase(phrase : string) : void {
-        if (phrase) {
-          const filteredContactList = Helper.filterByPhrase(phrase, this._contactList, "fullName");
-    
-          filteredContactList.forEach(contact => contact.show());
+        try {
+            Helper.validateEmptyString(phrase);
+            
+            const filteredContactList = Helper.filterByPhrase(phrase, this._contactList, "fullName");
+
+            filteredContactList.forEach(contact => contact.show());
         }
+        catch(e) {
+            console.error(e);
+        }  
       }
 }
