@@ -8,6 +8,10 @@ export abstract class ItemPropertiesValidator {
     }
 
     static validateName(name: string): void {
-         Helper.validateEmptyString(name);     
+        try {
+            Helper.validateEmptyString(name);  
+        } catch(e) {
+            throw new Error("Name of product must have a value and can not consist of white spaces");
+        }     
     }
 }
