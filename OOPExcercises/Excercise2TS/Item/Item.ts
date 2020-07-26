@@ -3,6 +3,8 @@ import { IItem } from "../Utilities/Interfaces/Item/IItem";
 import { Categories } from "../Utilities/Enums/Categories";
 import { DiscountValidator } from "../Common/DiscountValidator";
 import { ItemPropertiesValidator } from "./ItemPropertiesValidator";
+import { IItemDataOptional } from "../Utilities/Interfaces/Item/IItemDataOptional";
+import { Helper } from "../../Common/Helper";
 
 
 export class Item implements IItem {
@@ -31,7 +33,8 @@ export class Item implements IItem {
         return (100 - this.discount) / 100 * this.price;
     }
 
-    update<IItemDataOptional>(source: IItemDataOptional) : void {
+    update(source: IItemDataOptional) : void {
+        this._validateUpdateData(source);
         Object.assign(this, source);
     }
 
@@ -45,5 +48,19 @@ export class Item implements IItem {
          Price: ${this.price} $
          Category: ${this.category}
          Discount: ${this.discount}%`);
+    }
+
+    private _validateUpdateData(source: IItemDataOptional) {
+        if (!Helper.isNullOrUndefined(source.name)) {
+            ItemPropertiesValidator.validateName(source.name!);
+        }
+
+        if (!Helper.isNullOrUndefined(source.price)) {
+            ItemPropertiesValidator.validatePrice(source.price!);
+        }
+
+        if (!Helper.isNullOrUndefined(source.discount)) {
+            source.discount = DiscountValidator.validateDiscountOrChangeToZero(source.discount!);
+        }
     }
 }
