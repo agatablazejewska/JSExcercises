@@ -1,6 +1,7 @@
 import { v4 as uuidv4 } from 'uuid';
 import { Helper } from "../../Common/Helper";
 import { IContact } from "../Interfaces/Contact/IContact";
+import { IContactDataOptional } from '../Interfaces/Contact/IContactDataOptional';
 
 export class Contact implements IContact {
     private readonly _id: string;
@@ -31,9 +32,15 @@ export class Contact implements IContact {
         return `${this.firstName} ${this.surname}`;
     }
 
-    update<IContactDataOptional>(source : IContactDataOptional): void {
-        Object.assign(this, source); 
-        this.modifyDate = new Date();  
+    update(source : IContactDataOptional): void {
+        try {
+            Helper.validateStringProperties(source);
+        
+            Object.assign(this, source); 
+            this.modifyDate = new Date();  
+        } catch {
+            console.error("One of data provided consists of white spaces. Update failed.");
+        }      
     }
 
     show(): void {

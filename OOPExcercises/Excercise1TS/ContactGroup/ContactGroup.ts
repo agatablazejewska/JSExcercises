@@ -38,11 +38,13 @@ export class ContactGroup implements IContactGroup {
     }
 
     update(source: IContactGroupDataOptional) : void {
-        if(!Helper.isNullOrUndefined(source.name)) {
-            Helper.validateEmptyString(source.name!);        
-        }
+        try {
+            Helper.validateStringProperties(source);
         
-        Object.assign(this, source);
+            Object.assign(this, source);
+        } catch {
+            console.error("Provided name consists of white spaces. Update failed.");
+        }       
     }
 
     show() : void {

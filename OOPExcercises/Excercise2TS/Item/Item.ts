@@ -34,8 +34,14 @@ export class Item implements IItem {
     }
 
     update(source: IItemDataOptional) : void {
-        this._validateUpdateData(source);
-        Object.assign(this, source);
+        try {
+            Helper.validateStringProperties(source);
+            Object.assign(this, source);
+        } catch {
+            console.error("One of data provided consists of white spaces. Update failed.");
+        }
+        
+       
     }
 
     show() : void {
@@ -48,19 +54,5 @@ export class Item implements IItem {
          Price: ${this.price} $
          Category: ${this.category}
          Discount: ${this.discount}%`);
-    }
-
-    private _validateUpdateData(source: IItemDataOptional) {
-        if (!Helper.isNullOrUndefined(source.name)) {
-            ItemPropertiesValidator.validateName(source.name!);
-        }
-
-        if (!Helper.isNullOrUndefined(source.price)) {
-            ItemPropertiesValidator.validatePrice(source.price!);
-        }
-
-        if (!Helper.isNullOrUndefined(source.discount)) {
-            source.discount = DiscountValidator.validateDiscountOrChangeToZero(source.discount!);
-        }
     }
 }

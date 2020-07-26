@@ -14,8 +14,12 @@ export abstract class Helper {
         }
     }
 
-    static isNullOrUndefined<T>(prop: T) {
-        return prop === null || prop === undefined;
+    static validateStringProperties<T>(obj: T) {
+        for(const value in obj) {
+            if(typeof value === "string") {
+                this.validateEmptyString(value);
+            }
+        }
     }
 
     static formatDate(date : Date) : string {
