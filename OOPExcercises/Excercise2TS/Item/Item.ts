@@ -13,10 +13,13 @@ export class Item implements IItem {
     discount: number;
 
     constructor(name: string, category : Categories, price : number, discount = 0) {
+        ItemPropertiesValidator.validateName(name);
+        ItemPropertiesValidator.validatePrice(price);
+
         this._id = uuid4();
         this.category = category;
-        this.name = ItemPropertiesValidator.validateNameOrSetToDefault(name, this._id);
-        this.price = ItemPropertiesValidator.validatePriceOrSetToZero(price);
+        this.name = name;
+        this.price = price;
         this.discount = DiscountValidator.validateDiscountOrChangeToZero(discount);        
     }
 
