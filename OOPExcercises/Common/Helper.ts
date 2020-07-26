@@ -14,6 +14,10 @@ export abstract class Helper {
         }
     }
 
+    static isNullOrUndefined<T>(prop: T) {
+        return prop === null || prop === undefined;
+    }
+
     static formatDate(date : Date) : string {
     
         const fullDate : string = `${date.getDate()}-${
