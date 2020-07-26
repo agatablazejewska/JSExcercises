@@ -20,7 +20,8 @@ export class Cart implements ICart {
         this._items = new Array<ItemAmountAndPrice>();
         this._currentDiscountCodes = new DiscountCodes();
         this.discount = 0;
-        this._sum = { finalPrice: 0,
+        this._sum = { 
+            finalPrice: 0,
             cartDiscountPrice: 0,
             cartPriceNoDiscountCode: 0,
             allItemsAmount: 0,
