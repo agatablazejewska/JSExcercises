@@ -1,10 +1,9 @@
 import uuid4 from "uuid4";
 import { IItem } from "../Utilities/Interfaces/Item/IItem";
 import { Categories } from "../Utilities/Enums/Categories";
-import { DiscountValidator } from "../Common/DiscountValidator";
 import { ItemPropertiesValidator } from "./ItemPropertiesValidator";
 import { IItemDataOptional } from "../Utilities/Interfaces/Item/IItemDataOptional";
-import { Helper } from "../../Common/Helper";
+import { CommonValidator } from "../../Common/CommonValidator";
 
 
 export class Item implements IItem {
@@ -35,7 +34,7 @@ export class Item implements IItem {
 
     update(source: IItemDataOptional) : void {
         try {
-            Helper.validateStringProperties(source);
+            CommonValidator.validateStringProperties(source);
             Object.assign(this, source);
         } catch {
             console.error("One of data provided consists of white spaces. Update failed.");

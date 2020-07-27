@@ -3,6 +3,7 @@ import { IContactGroup } from "../Interfaces/ContactGroup/IContactGroup";
 import { IContact } from "../Interfaces/Contact/IContact";
 import { Helper } from "../../Common/Helper";
 import { IContactGroupDataOptional } from "../Interfaces/ContactGroup/IContactGroupDataOptional";
+import { CommonValidator } from "../../Common/CommonValidator";
 
 export class ContactGroup implements IContactGroup {
     private _name : string;
@@ -39,7 +40,7 @@ export class ContactGroup implements IContactGroup {
 
     update(source: IContactGroupDataOptional) : void {
         try {
-            Helper.validateStringProperties(source);
+            CommonValidator.validateStringProperties(source);
         
             Object.assign(this, source);
         } catch {

@@ -3,6 +3,7 @@ import { IContact } from "../Interfaces/Contact/IContact";
 import { IContactGroup } from "../Interfaces/ContactGroup/IContactGroup";
 import { IContactDataOptional } from "../Interfaces/Contact/IContactDataOptional";
 import { Helper } from "../../Common/Helper";
+import { CommonValidator } from "../../Common/CommonValidator";
 
 export class PhoneBook {
     private _contactList : Array<IContact>;
@@ -68,7 +69,7 @@ export class PhoneBook {
     //Filtered
     showFilteredByPhrase(phrase : string) : void {
         try {
-            Helper.validateEmptyString(phrase);
+            CommonValidator.validateEmptyString(phrase);
             
             const filteredContactList = Helper.filterByPhrase(phrase, this._contactList, "fullName");
 
