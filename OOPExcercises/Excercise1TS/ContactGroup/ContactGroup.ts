@@ -6,22 +6,18 @@ import { IContactGroupDataOptional } from "../Interfaces/ContactGroup/IContactGr
 import { CommonValidator } from "../../Common/CommonValidator";
 
 export class ContactGroup implements IContactGroup {
-    private _name : string;
+    readonly name : string;
     private _contactArray : Array<IContact>;
     private readonly _id: string;
 
     constructor(name : string) {
         this._id = uuid4();
-        this._name = name;
+        this.name = name;
         this._contactArray = new Array<IContact>();
     }
 
     get id() : string {
         return this._id;
-    }
-
-    get name() : string {
-        return this._name;
     }
 
     get contacts() : Array<IContact> {
