@@ -14,32 +14,19 @@ export class User implements IUser {
     readonly gender: Gender;
     readonly accessLevel: AccessLevels;
     constructor(name: string, surname: string, email: string, dateOfBirth: string, dateOfBirthCurrentFormat: string, 
-        gender: Gender, accessLevel: AccessLevels, password: string) {
+        gender: Gender, password: string) {
             this._validate(password, name, surname, email);
             this.name = name;
             this.surname = surname;
             this.email = email;
             this.dateOfBirth = UserPropertiesValidator.validateAndFormatDateOfBirth(dateOfBirth, dateOfBirthCurrentFormat);
             this.gender = gender;
-            this.accessLevel = accessLevel;
+            this.accessLevel = AccessLevels.User;
             this._password = password;
     }
+
     canLogin(email: string, password: string): boolean {
         return this._isEmailCorrect(email) && this._isPasswordCorrect(password);
-    }
-
-    private _isEmailCorrect(email: string) : boolean {
-        return email === this.email;
-    }
-
-    private _isPasswordCorrect(password: string): boolean {
-        return password === this._password;
-    }
-
-    private _validate(password: string, name: string, surname: string, email: string) {
-        UserPropertiesValidator.validatePassword(password);
-        UserPropertiesValidator.validateNameSurname(name, surname);
-        UserPropertiesValidator.validateEmail(email);
     }
 
     update(source: IUserDataOptional): void {
@@ -60,11 +47,36 @@ export class User implements IUser {
         }        
          
     }
+    
     show(): void {
-        throw new Error("Method not implemented.");
-    }
-    showAllInfo(): void {
-        throw new Error("Method not implemented.");
+        console.log(`User info:
+        ${this.name}
+        ${this.surname}
+        ${this.email}
+        ${this.accessLevel}`);
     }
 
+    showAllInfo(): void {
+        console.log(`User details:
+        ${this.name}
+        ${this.surname}
+        ${this.email}
+        ${this.dateOfBirth}
+        ${this.gender}
+        ${this.accessLevel}`);
+    }
+
+    private _isEmailCorrect(email: string) : boolean {
+        return email === this.email;
+    }
+
+    private _isPasswordCorrect(password: string): boolean {
+        return password === this._password;
+    }
+
+    private _validate(password: string, name: string, surname: string, email: string) {
+        UserPropertiesValidator.validatePassword(password);
+        UserPropertiesValidator.validateNameSurname(name, surname);
+        UserPropertiesValidator.validateEmail(email);
+    }
 }
