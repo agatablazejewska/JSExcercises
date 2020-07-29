@@ -2,8 +2,7 @@ import { Gender } from "../../Enums/Gender";
 import { AccessLevels } from "../../Enums/AccessLevel";
 import { IUpdatableAndReadable } from "../../../../Common/IUpdatableAndReadable";
 import { IHasID } from "../../../../Common/IHasID";
-
-export type DateOfBirth = Date | string | number;
+import { DateOfBirth } from "../../Types/DateOfBirth";
 
 export interface IUser extends IUpdatableAndReadable, IHasID {
     readonly name: string;
