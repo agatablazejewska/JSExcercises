@@ -1,5 +1,6 @@
 import { CommonValidator } from "../../Common/CommonValidator";
 import moment from 'moment';
+import { DateOfBirth } from "../Utilities/Types/DateOfBirth";
 
 export abstract class UserPropertiesValidator {
     static validateNameSurname(name: string, surname: string): void {
@@ -21,8 +22,10 @@ export abstract class UserPropertiesValidator {
         CommonValidator.validatePassword(password);
     }
 
-    static validateAndFormatDateOfBirth(date: string, dateCurrentFormat: string): string {
-        CommonValidator.validateEmptyString(date);
+    static validateAndFormatDateOfBirth(date: DateOfBirth, dateCurrentFormat: string): string {
+        if(typeof date === "string") {
+            CommonValidator.validateEmptyString(date);
+        }   
         CommonValidator.validateEmptyString(dateCurrentFormat);
 
         const momentDate = moment(date, dateCurrentFormat, true);

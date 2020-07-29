@@ -5,6 +5,7 @@ import { UserPropertiesValidator } from "./UserPropertiesValidator";
 import { CommonValidator } from "../../Common/CommonValidator";
 import uuid4 from 'uuid4';
 import { IUserDataOptional } from "../Utilities/Interfaces/User/IUserDataOptional";
+import { DateOfBirth } from "../Utilities/Types/DateOfBirth";
 
 export class User implements IUser {
     protected readonly _id: string;
@@ -12,11 +13,11 @@ export class User implements IUser {
     readonly name: string;
     readonly surname: string;
     readonly email: string;
-    readonly dateOfBirth: string;
+    readonly dateOfBirth: DateOfBirth;
     readonly gender: Gender;
     readonly accessLevel: AccessLevels;
     
-    constructor(name: string, surname: string, email: string, dateOfBirth: string, dateOfBirthCurrentFormat: string, 
+    constructor(name: string, surname: string, email: string, dateOfBirth: DateOfBirth, dateOfBirthCurrentFormat: string, 
         gender: Gender, password: string) {
             this._validate(password, name, surname, email);
             this._id = uuid4();
