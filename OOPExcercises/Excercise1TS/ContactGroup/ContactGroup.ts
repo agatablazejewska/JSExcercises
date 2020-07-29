@@ -2,24 +2,22 @@ import uuid4 from "uuid4";
 import { IContactGroup } from "../Interfaces/ContactGroup/IContactGroup";
 import { IContact } from "../Interfaces/Contact/IContact";
 import { Helper } from "../../Common/Helper";
+import { IContactGroupDataOptional } from "../Interfaces/ContactGroup/IContactGroupDataOptional";
+import { CommonValidator } from "../../Common/CommonValidator";
 
 export class ContactGroup implements IContactGroup {
-    private _name : string;
+    readonly name : string;
     private _contactArray : Array<IContact>;
     private readonly _id: string;
 
     constructor(name : string) {
         this._id = uuid4();
-        this._name = name;
+        this.name = name;
         this._contactArray = new Array<IContact>();
     }
 
     get id() : string {
         return this._id;
-    }
-
-    get name() : string {
-        return this._name;
     }
 
     get contacts() : Array<IContact> {
@@ -36,8 +34,14 @@ export class ContactGroup implements IContactGroup {
         Helper.removeFromArray(id, this._contactArray);
     }
 
-    update<IContactGroupDataOptional>(source: IContactGroupDataOptional) : void {
-        Object.assign(this, source);
+    update(source: IContactGroupDataOptional) : void {
+        try {
+            CommonValidator.validateStringProperties(source);
+        
+            Object.assign(this, source);
+        } catch {
+            console.error("Provided name consists of white spaces. Update failed.");
+        }       
     }
 
     show() : void {

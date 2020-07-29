@@ -5,7 +5,5 @@ export type codeAndPercentageOffType = {
 
 export interface IDiscountCodes {
     discountCodes : Array<codeAndPercentageOffType>;
-    add(codeAndPercentageOff: codeAndPercentageOffType) : void;
-    remove(code : string) : void;
     getPercentOff(code : string) : number;
 }

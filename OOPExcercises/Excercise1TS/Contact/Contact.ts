@@ -1,6 +1,8 @@
 import { v4 as uuidv4 } from 'uuid';
 import { Helper } from "../../Common/Helper";
 import { IContact } from "../Interfaces/Contact/IContact";
+import { IContactDataOptional } from '../Interfaces/Contact/IContactDataOptional';
+import { CommonValidator } from '../../Common/CommonValidator';
 
 export class Contact implements IContact {
     private readonly _id: string;
@@ -10,7 +12,7 @@ export class Contact implements IContact {
     modifyDate: Date;
     
     constructor(firstName : string, surname : string, email : string) {
-        Helper.validateEmail(email);
+        CommonValidator.validateEmail(email);
 
         if (!firstName) {
           throw new Error("First name has to have a value");
@@ -31,9 +33,15 @@ export class Contact implements IContact {
         return `${this.firstName} ${this.surname}`;
     }
 
-    update<IContactDataOptional>(source : IContactDataOptional): void {
-        Object.assign(this, source); 
-        this.modifyDate = new Date();  
+    update(source : IContactDataOptional): void {
+        try {
+            CommonValidator.validateStringProperties(source);
+        
+            Object.assign(this, source); 
+            this.modifyDate = new Date();  
+        } catch {
+            console.error("One of data provided consists of white spaces. Update failed.");
+        }      
     }
 
     show(): void {

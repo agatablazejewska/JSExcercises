@@ -1,0 +1,1 @@
+export type DateOfBirth = Date | string | number;

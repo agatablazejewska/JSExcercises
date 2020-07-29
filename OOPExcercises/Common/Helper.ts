@@ -1,19 +1,6 @@
 import { IHasID } from "./IHasID";
 
 export abstract class Helper {
-    static validateEmail(email : string) : void {
-        const emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/i;
-        if(!emailRegex.test(email)) {
-            throw new Error("Provided value is not a valid e-mail");
-        };
-    }
-
-    static validateEmptyString(text: string) {
-        if(text.trim().length === 0) {
-            throw new Error("Provided text is empty or consists of white spaces");
-        }
-    }
-
     static formatDate(date : Date) : string {
     
         const fullDate : string = `${date.getDate()}-${
