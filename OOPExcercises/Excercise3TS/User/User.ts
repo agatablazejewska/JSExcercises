@@ -6,8 +6,10 @@ import { CommonValidator } from "../../Common/CommonValidator";
 import uuid4 from 'uuid4';
 import { IUserDataOptional } from "../Utilities/Interfaces/User/IUserDataOptional";
 import { DateOfBirth } from "../Utilities/Types/DateOfBirth";
+import { UsersStorage } from "../UsersStorage/UsersStorage";
 
 export class User implements IUser {
+    protected _usersStorage: UsersStorage;
     protected readonly _id: string;
     protected _password: string;
     readonly name: string;
@@ -20,6 +22,7 @@ export class User implements IUser {
     constructor(name: string, surname: string, email: string, dateOfBirth: DateOfBirth, dateOfBirthCurrentFormat: string, 
         gender: Gender, password: string) {
             this._validate(password, name, surname, email);
+            this._usersStorage = UsersStorage.getInstance();
             this._id = uuid4();
             this.name = name;
             this.surname = surname;
@@ -28,6 +31,8 @@ export class User implements IUser {
             this.gender = gender;
             this.accessLevel = AccessLevels.User;
             this._password = password;
+
+            this._usersStorage.users.push({ user: this, password: this._password });
     }
 
     get id() {
