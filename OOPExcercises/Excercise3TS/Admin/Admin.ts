@@ -22,7 +22,7 @@ export class Admin extends User implements IAdmin {
         userData?.user.updatePassword(newPassword);
     }
 
-    modifyUserAccessLevel(userId: string): void {
+    setUserAccessLevelToAdmin(userId: string): void {
         const userData = this._findUserDataById(userId);
         const user = userData?.user;
         if (user) {
