@@ -1,12 +1,19 @@
-import { IUser } from "../Utilities/Interfaces/User/IUser";
+import { UserAndPassword } from "../Utilities/Types/UserAndPassword";
 
 export class UsersStorage {
-    private _usersArray: Array<IUser>;
+    private static _instance: UsersStorage;
+    private _usersArray: Array<UserAndPassword> = new Array<UserAndPassword>();
 
-    constructor() {
-        this._usersArray = new Array<IUser>();
-    }
+    private constructor() {}
 
+    static getInstance(): UsersStorage {
+        if (!UsersStorage._instance) {
+            UsersStorage._instance = new UsersStorage();
+        }
+    
+        return UsersStorage._instance;
+      }
+    
     get users() {
         return this._usersArray;
     }
