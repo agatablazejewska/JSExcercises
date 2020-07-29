@@ -38,9 +38,7 @@ export class Item implements IItem {
             Object.assign(this, source);
         } catch {
             console.error("One of data provided consists of white spaces. Update failed.");
-        }
-        
-       
+        }     
     }
 
     show() : void {
