@@ -22,7 +22,7 @@ export abstract class UserPropertiesValidator {
         CommonValidator.validatePassword(password);
     }
 
-    static validateAndFormatDateOfBirth(date: DateOfBirth, dateCurrentFormat: string): string {
+    static validateAndFormatDateOfBirth(date: DateOfBirth, dateCurrentFormat: string, dateExpectedFormat: string): string {
         if(typeof date === "string") {
             CommonValidator.validateEmptyString(date);
         }   
@@ -33,7 +33,7 @@ export abstract class UserPropertiesValidator {
             throw new Error("Provided date is not valid");
         }
 
-        let formattedDate = momentDate.format('MM-DD-YYYY');
+        let formattedDate = momentDate.format(dateExpectedFormat);
 
         return formattedDate;
     }

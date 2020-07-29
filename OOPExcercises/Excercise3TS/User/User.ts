@@ -11,6 +11,7 @@ import { UsersStorage } from "../UsersStorage/UsersStorage";
 export class User implements IUser {
     protected _usersStorage: UsersStorage;
     protected readonly _id: string;
+    protected readonly _finalDateFormat: string = "MM/DD/YYYY";
     protected _password: string;
     readonly name: string;
     readonly surname: string;
@@ -27,10 +28,11 @@ export class User implements IUser {
             this.name = name;
             this.surname = surname;
             this.email = email;
-            this.dateOfBirth = UserPropertiesValidator.validateAndFormatDateOfBirth(dateOfBirth, dateOfBirthCurrentFormat);
             this.gender = gender;
             this.accessLevel = AccessLevels.User;
             this._password = password;
+            this.dateOfBirth = UserPropertiesValidator
+            .validateAndFormatDateOfBirth(dateOfBirth, dateOfBirthCurrentFormat, this._finalDateFormat);
 
             this._usersStorage.users.push({ user: this, password: this._password });
     }
