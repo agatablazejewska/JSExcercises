@@ -8,13 +8,14 @@ import { IUserDataOptional } from "../Utilities/Interfaces/User/IUserDataOptiona
 
 export class User implements IUser {
     protected readonly _id: string;
-    private _password: string;
+    protected _password: string;
     readonly name: string;
     readonly surname: string;
     readonly email: string;
     readonly dateOfBirth: string;
     readonly gender: Gender;
     readonly accessLevel: AccessLevels;
+    
     constructor(name: string, surname: string, email: string, dateOfBirth: string, dateOfBirthCurrentFormat: string, 
         gender: Gender, password: string) {
             this._validate(password, name, surname, email);
