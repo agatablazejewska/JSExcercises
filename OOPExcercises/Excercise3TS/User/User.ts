@@ -3,9 +3,11 @@ import { Gender } from "../Utilities/Enums/Gender";
 import { AccessLevels } from "../Utilities/Enums/AccessLevel";
 import { UserPropertiesValidator } from "./UserPropertiesValidator";
 import { CommonValidator } from "../../Common/CommonValidator";
+import uuid4 from 'uuid4';
 import { IUserDataOptional } from "../Utilities/Interfaces/User/IUserDataOptional";
 
 export class User implements IUser {
+    protected readonly _id: string;
     private _password: string;
     readonly name: string;
     readonly surname: string;
@@ -16,6 +18,7 @@ export class User implements IUser {
     constructor(name: string, surname: string, email: string, dateOfBirth: string, dateOfBirthCurrentFormat: string, 
         gender: Gender, password: string) {
             this._validate(password, name, surname, email);
+            this._id = uuid4();
             this.name = name;
             this.surname = surname;
             this.email = email;
@@ -25,8 +28,24 @@ export class User implements IUser {
             this._password = password;
     }
 
+    get id() {
+        return this._id;
+    }
+
     canLogin(email: string, password: string): boolean {
         return this._isEmailCorrect(email) && this._isPasswordCorrect(password);
+    }
+
+    updatePassword(password: string): void {
+        try {
+            CommonValidator.validateEmptyString(password);
+            CommonValidator.validatePassword(password);
+
+            this._password = password;
+        } catch(e) {
+            console.error(`Provided password is not valid or is empty. Update failed.
+            ${e}`);
+        }                
     }
 
     update(source: IUserDataOptional): void {
@@ -36,18 +55,14 @@ export class User implements IUser {
             if(source.email) {
                 UserPropertiesValidator.validateEmail(source.email)
             }
-            if(source._password) {
-                UserPropertiesValidator.validatePassword(source._password);
-            }
 
             Object.assign(this, source);
         } catch(e) {
             console.error(`Provided data is not valid or is empty. Update failed.
             ${e}`);
-        }        
-         
+        }                
     }
-    
+
     show(): void {
         console.log(`User info:
         ${this.name}
