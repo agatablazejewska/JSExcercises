@@ -5,7 +5,6 @@ import { UsersStorage } from "../UsersStorage/UsersStorage";
 import { IUser, Gender, AccessLevels, IUserDataOptional, DateOfBirth, UserConstructionData} from "../Utilities";
 
 export class User implements IUser {
-    protected _usersStorage: UsersStorage;
     protected readonly _id: string;
     protected readonly _finalDateFormat: string = "MM/DD/YYYY";
     protected _password: string;
@@ -19,7 +18,6 @@ export class User implements IUser {
     constructor(data: UserConstructionData)
     {
             this._validate(data.password, name, data.surname, data.email);
-            this._usersStorage = UsersStorage.getInstance();
             this._id = uuid4();
             this.name = name;
             this.surname = data.surname;
@@ -29,8 +27,6 @@ export class User implements IUser {
             this._password = data.password;
             this.dateOfBirth = UserPropertiesValidator
             .validateAndFormatDateOfBirth(data.dateOfBirth, data.dateOfBirthCurrentFormat, this._finalDateFormat);
-
-            this._usersStorage.users.push({ user: this, password: this._password });
     }
 
     get id() {
