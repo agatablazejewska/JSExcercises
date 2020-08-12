@@ -1,10 +1,8 @@
-import { Gender } from "../../Enums/Gender";
-import { AccessLevels } from "../../Enums/AccessLevel";
 import { IUpdatableAndReadable } from "../../../../Common/IUpdatableAndReadable";
 import { IHasID } from "../../../../Common/IHasID";
-import { DateOfBirth } from "../../Types/DateOfBirth";
+import { DateOfBirth, Gender, AccessLevels } from "../..";
 
-export interface IUser extends IUpdatableAndReadable, IHasID {
+export default interface IUser extends IUpdatableAndReadable, IHasID {
     readonly name: string;
     readonly surname: string;
     readonly email: string;

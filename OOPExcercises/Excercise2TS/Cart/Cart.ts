@@ -34,10 +34,10 @@ export class Cart implements ICart {
     }
 
     addItem(item: IItem) : void {
-        let presentItemData = this._items.find(i => i.item.name === item.name);
+        let itemAlreadyInCartData = this._items.find(i => i.item.name === item.name);
 
-        if(presentItemData) {
-            this._updateExistingItemValuesAdd(presentItemData, item);    
+        if(itemAlreadyInCartData) {
+            this._updateProductAdded(itemAlreadyInCartData, item);    
         }
         else {
             this._items.push({item: item, amount: 1, finalPrice: item.getPriceAfterDiscount(), priceNoDiscounts: item.price});
@@ -55,8 +55,8 @@ export class Cart implements ICart {
                 return;
             }
 
-            this._updateExistingItemValuesSubstract(dataToRemove);
-            this._updateCartSummaryItemRemovedOne(dataToRemove);
+            this._updateProductRemoved(dataToRemove);
+            this._updateCartSummaryOneItemRemoved(dataToRemove);
         }   
     }
 
@@ -107,13 +107,13 @@ export class Cart implements ICart {
         this._sum.cartDiscountPrice = priceNoDiscountCode - finalPrice;
     }
 
-    private _updateExistingItemValuesAdd(presentData: ItemAmountAndPrice, item: IItem) {
+    private _updateProductAdded(presentData: ItemAmountAndPrice, item: IItem) {
         presentData.amount++;
         presentData.finalPrice += item.getPriceAfterDiscount();
         presentData.priceNoDiscounts += item.price;
     }
 
-    private _updateExistingItemValuesSubstract(dataToModify: ItemAmountAndPrice) {
+    private _updateProductRemoved(dataToModify: ItemAmountAndPrice) {
         const item = dataToModify.item;
         
         dataToModify.amount--;
@@ -130,7 +130,7 @@ export class Cart implements ICart {
         this._sum.finalPrice = this._calculateFinalPrice();
     }
 
-    private _updateCartSummaryItemRemovedOne(data: ItemAmountAndPrice) {
+    private _updateCartSummaryOneItemRemoved(data: ItemAmountAndPrice) {
         const item = data.item;
         const itemPriceAfterDiscount = item.getPriceAfterDiscount();
 

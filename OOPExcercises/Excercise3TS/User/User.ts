@@ -1,12 +1,8 @@
-import { IUser } from "../Utilities/Interfaces/User/IUser";
-import { Gender } from "../Utilities/Enums/Gender";
-import { AccessLevels } from "../Utilities/Enums/AccessLevel";
+import uuid4 from 'uuid4';
 import { UserPropertiesValidator } from "./UserPropertiesValidator";
 import { CommonValidator } from "../../Common/CommonValidator";
-import uuid4 from 'uuid4';
-import { IUserDataOptional } from "../Utilities/Interfaces/User/IUserDataOptional";
-import { DateOfBirth } from "../Utilities/Types/DateOfBirth";
 import { UsersStorage } from "../UsersStorage/UsersStorage";
+import { IUser, Gender, AccessLevels, IUserDataOptional, DateOfBirth, UserConstructionData} from "../Utilities";
 
 export class User implements IUser {
     protected _usersStorage: UsersStorage;
@@ -20,19 +16,19 @@ export class User implements IUser {
     readonly gender: Gender;
     readonly accessLevel: AccessLevels;
     
-    constructor(name: string, surname: string, email: string, dateOfBirth: DateOfBirth, dateOfBirthCurrentFormat: string, 
-        gender: Gender, password: string) {
-            this._validate(password, name, surname, email);
+    constructor(data: UserConstructionData)
+    {
+            this._validate(data.password, name, data.surname, data.email);
             this._usersStorage = UsersStorage.getInstance();
             this._id = uuid4();
             this.name = name;
-            this.surname = surname;
-            this.email = email;
-            this.gender = gender;
+            this.surname = data.surname;
+            this.email = data.email;
+            this.gender = data.gender;
             this.accessLevel = AccessLevels.User;
-            this._password = password;
+            this._password = data.password;
             this.dateOfBirth = UserPropertiesValidator
-            .validateAndFormatDateOfBirth(dateOfBirth, dateOfBirthCurrentFormat, this._finalDateFormat);
+            .validateAndFormatDateOfBirth(data.dateOfBirth, data.dateOfBirthCurrentFormat, this._finalDateFormat);
 
             this._usersStorage.users.push({ user: this, password: this._password });
     }

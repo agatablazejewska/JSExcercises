@@ -1,1 +1,3 @@
-export type DateOfBirth = Date | string | number;
+type DateOfBirth = Date | string | number;
+
+export default DateOfBirth;
