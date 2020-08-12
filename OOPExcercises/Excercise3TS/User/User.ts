@@ -1,13 +1,8 @@
 import uuid4 from 'uuid4';
-import { IUser } from "../Utilities/Interfaces/User/IUser";
-import { Gender } from "../Utilities/Enums/Gender";
-import { AccessLevels } from "../Utilities/Enums/AccessLevel";
 import { UserPropertiesValidator } from "./UserPropertiesValidator";
 import { CommonValidator } from "../../Common/CommonValidator";
-import { IUserDataOptional } from "../Utilities/Interfaces/User/IUserDataOptional";
-import { DateOfBirth } from "../Utilities/Types/DateOfBirth";
 import { UsersStorage } from "../UsersStorage/UsersStorage";
-import { UserConstructionData } from '../Utilities/Types/UserConstructionData';
+import { IUser, Gender, AccessLevels, IUserDataOptional, DateOfBirth, UserConstructionData} from "../Utilities";
 
 export class User implements IUser {
     protected _usersStorage: UsersStorage;

@@ -1,6 +1,6 @@
-import { UserConstructionData } from "../../Types/UserConstructionData";
+import { UserConstructionData } from "../..";
 
-export interface IHandleUsersStorage {
+export default interface IHandleUsersStorage {
     addUser(data: UserConstructionData): void;
     addAdmin(data: UserConstructionData): void;
     removeUser(id: string): void;

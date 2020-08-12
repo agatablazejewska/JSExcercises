@@ -1,4 +1,4 @@
-import { UserAndPassword } from "../Utilities/Types/UserAndPassword";
+import { UserAndPassword } from "../Utilities";
 
 export class UsersStorage {
     private static _instance: UsersStorage;

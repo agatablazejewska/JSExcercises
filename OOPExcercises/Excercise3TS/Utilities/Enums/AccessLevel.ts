@@ -1,4 +1,6 @@
-export enum AccessLevels {
+enum AccessLevels {
     User, 
     Admin,
 }
+
+export default AccessLevels;

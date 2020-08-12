@@ -1,8 +1,6 @@
 import { User } from "../User/User";
-import { IAdmin } from "../Utilities/Interfaces/Admin/IAdmin";
-import { AccessLevels } from "../Utilities/Enums/AccessLevel";
-import { UserConstructionData } from "../Utilities/Types/UserConstructionData";
-import { IHandleUsersStorage } from "../Utilities/Interfaces/UsersStorage/IHandleUsersStorage";
+import { IAdmin, AccessLevels, UserConstructionData, IHandleUsersStorage } from "../Utilities";
+
 
 
 export class Admin extends User implements IAdmin {

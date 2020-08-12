@@ -1,7 +1,7 @@
-import { DateOfBirth } from "./DateOfBirth";
-import { Gender } from "../Enums/Gender";
+import { Gender, DateOfBirth } from "..";
 
-export type UserConstructionData = {
+
+type UserConstructionData = {
     name: string, 
     surname: string, 
     email: string, 
@@ -9,3 +9,5 @@ export type UserConstructionData = {
     dateOfBirthCurrentFormat: string, 
     gender: Gender, 
     password: string };
+
+export default UserConstructionData;

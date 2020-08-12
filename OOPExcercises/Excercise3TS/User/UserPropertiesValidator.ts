@@ -1,6 +1,6 @@
-import { CommonValidator } from "../../Common/CommonValidator";
 import moment from 'moment';
-import { DateOfBirth } from "../Utilities/Types/DateOfBirth";
+import { CommonValidator } from "../../Common/CommonValidator";
+import { DateOfBirth } from "../Utilities";
 
 export abstract class UserPropertiesValidator {
     static validateNameSurname(name: string, surname: string): void {

@@ -1,10 +1,7 @@
-import { IHandleUsersStorage } from "../Utilities/Interfaces/UsersStorage/IHandleUsersStorage";
 import { UsersStorage } from "./UsersStorage";
 import { User } from "../User/User";
 import { Admin } from "../Admin/Admin";
-import { UserAndPassword } from "../Utilities/Types/UserAndPassword";
-import { UserConstructionData } from "../Utilities/Types/UserConstructionData";
-import { IUser } from "../Utilities/Interfaces/User/IUser";
+import { IHandleUsersStorage, UserAndPassword, UserConstructionData, IUser } from "../Utilities";
 
 export class UsersStorageHandler implements IHandleUsersStorage {
     private readonly _usersStorage: UsersStorage;
