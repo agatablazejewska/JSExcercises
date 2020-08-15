@@ -7,3 +7,5 @@ export { default as IUser } from "./Interfaces/User/IUser";
 export { default as Gender } from "./Enums/Gender";
 export { default as IUserDataOptional } from "./Interfaces/User/IUserDataOptional";
 export { default as DateOfBirth }  from "./Types/DateOfBirth";
+export { default as IChatRoom } from "./Interfaces/ChatRoom/IChatRoom";
+export { default as IMessage } from "./Interfaces/Message/IMessage";
