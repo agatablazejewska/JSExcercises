@@ -1,5 +1,7 @@
 import { ChatRoom } from '../ChatRoom/ChatRoom';
+import { ChatRoomStorageHandler } from '../ChatRoomStorage/ChatRoomStorageHandler';
 import { User } from "../User/User";
+import { UsersStorageHandler } from '../UsersStorage/UsersStorageHandler';
 import {
     IAdmin,
     AccessLevels,
@@ -13,7 +15,8 @@ export class Admin extends User implements IAdmin {
     private readonly _chatRoomsStorageHandler: IChatRoomsStorageHandler;
     accessLevel: AccessLevels;
     
-    constructor(data: UserConstructionData, usersStorageHandler: IHandleUsersStorage, chatRoomsHandler: IChatRoomsStorageHandler) {
+    constructor(data: UserConstructionData, usersStorageHandler: IHandleUsersStorage = new UsersStorageHandler(),
+                chatRoomsHandler: IChatRoomsStorageHandler = new ChatRoomStorageHandler()) {
         super(data);
 
         this.accessLevel = AccessLevels.Admin;   
