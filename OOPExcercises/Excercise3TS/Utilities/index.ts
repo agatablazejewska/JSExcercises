@@ -9,3 +9,6 @@ export { default as IUserDataOptional } from "./Interfaces/User/IUserDataOptiona
 export { default as DateOfBirth }  from "./Types/DateOfBirth";
 export { default as IChatRoom } from "./Interfaces/ChatRoom/IChatRoom";
 export { default as IMessage } from "./Interfaces/Message/IMessage";
+export { default as IChatRoomsStorageHandler } from "./Interfaces/ChatRoomsStorage/IChatRoomsStorageHandler";
+export { default as IHandleMessages } from "./Interfaces/ChatRoom/IHandleMessages";
+export { default as IGetRoom } from "./Interfaces/ChatRoomsStorage/IGetRoom";
