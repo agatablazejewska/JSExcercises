@@ -2,7 +2,7 @@ import { UserAndPassword } from "../Utilities";
 
 export class UsersStorage {
     private static _instance: UsersStorage;
-    private _usersArray: Array<UserAndPassword> = new Array<UserAndPassword>();
+    private _usersArray: UserAndPassword[] = new Array<UserAndPassword>();
 
     private constructor() {}
 
