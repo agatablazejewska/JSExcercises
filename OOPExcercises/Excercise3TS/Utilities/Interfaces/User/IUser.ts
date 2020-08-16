@@ -11,4 +11,7 @@ export default interface IUser extends IUpdatableAndReadable, IHasID {
     accessLevel: AccessLevels;
     canLogin(email: string, password: string): boolean;
     updatePassword(password: string): void;
+    joinRoom(id: string): void;
+    leaveRoom(id: string): void;
+    addMessageInRoom(message: string): void;
 }

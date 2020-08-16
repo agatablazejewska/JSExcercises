@@ -1,11 +1,23 @@
 import uuid4 from 'uuid4';
+import { ChatRoomStorageHandler } from '../ChatRoomStorage/ChatRoomStorageHandler';
+import { Message } from '../Message/Message';
 import { UserPropertiesValidator } from "./UserPropertiesValidator";
 import { CommonValidator } from "../../Common/CommonValidator";
-import { IUser, Gender, AccessLevels, IUserDataOptional, DateOfBirth, UserConstructionData} from "../Utilities";
+import {
+    IUser,
+    Gender,
+    AccessLevels,
+    IUserDataOptional,
+    DateOfBirth,
+    UserConstructionData,
+    IHandleMessages, IGetRoom,
+} from '../Utilities';
 
 export class User implements IUser {
     protected readonly _id: string;
     protected readonly _finalDateFormat: string = "MM/DD/YYYY";
+    protected readonly _roomHandler: IGetRoom;
+    protected _currentRoom: IHandleMessages | undefined;
     protected _password: string;
     readonly name: string;
     readonly surname: string;
@@ -14,7 +26,7 @@ export class User implements IUser {
     readonly gender: Gender;
     readonly accessLevel: AccessLevels;
     
-    constructor(data: UserConstructionData)
+    constructor(data: UserConstructionData, roomHandler: IGetRoom = new ChatRoomStorageHandler())
     {
             this._validate(data.password, name, data.surname, data.email);
             this._id = uuid4();
@@ -26,6 +38,8 @@ export class User implements IUser {
             this._password = data.password;
             this.dateOfBirth = UserPropertiesValidator
                 .validateAndFormatDateOfBirth(data.dateOfBirth, data.dateOfBirthCurrentFormat, this._finalDateFormat);
+
+            this._roomHandler = roomHandler;
     }
 
     get id() {
@@ -79,6 +93,24 @@ export class User implements IUser {
         ${this.dateOfBirth}
         ${this.gender}
         ${this.accessLevel}`);
+    }
+
+    addMessageInRoom(message: string): void {
+        this._currentRoom?.addMessage(new Message(this, message));
+    }
+
+    joinRoom(id: string): void {
+
+        const room = this._roomHandler.getRoom(id);
+        if(room) {
+            this._currentRoom = room;
+            room.addUser(this);
+        }
+    }
+
+    leaveRoom(id: string): void {
+        this._roomHandler.getRoom(id)?.removeUser(this.id);
+        this._currentRoom = undefined;
     }
 
     private _isEmailCorrect(email: string) : boolean {
