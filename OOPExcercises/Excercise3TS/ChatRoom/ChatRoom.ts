@@ -31,7 +31,7 @@ export class ChatRoom implements IChatRoom {
         return this._bannedUsersIDs;
     }
 
-    getAllMessages(): Array<IMessage> {
+    getAllMessages(): IMessage[] {
         return this._messages;
     }
 
