@@ -3,10 +3,9 @@ import { IChatRoom, IChatRoomsStorageHandler } from '../Utilities';
 import { Helper } from '../../Common/Helper';
 
 export class ChatRoomStorageHandler implements IChatRoomsStorageHandler {
-    private readonly _chatRoomsStorage: ChatRoomsStorage;
+    private readonly _chatRoomsStorage = ChatRoomsStorage;
 
     constructor() {
-        this._chatRoomsStorage = ChatRoomsStorage.getInstance();
     }
 
     addNewRoom(room: IChatRoom): void {

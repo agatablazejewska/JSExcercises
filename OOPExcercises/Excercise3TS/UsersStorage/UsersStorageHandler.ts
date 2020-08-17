@@ -4,10 +4,9 @@ import { Admin } from "../Admin/Admin";
 import { IHandleUsersStorage, UserAndPassword, UserConstructionData, IUser } from "../Utilities";
 
 export class UsersStorageHandler implements IHandleUsersStorage {
-    private readonly _usersStorage: UsersStorage;
+    private readonly _usersStorage = UsersStorage;
 
     constructor() {
-        this._usersStorage = UsersStorage.getInstance();
     }
 
     addUser(data: UserConstructionData): void {
