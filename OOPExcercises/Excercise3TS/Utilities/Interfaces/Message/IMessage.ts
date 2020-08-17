@@ -3,7 +3,7 @@ import {IUser} from "../../index";
 import {IHasID} from "../../../../Common/IHasID";
 
 export default interface IMessage extends IHasID {
-    author: IUser;
+    readonly author: IUser;
     message: string;
-    dateAndTime: moment.Moment;
+    createdAt: moment.Moment;
 }

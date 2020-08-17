@@ -55,7 +55,7 @@ export class ChatRoom implements IChatRoom {
         const usersIndex = this._users.findIndex(u => u.id === id);
 
         if(usersIndex > -1) {
-            this._bannedUsersIDs.push()
+            this._bannedUsersIDs.push(id);
         }
     }
 }

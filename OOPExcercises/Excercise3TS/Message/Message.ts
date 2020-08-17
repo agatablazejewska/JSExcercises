@@ -5,14 +5,14 @@ import {IMessage, IUser} from "../Utilities";
 
 export class Message implements IMessage {
     readonly id: string;
-    author: IUser;
-    dateAndTime: moment.Moment;
+    readonly author: IUser;
+    createdAt: moment.Moment;
     message: string;
 
      constructor(author: IUser, message: string) {
          this.id = uuid4();
          this.author = author;
          this.message = message;
-         this.dateAndTime = moment();
+         this.createdAt = moment();
      }
 }
