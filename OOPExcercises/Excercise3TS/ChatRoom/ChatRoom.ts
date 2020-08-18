@@ -36,7 +36,9 @@ export class ChatRoom implements IChatRoom {
     }
 
     addMessage(messageObj: IMessage): void {
-        this._messages.push(messageObj);
+        if(this._users.find(u => u.id === messageObj.author.id)){
+            this._messages.push(messageObj);
+        }
     }
 
     removeMessage(id: string): void {
@@ -44,7 +46,9 @@ export class ChatRoom implements IChatRoom {
     }
 
     addUser(user: IUser): void {
-        this._users.push(user);
+        if(!this._users.find(u => u.id === user.id)) {
+            this._users.push(user);
+        }
     }
 
     removeUser(id: string): void {
