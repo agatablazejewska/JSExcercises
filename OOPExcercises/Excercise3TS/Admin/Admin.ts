@@ -1,58 +1,52 @@
+import { Chat } from '../Chat/Chat';
 import { ChatRoom } from '../ChatRoom/ChatRoom';
-import { ChatRoomStorageHandler } from '../ChatRoomStorage/ChatRoomStorageHandler';
 import { User } from "../User/User";
-import { UsersStorageHandler } from '../UsersStorage/UsersStorageHandler';
 import {
     IAdmin,
     AccessLevels,
-    UserConstructionData,
-    IHandleUsersStorage,
-    IChatRoomsStorageHandler,
+    UserConstructionData, IChatAdmin,
 } from '../Utilities';
 
 export class Admin extends User implements IAdmin {
-    private readonly _usersStorageHandler: IHandleUsersStorage;
-    private readonly _chatRoomsStorageHandler: IChatRoomsStorageHandler;
+    private readonly _chatForAdmin: IChatAdmin;
     accessLevel: AccessLevels;
     
-    constructor(data: UserConstructionData, usersStorageHandler: IHandleUsersStorage = new UsersStorageHandler(),
-                chatRoomsHandler: IChatRoomsStorageHandler = new ChatRoomStorageHandler()) {
+    constructor(data: UserConstructionData, chat: IChatAdmin = new Chat()) {
         super(data);
 
-        this.accessLevel = AccessLevels.Admin;   
-        this._usersStorageHandler = usersStorageHandler;
-        this._chatRoomsStorageHandler = chatRoomsHandler;
+        this._chatForAdmin = chat;
+        this.accessLevel = AccessLevels.Admin;
     }
 
     modifyUserPassword(userId: string, newPassword: string): void {
-        this._usersStorageHandler.updateUserPassword(userId, newPassword);
+        this._chatForAdmin.updateUserPassword(userId, newPassword);
     }
 
     setUserAccessLevelToAdmin(userId: string): void {
-        this._usersStorageHandler.userToAdmin(userId);
+        this._chatForAdmin.userToAdmin(userId);
     }    
 
     setAdminAccessLevelToUser(adminId: string): void {
-        this._usersStorageHandler.adminToUser(adminId);
+        this._chatForAdmin.adminToUser(adminId);
     }
 
     banUserInRoom(roomId: string, userId: string): void {
-        this._chatRoomsStorageHandler.getRoom(roomId)?.banUser(userId);
+        this._chatForAdmin.banUserInRoom(roomId, userId);
     }
 
     createNewRoom(name: string, description: string): void {
-        this._chatRoomsStorageHandler.addNewRoom(new ChatRoom(name, description));
+        this._chatForAdmin.addNewRoom(new ChatRoom(name, description));
     }
 
     deleteRoom(roomId: string): void {
-        this._chatRoomsStorageHandler.deleteRoom(roomId);
+        this._chatForAdmin.deleteRoom(roomId);
     }
 
     deleteMessageInRoom(roomId: string, messageId: string): void {
-        this._chatRoomsStorageHandler.getRoom(roomId)?.removeMessage(messageId);
+        this._chatForAdmin.removeMessageFromRoom(roomId, messageId);
     }
 
     removeUserFromRoom(roomId: string, userId: string): void {
-        this._chatRoomsStorageHandler.getRoom(roomId)?.removeUser(userId);
+        this._chatForAdmin.removeUserFromRoom(roomId, userId);
     }
 }
