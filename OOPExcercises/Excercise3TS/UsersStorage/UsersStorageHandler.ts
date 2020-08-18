@@ -16,7 +16,7 @@ export class UsersStorageHandler implements IHandleUsersStorage {
     }
 
     addAdmin(data: UserConstructionData): void {
-        const admin = new Admin(data, this);
+        const admin = new Admin(data);
 
         this._usersStorage.users.push({user: admin, password: data.password});
     }
