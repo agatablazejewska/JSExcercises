@@ -13,5 +13,5 @@ export default interface IUser extends IUpdatableAndReadable, IHasID {
     updatePassword(password: string): void;
     joinRoom(id: string): void;
     leaveRoom(id: string): void;
-    addMessageInRoom(message: string): void;
+    addMessageInRoom(roomId: string, message: string): void;
 }

@@ -1,5 +1,5 @@
 import uuid4 from 'uuid4';
-import { ChatRoomStorageHandler } from '../ChatRoomStorage/ChatRoomStorageHandler';
+import { Chat } from '../Chat/Chat';
 import { Message } from '../Message/Message';
 import { UserPropertiesValidator } from "./UserPropertiesValidator";
 import { CommonValidator } from "../../Common/CommonValidator";
@@ -9,15 +9,13 @@ import {
     AccessLevels,
     IUserDataOptional,
     DateOfBirth,
-    UserConstructionData,
-    IHandleMessages, IGetRoom,
+    UserConstructionData, IChatUser, IChatAdmin,
 } from '../Utilities';
 
 export class User implements IUser {
     protected readonly _id: string;
     protected readonly _finalDateFormat: string = "MM/DD/YYYY";
-    protected readonly _roomHandler: IGetRoom;
-    protected _currentRoom: IHandleMessages | undefined;
+    protected _chatForUser: IChatUser | IChatAdmin;
     protected _password: string;
     readonly name: string;
     readonly surname: string;
@@ -26,7 +24,7 @@ export class User implements IUser {
     readonly gender: Gender;
     readonly accessLevel: AccessLevels;
     
-    constructor(data: UserConstructionData, roomHandler: IGetRoom = new ChatRoomStorageHandler())
+    constructor(data: UserConstructionData, chat: IChatUser = new Chat())
     {
             this._validate(data.password, name, data.surname, data.email);
             this._id = uuid4();
@@ -38,8 +36,7 @@ export class User implements IUser {
             this._password = data.password;
             this.dateOfBirth = UserPropertiesValidator
                 .validateAndFormatDateOfBirth(data.dateOfBirth, data.dateOfBirthCurrentFormat, this._finalDateFormat);
-
-            this._roomHandler = roomHandler;
+            this._chatForUser = chat;
     }
 
     get id() {
@@ -95,22 +92,16 @@ export class User implements IUser {
         ${this.accessLevel}`);
     }
 
-    addMessageInRoom(message: string): void {
-        this._currentRoom?.addMessage(new Message(this, message));
+    addMessageInRoom(roomId: string, message: string): void {
+        this._chatForUser.addMessageInRoom(roomId, new Message(this, message));
     }
 
     joinRoom(id: string): void {
-
-        const room = this._roomHandler.getRoom(id);
-        if(room) {
-            this._currentRoom = room;
-            room.addUser(this);
-        }
+        this._chatForUser.joinUserToChatRoom(this, id);
     }
 
     leaveRoom(id: string): void {
-        this._roomHandler.getRoom(id)?.removeUser(this.id);
-        this._currentRoom = undefined;
+        this._chatForUser.removeUserFromRoom(id, this.id);
     }
 
     private _isEmailCorrect(email: string) : boolean {
