@@ -3,14 +3,14 @@ import { IChatRoom, IChatRoomsStorageHandler, IMessage, IUser } from '../../inde
 export default interface IChatHandleRooms {
     readonly chatRoomsActions: IChatRoomsStorageHandler;
     showAllChatRooms(): void;
-    joinUserToChatRoom(user: IUser, roomId: string, originator: IUser): void;
-    writeMessageInChatRoom(roomId: string, messageObj: IMessage, originator: IUser): void;
-    removeUserFromRoom(roomId: string, userId: string, originator: IUser): void;
+    joinUserToChatRoom(user: IUser, roomId: string, actionAuthor: IUser): void;
+    writeMessageInChatRoom(roomId: string, messageObj: IMessage, actionAuthor: IUser): void;
+    removeUserFromRoom(roomId: string, userId: string, actionAuthor: IUser): void;
     getUsersListInRoom(roomId: string): IUser[]
     getAllMessagesInRoom(roomId: string): IMessage[];
-    addNewRoom(room: IChatRoom, originator: IUser): void;
-    deleteRoom(id: string, originator: IUser): void;
+    addNewRoom(room: IChatRoom, actionAuthor: IUser): void;
+    deleteRoom(id: string, actionAuthor: IUser): void;
     getBannedUsersIDs(roomId: string): string[];
-    removeMessageFromRoom(roomId: string, messageId: string, originator: IUser): void;
-    banUserInRoom(roomId: string, userId: string, originator: IUser): void;
+    removeMessageFromRoom(roomId: string, messageId: string, actionAuthor: IUser): void;
+    banUserInRoom(roomId: string, userId: string, actionAuthor: IUser): void;
 }
