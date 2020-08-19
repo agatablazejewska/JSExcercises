@@ -44,7 +44,7 @@ export class ChatRoom implements IChatRoom {
     }
 
     addUser(user: IUser): void {
-        if(!this.isUserAMember(user.id)) {
+        if(!this.containsUser(user.id)) {
             this._users.push(user);
         }
     }
@@ -61,7 +61,7 @@ export class ChatRoom implements IChatRoom {
         }
     }
 
-    isUserAMember(userId: string): boolean {
+    containsUser(userId: string): boolean {
         return this._users.some(u => u.id === userId);
     }
 

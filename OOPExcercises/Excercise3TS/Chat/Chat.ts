@@ -92,7 +92,7 @@ export class Chat implements IChatHandleRooms, IChatHandleUsers {
 
     writeMessageInChatRoom(roomId: string, messageObj: IMessage, actionAuthor: IUser) {
         const chatRoom = this._getRoom(roomId);
-        const isUserMemberOfRoom = chatRoom.isUserAMember(messageObj.author.id);
+        const isUserMemberOfRoom = chatRoom.containsUser(messageObj.author.id);
 
         if(!isUserMemberOfRoom && !this._isAdmin(actionAuthor)) {
             throw new Error("This user is not a member of the room");
