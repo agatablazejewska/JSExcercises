@@ -1,6 +1,6 @@
-import { UserConstructionData } from "../..";
+import { UserConstructionData } from '../..';
 
-export default interface IHandleUsersStorage {
+interface IHandleUsersStorage {
     addUser(data: UserConstructionData): void;
     addAdmin(data: UserConstructionData): void;
     removeUser(id: string): void;
@@ -8,3 +8,5 @@ export default interface IHandleUsersStorage {
     adminToUser(id: string): void;
     updateUserPassword(id: string, newPassword: string): void;
 }
+
+export { IHandleUsersStorage };

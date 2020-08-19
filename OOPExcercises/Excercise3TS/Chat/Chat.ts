@@ -8,9 +8,8 @@ import {
     IHandleUsersStorage,
     IMessage,
     IUser,
-    UserConstructionData,
+    UserConstructionData, AccessLevels,
 } from '../Utilities';
-import AccessLevels from '../Utilities/Enums/AccessLevel';
 
 export class Chat implements IChatHandleRooms, IChatHandleUsers {
     readonly chatRoomsActions: IChatRoomsStorageHandler;
@@ -27,50 +26,50 @@ export class Chat implements IChatHandleRooms, IChatHandleUsers {
     }
 
     addAdmin(data: UserConstructionData, actionAuthor: IUser): void {
-        if(!this._isAdmin(actionAuthor)) {
-            throw new Error("Only an admin is allowed to add a new admin");
+        if (!this._isAdmin(actionAuthor)) {
+            throw new Error('Only an admin is allowed to add a new admin');
         }
         this.usersActions.addAdmin(data);
     }
 
     removeUser(id: string, actionAuthor: IUser): void {
-        if(!this._isAdmin(actionAuthor)) {
-            throw new Error("Only an admin is allowed to remove a user");
+        if (!this._isAdmin(actionAuthor)) {
+            throw new Error('Only an admin is allowed to remove a user');
         }
         this.usersActions.removeUser(id);
     }
 
     userToAdmin(id: string, actionAuthor: IUser): void {
-        if(!this._isAdmin(actionAuthor)) {
-            throw new Error("Only an admin is allowed to change privileges");
+        if (!this._isAdmin(actionAuthor)) {
+            throw new Error('Only an admin is allowed to change privileges');
         }
         this.usersActions.userToAdmin(id);
     }
 
     adminToUser(id: string, actionAuthor: IUser): void {
-        if(!this._isAdmin(actionAuthor)) {
-            throw new Error("Only another admin is allowed to change admin privileges");
+        if (!this._isAdmin(actionAuthor)) {
+            throw new Error('Only another admin is allowed to change admin privileges');
         }
         this.usersActions.adminToUser(id);
     }
 
     updateUserPassword(id: string, newPassword: string, actionAuthor: IUser): void {
-        if(actionAuthor.id !== id && !this._isAdmin(actionAuthor)) {
-            throw new Error("Only an admin is allowed to change another user's password");
+        if (actionAuthor.id !== id && !this._isAdmin(actionAuthor)) {
+            throw new Error('Only an admin is allowed to change another user\'s password');
         }
         this.usersActions.updateUserPassword(id, newPassword);
     }
 
     addNewRoom(room: IChatRoom, actionAuthor: IUser): void {
-        if(!this._isAdmin(actionAuthor)) {
-            throw new Error("Only an admin is allowed to add a new room");
+        if (!this._isAdmin(actionAuthor)) {
+            throw new Error('Only an admin is allowed to add a new room');
         }
         this.chatRoomsActions.addNewRoom(room);
     }
 
     deleteRoom(id: string, actionAuthor: IUser): void {
-        if(!this._isAdmin(actionAuthor)) {
-            throw new Error("Only an admin is allowed to add a new admin");
+        if (!this._isAdmin(actionAuthor)) {
+            throw new Error('Only an admin is allowed to add a new admin');
         }
         this.chatRoomsActions.deleteRoom(id);
     }
@@ -81,10 +80,10 @@ export class Chat implements IChatHandleRooms, IChatHandleUsers {
 
     joinUserToChatRoom(user: IUser, roomId: string, actionAuthor: IUser): void {
         const room = this._getRoom(roomId);
-        if(user != actionAuthor && !this._isAdmin(actionAuthor)) {
-            throw new Error("Only an admin is allowed to add other user than himself to a room");
-        } else if(room.isBanned(user.id)) {
-            throw new Error("User is banned in the room");
+        if (user != actionAuthor && !this._isAdmin(actionAuthor)) {
+            throw new Error('Only an admin is allowed to add other user than himself to a room');
+        } else if (room.isBanned(user.id)) {
+            throw new Error('User is banned in the room');
         }
 
         room.addUser(user);
@@ -94,16 +93,16 @@ export class Chat implements IChatHandleRooms, IChatHandleUsers {
         const chatRoom = this._getRoom(roomId);
         const isUserMemberOfRoom = chatRoom.containsUser(messageObj.author.id);
 
-        if(!isUserMemberOfRoom && !this._isAdmin(actionAuthor)) {
-            throw new Error("This user is not a member of the room");
+        if (!isUserMemberOfRoom && !this._isAdmin(actionAuthor)) {
+            throw new Error('This user is not a member of the room');
         }
 
         chatRoom.addMessage(messageObj);
     }
 
     removeUserFromRoom(roomId: string, userId: string, actionAuthor: IUser) {
-        if(actionAuthor.id !== userId && !this._isAdmin(actionAuthor)) {
-            throw new Error("Only an admin is allowed to remove user other than himself from a room");
+        if (actionAuthor.id !== userId && !this._isAdmin(actionAuthor)) {
+            throw new Error('Only an admin is allowed to remove user other than himself from a room');
         }
         this._getRoom(roomId).removeUser(userId);
     }
@@ -112,7 +111,7 @@ export class Chat implements IChatHandleRooms, IChatHandleUsers {
         return this._getRoom(roomId).getUsersList();
     }
 
-    getBannedUsersIDs(roomId: string): string[]{
+    getBannedUsersIDs(roomId: string): string[] {
         return this._getRoom(roomId).getBannedUsersIDs();
     }
 
@@ -121,16 +120,16 @@ export class Chat implements IChatHandleRooms, IChatHandleUsers {
     }
 
     removeMessageFromRoom(roomId: string, messageId: string, actionAuthor: IUser): void {
-        if(!this._isAdmin(actionAuthor)) {
-            throw new Error("Only admin can remove messages in room");
+        if (!this._isAdmin(actionAuthor)) {
+            throw new Error('Only admin can remove messages in room');
         }
 
         this._getRoom(roomId).removeMessage(messageId);
     }
 
     banUserInRoom(roomId: string, userId: string, actionAuthor: IUser): void {
-        if(!this._isAdmin(actionAuthor)) {
-            throw new Error("Only admin can ban users in room");
+        if (!this._isAdmin(actionAuthor)) {
+            throw new Error('Only admin can ban users in room');
         }
 
         this._getRoom(roomId).banUser(userId);

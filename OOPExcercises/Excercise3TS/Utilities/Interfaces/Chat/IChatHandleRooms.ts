@@ -1,6 +1,6 @@
 import { IChatRoom, IChatRoomsStorageHandler, IMessage, IUser } from '../../index';
 
-export default interface IChatHandleRooms {
+interface IChatHandleRooms {
     readonly chatRoomsActions: IChatRoomsStorageHandler;
     showAllChatRooms(): void;
     joinUserToChatRoom(user: IUser, roomId: string, actionAuthor: IUser): void;
@@ -14,3 +14,5 @@ export default interface IChatHandleRooms {
     removeMessageFromRoom(roomId: string, messageId: string, actionAuthor: IUser): void;
     banUserInRoom(roomId: string, userId: string, actionAuthor: IUser): void;
 }
+
+export { IChatHandleRooms };

@@ -1,7 +1,7 @@
 import { IUser, IMessage } from '../..';
-import {IHasID} from "../../../../Common/IHasID";
+import { IHasID } from '../../../../Common/IHasID';
 
-export default interface IChatRoom extends IHasID {
+interface IChatRoom extends IHasID {
     name: string;
     description: string;
     getUsersList(): IUser[];
@@ -15,3 +15,5 @@ export default interface IChatRoom extends IHasID {
     addMessage(messageObj: IMessage): void;
     removeMessage(id: string): void;
 }
+
+export { IChatRoom };

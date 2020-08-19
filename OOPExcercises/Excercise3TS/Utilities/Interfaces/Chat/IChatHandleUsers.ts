@@ -1,6 +1,6 @@
 import { IHandleUsersStorage, IUser, UserConstructionData } from '../../index';
 
-export default interface IChatHandleUsers {
+interface IChatHandleUsers {
     readonly usersActions: IHandleUsersStorage;
     addUser(data: UserConstructionData): void;
     addAdmin(data: UserConstructionData, actionAuthor: IUser): void;
@@ -9,3 +9,5 @@ export default interface IChatHandleUsers {
     adminToUser(id: string, actionAuthor: IUser): void;
     updateUserPassword(id: string, newPassword: string, actionAuthor: IUser): void;
 }
+
+export { IChatHandleUsers };

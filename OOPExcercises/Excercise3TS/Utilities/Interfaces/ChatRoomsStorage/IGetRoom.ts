@@ -1,5 +1,7 @@
 import { IChatRoom } from '../../index';
 
-export default interface IGetRoom {
+interface IGetRoom {
     getRoom(id: string): IChatRoom;
 }
+
+export { IGetRoom };
