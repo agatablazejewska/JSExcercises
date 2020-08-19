@@ -1,6 +1,4 @@
 import uuid4 from 'uuid4';
-import { Chat } from '../Chat/Chat';
-import { Message } from '../Message/Message';
 import { UserPropertiesValidator } from "./UserPropertiesValidator";
 import { CommonValidator } from "../../Common/CommonValidator";
 import {
@@ -9,22 +7,21 @@ import {
     AccessLevels,
     IUserDataOptional,
     DateOfBirth,
-    UserConstructionData, IChatUser, IChatAdmin,
+    UserConstructionData,
 } from '../Utilities';
 
 export class User implements IUser {
     protected readonly _id: string;
     protected readonly _finalDateFormat: string = "MM/DD/YYYY";
-    protected _chatForUser: IChatUser | IChatAdmin;
     protected _password: string;
     readonly name: string;
     readonly surname: string;
     readonly email: string;
     readonly dateOfBirth: DateOfBirth;
     readonly gender: Gender;
-    readonly accessLevel: AccessLevels;
+    accessLevel: AccessLevels;
     
-    constructor(data: UserConstructionData, chat: IChatUser = new Chat())
+    constructor(data: UserConstructionData)
     {
             this._validate(data.password, name, data.surname, data.email);
             this._id = uuid4();
@@ -36,7 +33,6 @@ export class User implements IUser {
             this._password = data.password;
             this.dateOfBirth = UserPropertiesValidator
                 .validateAndFormatDateOfBirth(data.dateOfBirth, data.dateOfBirthCurrentFormat, this._finalDateFormat);
-            this._chatForUser = chat;
     }
 
     get id() {
@@ -90,18 +86,6 @@ export class User implements IUser {
         ${this.dateOfBirth}
         ${this.gender}
         ${this.accessLevel}`);
-    }
-
-    addMessageInRoom(roomId: string, message: string): void {
-        this._chatForUser.addMessageInRoom(roomId, new Message(this, message));
-    }
-
-    joinRoom(id: string): void {
-        this._chatForUser.joinUserToChatRoom(this, id);
-    }
-
-    leaveRoom(id: string): void {
-        this._chatForUser.removeUserFromRoom(id, this.id);
     }
 
     private _isEmailCorrect(email: string) : boolean {
