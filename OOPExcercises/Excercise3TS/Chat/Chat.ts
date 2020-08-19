@@ -1,7 +1,8 @@
 import { ChatRoomStorageHandler } from '../ChatRoomStorage/ChatRoomStorageHandler';
 import { UsersStorageHandler } from '../UsersStorage/UsersStorageHandler';
 import {
-    IChatHandleRooms, IChatHandleUsers,
+    IChatHandleRooms,
+    IChatHandleUsers,
     IChatRoom,
     IChatRoomsStorageHandler,
     IHandleUsersStorage,
@@ -9,6 +10,7 @@ import {
     IUser,
     UserConstructionData,
 } from '../Utilities';
+import AccessLevels from '../Utilities/Enums/AccessLevel';
 
 export class Chat implements IChatHandleRooms, IChatHandleUsers {
     readonly chatRoomsActions: IChatRoomsStorageHandler;
@@ -24,31 +26,52 @@ export class Chat implements IChatHandleRooms, IChatHandleUsers {
         this.usersActions.addUser(data);
     }
 
-    addAdmin(data: UserConstructionData): void {
+    addAdmin(data: UserConstructionData, originator: IUser): void {
+        if(!this._isAdmin(originator)) {
+            throw new Error("Only an admin is allowed to add a new admin");
+        }
         this.usersActions.addAdmin(data);
     }
 
-    removeUser(id: string): void {
+    removeUser(id: string, originator: IUser): void {
+        if(!this._isAdmin(originator)) {
+            throw new Error("Only an admin is allowed to remove a user");
+        }
         this.usersActions.removeUser(id);
     }
 
-    userToAdmin(id: string): void {
+    userToAdmin(id: string, originator: IUser): void {
+        if(!this._isAdmin(originator)) {
+            throw new Error("Only an admin is allowed to change privileges");
+        }
         this.usersActions.userToAdmin(id);
     }
 
-    adminToUser(id: string): void {
+    adminToUser(id: string, originator: IUser): void {
+        if(!this._isAdmin(originator)) {
+            throw new Error("Only another admin is allowed to change admin privileges");
+        }
         this.usersActions.adminToUser(id);
     }
 
-    updateUserPassword(id: string, newPassword: string): void {
+    updateUserPassword(id: string, newPassword: string, originator: IUser): void {
+        if(originator.id !== id && !this._isAdmin(originator)) {
+            throw new Error("Only an admin is allowed to change another user's password");
+        }
         this.usersActions.updateUserPassword(id, newPassword);
     }
 
-    addNewRoom(room: IChatRoom): void {
+    addNewRoom(room: IChatRoom, originator: IUser): void {
+        if(!this._isAdmin(originator)) {
+            throw new Error("Only an admin is allowed to add a new room");
+        }
         this.chatRoomsActions.addNewRoom(room);
     }
 
-    deleteRoom(id: string): void {
+    deleteRoom(id: string, originator: IUser): void {
+        if(!this._isAdmin(originator)) {
+            throw new Error("Only an admin is allowed to add a new admin");
+        }
         this.chatRoomsActions.deleteRoom(id);
     }
 
@@ -56,50 +79,64 @@ export class Chat implements IChatHandleRooms, IChatHandleUsers {
         this.chatRoomsActions.showAllChatRooms();
     }
 
-    getRoom(id: string): IChatRoom {
-            return this.chatRoomsActions.getRoom(id);
+    joinUserToChatRoom(user: IUser, roomId: string, originator: IUser): void {
+        if(user != originator && this._isAdmin(originator)) {
+            throw new Error("Only an admin is allowed to add other user than himself to a room");
+        }
+        this._getRoom(roomId).addUser(user);
     }
 
-    joinUserToChatRoom(user: IUser, roomId: string): void {
-        this.getRoom(roomId).addUser(user);
-    }
-
-    writeMessageInChatRoom(roomId: string, messageObj: IMessage) {
-        const chatRoom = this.getRoom(roomId);
+    writeMessageInChatRoom(roomId: string, messageObj: IMessage, originator: IUser) {
+        const chatRoom = this._getRoom(roomId);
         const isUserMemberOfRoom = chatRoom.isUserAMember(messageObj.author.id);
 
-        if(!isUserMemberOfRoom) {
+        if(!isUserMemberOfRoom && !this._isAdmin(originator)) {
             throw new Error("This user is not a member of the room");
         }
 
         chatRoom.addMessage(messageObj);
     }
 
-    removeUserFromRoom(roomId: string, userId: string) {
-        this.getRoom(roomId).removeUser(userId);
+    removeUserFromRoom(roomId: string, userId: string, originator: IUser) {
+        if(originator.id !== userId && !this._isAdmin(originator)) {
+            throw new Error("Only an admin is allowed to remove user other than himself from a room");
+        }
+        this._getRoom(roomId).removeUser(userId);
     }
 
     getUsersListInRoom(roomId: string): IUser[] {
-        return this.getRoom(roomId).getUsersList();
+        return this._getRoom(roomId).getUsersList();
     }
 
     getBannedUsersIDs(roomId: string): string[]{
-        return this.getRoom(roomId).getBannedUsersIDs();
+        return this._getRoom(roomId).getBannedUsersIDs();
     }
 
     getAllMessagesInRoom(roomId: string): IMessage[] {
-        return this.getRoom(roomId).getAllMessages();
+        return this._getRoom(roomId).getAllMessages();
     }
 
-    addMessageInRoom(roomId: string, messageObj: IMessage): void {
-        this.getRoom(roomId).addMessage(messageObj);
+    removeMessageFromRoom(roomId: string, messageId: string, originator: IUser): void {
+        if(!this._isAdmin(originator)) {
+            throw new Error("Only admin can remove messages in room");
+        }
+
+        this._getRoom(roomId).removeMessage(messageId);
     }
 
-    removeMessageFromRoom(roomId: string, messageId: string): void {
-        this.getRoom(roomId).removeMessage(messageId);
+    banUserInRoom(roomId: string, userId: string, originator: IUser): void {
+        if(!this._isAdmin(originator)) {
+            throw new Error("Only admin can ban users in room");
+        }
+
+        this._getRoom(roomId).banUser(userId);
     }
 
-    banUserInRoom(roomId: string, userId: string): void {
-        this.getRoom(roomId).banUser(userId);
+    private _isAdmin(user: IUser): boolean {
+        return user.accessLevel === AccessLevels.Admin;
+    }
+
+    private _getRoom(id: string): IChatRoom {
+        return this.chatRoomsActions.getRoom(id);
     }
 }
