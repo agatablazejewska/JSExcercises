@@ -21,7 +21,12 @@ export class ChatRoomStorageHandler implements IChatRoomsStorageHandler {
             console.log(`Room name is ${r.name} and here's it's description: ${r.description}`));
     }
 
-    getRoom(id: string): IChatRoom | undefined {
-        return this._chatRoomsStorage.rooms.find(r => r.id === id);
+    getRoom(id: string): IChatRoom {
+        const chatRoom = this._chatRoomsStorage.rooms.find(r => r.id === id);
+        if(!chatRoom) {
+            throw new Error("Chat room doesn't exist");
+        }
+
+        return chatRoom;
     }
 }
