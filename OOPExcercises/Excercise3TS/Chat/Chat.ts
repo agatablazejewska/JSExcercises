@@ -54,7 +54,8 @@ export class Chat implements IChatHandleRooms, IChatHandleUsers {
     }
 
     updateUserPassword(id: string, newPassword: string, actionAuthor: IUser): void {
-        if (actionAuthor.id !== id && !this._isAdmin(actionAuthor)) {
+        if (!this._wasActionStartedBySameUserItOperatesOn(id, actionAuthor.id)
+            && !this._isAdmin(actionAuthor)) {
             throw new Error('Only an admin is allowed to change another user\'s password');
         }
         this.usersActions.updateUserPassword(id, newPassword);
@@ -80,7 +81,7 @@ export class Chat implements IChatHandleRooms, IChatHandleUsers {
 
     joinUserToChatRoom(user: IUser, roomId: string, actionAuthor: IUser): void {
         const room = this._getRoom(roomId);
-        if (user != actionAuthor && !this._isAdmin(actionAuthor)) {
+        if (!this._wasActionStartedBySameUserItOperatesOn(user.id, actionAuthor.id) && !this._isAdmin(actionAuthor)) {
             throw new Error('Only an admin is allowed to add other user than himself to a room');
         } else if (room.isBanned(user.id)) {
             throw new Error('User is banned in the room');
@@ -91,9 +92,9 @@ export class Chat implements IChatHandleRooms, IChatHandleUsers {
 
     writeMessageInChatRoom(roomId: string, messageObj: IMessage, actionAuthor: IUser) {
         const chatRoom = this._getRoom(roomId);
-        const isUserMemberOfRoom = chatRoom.containsUser(messageObj.author.id);
+        const _isUserInRoom = chatRoom.containsUser(messageObj.author.id);
 
-        if (!isUserMemberOfRoom && !this._isAdmin(actionAuthor)) {
+        if (!_isUserInRoom && !this._isAdmin(actionAuthor)) {
             throw new Error('This user is not a member of the room');
         }
 
@@ -101,7 +102,7 @@ export class Chat implements IChatHandleRooms, IChatHandleUsers {
     }
 
     removeUserFromRoom(roomId: string, userId: string, actionAuthor: IUser) {
-        if (actionAuthor.id !== userId && !this._isAdmin(actionAuthor)) {
+        if (!this._wasActionStartedBySameUserItOperatesOn(userId, actionAuthor.id) && !this._isAdmin(actionAuthor)) {
             throw new Error('Only an admin is allowed to remove user other than himself from a room');
         }
         this._getRoom(roomId).removeUser(userId);
@@ -141,5 +142,9 @@ export class Chat implements IChatHandleRooms, IChatHandleUsers {
 
     private _getRoom(id: string): IChatRoom {
         return this.chatRoomsActions.getRoom(id);
+    }
+
+    private _wasActionStartedBySameUserItOperatesOn(userId: string, actionAuthorId: string) {
+        return userId === actionAuthorId;
     }
 }
