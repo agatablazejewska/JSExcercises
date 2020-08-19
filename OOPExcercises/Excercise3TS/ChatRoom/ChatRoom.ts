@@ -64,4 +64,8 @@ export class ChatRoom implements IChatRoom {
     isUserAMember(userId: string): boolean {
         return this._users.some(u => u.id === userId);
     }
+
+    isBanned(userId: string): boolean {
+        return this._bannedUsersIDs.some(id => id === userId);
+    }
 }

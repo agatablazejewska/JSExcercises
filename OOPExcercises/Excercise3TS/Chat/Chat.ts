@@ -80,10 +80,14 @@ export class Chat implements IChatHandleRooms, IChatHandleUsers {
     }
 
     joinUserToChatRoom(user: IUser, roomId: string, actionAuthor: IUser): void {
-        if(user != actionAuthor && this._isAdmin(actionAuthor)) {
+        const room = this._getRoom(roomId);
+        if(user != actionAuthor && !this._isAdmin(actionAuthor)) {
             throw new Error("Only an admin is allowed to add other user than himself to a room");
+        } else if(room.isBanned(user.id)) {
+            throw new Error("User is banned in the room");
         }
-        this._getRoom(roomId).addUser(user);
+
+        room.addUser(user);
     }
 
     writeMessageInChatRoom(roomId: string, messageObj: IMessage, actionAuthor: IUser) {
