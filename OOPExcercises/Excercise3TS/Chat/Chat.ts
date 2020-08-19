@@ -1,7 +1,7 @@
 import { ChatRoomStorageHandler } from '../ChatRoomStorage/ChatRoomStorageHandler';
 import { UsersStorageHandler } from '../UsersStorage/UsersStorageHandler';
 import {
-    IChatAdmin,
+    IChatHandleRooms, IChatHandleUsers,
     IChatRoom,
     IChatRoomsStorageHandler,
     IHandleUsersStorage,
@@ -10,89 +10,96 @@ import {
     UserConstructionData,
 } from '../Utilities';
 
-export class Chat implements IChatAdmin {
-    readonly chatRooms: IChatRoomsStorageHandler;
-    readonly users: IHandleUsersStorage;
+export class Chat implements IChatHandleRooms, IChatHandleUsers {
+    readonly chatRoomsActions: IChatRoomsStorageHandler;
+    readonly usersActions: IHandleUsersStorage;
 
     constructor(chatRoomsHandler: IChatRoomsStorageHandler = new ChatRoomStorageHandler(),
                 usersHandler: IHandleUsersStorage = new UsersStorageHandler()) {
-        this.chatRooms = chatRoomsHandler;
-        this.users = usersHandler;
+        this.chatRoomsActions = chatRoomsHandler;
+        this.usersActions = usersHandler;
     }
 
     addUser(data: UserConstructionData): void {
-        this.users.addUser(data);
+        this.usersActions.addUser(data);
     }
 
     addAdmin(data: UserConstructionData): void {
-        this.users.addAdmin(data);
+        this.usersActions.addAdmin(data);
     }
 
     removeUser(id: string): void {
-        this.users.removeUser(id);
+        this.usersActions.removeUser(id);
     }
 
     userToAdmin(id: string): void {
-        this.users.userToAdmin(id);
+        this.usersActions.userToAdmin(id);
     }
 
     adminToUser(id: string): void {
-        this.users.adminToUser(id);
+        this.usersActions.adminToUser(id);
     }
 
     updateUserPassword(id: string, newPassword: string): void {
-        this.users.updateUserPassword(id, newPassword);
+        this.usersActions.updateUserPassword(id, newPassword);
     }
 
     addNewRoom(room: IChatRoom): void {
-        this.chatRooms.addNewRoom(room);
+        this.chatRoomsActions.addNewRoom(room);
     }
 
     deleteRoom(id: string): void {
-        this.chatRooms.deleteRoom(id);
+        this.chatRoomsActions.deleteRoom(id);
     }
 
     showAllChatRooms(): void {
-        this.chatRooms.showAllChatRooms();
+        this.chatRoomsActions.showAllChatRooms();
     }
 
-    getRoom(id: string): IChatRoom | undefined {
-        return this.getRoom(id);
+    getRoom(id: string): IChatRoom {
+            return this.chatRoomsActions.getRoom(id);
     }
 
     joinUserToChatRoom(user: IUser, roomId: string): void {
-        this.getRoom(roomId)?.addUser(user);
+        this.getRoom(roomId).addUser(user);
     }
 
     writeMessageInChatRoom(roomId: string, messageObj: IMessage) {
-        this.getRoom(roomId)?.addMessage(messageObj);
+        const chatRoom = this.getRoom(roomId);
+        const isUserMemberOfRoom = chatRoom.isUserAMember(messageObj.author.id);
+
+        if(!isUserMemberOfRoom) {
+            throw new Error("This user is not a member of the room");
+        }
+
+        chatRoom.addMessage(messageObj);
     }
 
     removeUserFromRoom(roomId: string, userId: string) {
-        this.getRoom(roomId)?.removeUser(userId);
+        this.getRoom(roomId).removeUser(userId);
     }
 
-    getUsersListInRoom(roomId: string): IUser[] | undefined {
-        return this.getRoom(roomId)?.getUsersList();
+    getUsersListInRoom(roomId: string): IUser[] {
+        return this.getRoom(roomId).getUsersList();
     }
 
-    getBannedUsersIDs(roomId: string): string[] | undefined {
-        return this.getRoom(roomId)?.getBannedUsersIDs();
+    getBannedUsersIDs(roomId: string): string[]{
+        return this.getRoom(roomId).getBannedUsersIDs();
     }
 
-    getAllMessagesInRoom(roomId: string): IMessage[] | undefined {
-        return this.getRoom(roomId)?.getAllMessages();
+    getAllMessagesInRoom(roomId: string): IMessage[] {
+        return this.getRoom(roomId).getAllMessages();
     }
 
     addMessageInRoom(roomId: string, messageObj: IMessage): void {
-        this.getRoom(roomId)?.addMessage(messageObj);
+        this.getRoom(roomId).addMessage(messageObj);
     }
 
     removeMessageFromRoom(roomId: string, messageId: string): void {
-        this.getRoom(roomId)?.removeMessage(messageId);
+        this.getRoom(roomId).removeMessage(messageId);
     }
 
     banUserInRoom(roomId: string, userId: string): void {
-        this.getRoom(roomId)?.banUser(userId);
+        this.getRoom(roomId).banUser(userId);
     }
 }

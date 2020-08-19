@@ -13,6 +13,6 @@ export { default as IChatRoom } from './Interfaces/ChatRoom/IChatRoom';
 export { default as IMessage } from './Interfaces/Message/IMessage';
 export { default as IChatRoomsStorageHandler } from './Interfaces/ChatRoomsStorage/IChatRoomsStorageHandler';
 export { default as IGetRoom } from './Interfaces/ChatRoomsStorage/IGetRoom';
-export { default as IChatUser } from './Interfaces/Chat/IChatUser';
-export { default as IChatAdmin } from './Interfaces/Chat/IChatAdmin';
+export { default as IChatHandleUsers } from './Interfaces/Chat/IChatHandleUsers';
+export { default as IChatHandleRooms } from './Interfaces/Chat/IChatHandleRooms';
 
