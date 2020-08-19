@@ -9,6 +9,7 @@ export default interface IChatRoom extends IHasID {
     getAllMessages(): IMessage[];
     addUser(user: IUser): void;
     removeUser(id: string): void;
+    isUserAMember(userId: string): boolean;
     banUser(id: string): void;
     addMessage(messageObj: IMessage): void;
     removeMessage(id: string): void;
