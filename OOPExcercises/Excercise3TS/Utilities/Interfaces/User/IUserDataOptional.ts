@@ -1,7 +1,9 @@
-import  AccessLevels  from "../../Enums/AccessLevel";
+import { AccessLevels } from '../../Enums/AccessLevel';
 
-export default interface IUserDataOptional {
+interface IUserDataOptional {
     surname?: string;
     email?: string;
     accessLevel?: AccessLevels;
 }
+
+export { IUserDataOptional };

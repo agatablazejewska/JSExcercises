@@ -1,5 +1,5 @@
-import  IUser  from "../Interfaces/User/IUser";
+import { IUser } from '../Interfaces/User/IUser';
 
 type UserAndPassword = { user: IUser, password: string };
 
-export default UserAndPassword;
+export { UserAndPassword };

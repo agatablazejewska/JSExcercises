@@ -1,8 +1,14 @@
 import uuid4 from 'uuid4';
 import { UserPropertiesValidator } from "./UserPropertiesValidator";
 import { CommonValidator } from "../../Common/CommonValidator";
-import { UsersStorage } from "../UsersStorage/UsersStorage";
-import { IUser, Gender, AccessLevels, IUserDataOptional, DateOfBirth, UserConstructionData} from "../Utilities";
+import {
+    IUser,
+    Gender,
+    AccessLevels,
+    IUserDataOptional,
+    DateOfBirth,
+    UserConstructionData,
+} from '../Utilities';
 
 export class User implements IUser {
     protected readonly _id: string;
@@ -13,7 +19,7 @@ export class User implements IUser {
     readonly email: string;
     readonly dateOfBirth: DateOfBirth;
     readonly gender: Gender;
-    readonly accessLevel: AccessLevels;
+    accessLevel: AccessLevels;
     
     constructor(data: UserConstructionData)
     {
@@ -26,7 +32,7 @@ export class User implements IUser {
             this.accessLevel = AccessLevels.User;
             this._password = data.password;
             this.dateOfBirth = UserPropertiesValidator
-            .validateAndFormatDateOfBirth(data.dateOfBirth, data.dateOfBirthCurrentFormat, this._finalDateFormat);
+                .validateAndFormatDateOfBirth(data.dateOfBirth, data.dateOfBirthCurrentFormat, this._finalDateFormat);
     }
 
     get id() {
