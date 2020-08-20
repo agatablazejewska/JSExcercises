@@ -1,35 +1,34 @@
 import moment from 'moment';
 import uuid4 from 'uuid4';
-import { CommonValidator } from '../Common/CommonValidator';
-import { IBooking, IUser } from './Interfaces';
+import { Helper } from '../Common/Helper';
+import { IBook, IBooking, IUser } from './Interfaces';
 
 export class Booking implements IBooking {
     private _penalty: number;
     private _penaltyForEachDay: number = 2;
     readonly id: string;
-    readonly bookId: string;
-    readonly bookTitle: string;
+    readonly bookIds: string[];
     readonly rentedTo: IUser;
     readonly rentedAt: moment.Moment;
     returnedAt: moment.Moment | undefined;
     expectedReturnDate: moment.Moment;
 
 
-    constructor(bookId: string, bookTitle: string, rentedTo: IUser) {
-        CommonValidator.validateEmptyString(bookId);
-        CommonValidator.validateEmptyString(bookTitle);
-
+    constructor(books: IBook[], rentedTo: IUser) {
         this.id = uuid4();
-        this.bookId = bookId;
-        this.bookTitle = bookTitle;
+        this.bookIds = books.map(book => book.id);
         this.rentedTo = rentedTo;
         this.rentedAt = moment().startOf('day');
         this.expectedReturnDate = this.rentedAt.add(7, 'days');
         this._penalty = 0;
     }
 
-    returnBook(): void {
-        this.returnedAt = moment().startOf('day');
+    returnBooks(books: IBook[]): void {
+        books.forEach(book => Helper.removeFromIdsArray(book.id, this.bookIds));
+
+        if(this.bookIds.length === 0) {
+            this.returnedAt = moment().startOf('day');
+        }
     }
 
     get penalty() {

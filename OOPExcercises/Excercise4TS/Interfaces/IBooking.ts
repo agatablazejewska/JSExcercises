@@ -1,16 +1,16 @@
 import moment from 'moment';
 import { IHasID } from '../../Common/IHasID';
+import { IBook } from './IBook';
 import { IUser } from './IUser';
 
 interface IBooking extends IHasID {
-    readonly bookId: string;
-    readonly bookTitle: string;
+    readonly bookIds: string[];
     readonly rentedTo: IUser;
     readonly rentedAt: moment.Moment;
     readonly penalty: number;
     returnedAt: moment.Moment | undefined;
     expectedReturnDate: moment.Moment;
-    returnBook(): void;
+    returnBooks(books: IBook[]): void;
 }
 
 export { IBooking };
