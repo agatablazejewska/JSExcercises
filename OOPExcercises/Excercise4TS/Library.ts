@@ -27,21 +27,19 @@ export class Library implements ILibrary {
         Helper.removeFromArray(book.id, this.bookList);
     }
 
-    rentBook(book: IBook, user: IUser, actionAuthor: IUser): void {
+    rentBooks(books: IBook[], user: IUser, actionAuthor: IUser): void {
         this._checkIfUserIsAllowedToPerformAction(actionAuthor);
-        this._checkIfBookIsAvailable(book);
+        books.forEach(book => this._checkIfBookIsAvailable(book));
 
-        const booking = new Booking(book.id, book.title, user);
+        const booking = new Booking(books, user);
         this.bookingList.push(booking);
-        Helper.removeFromArray(book.id, this.availableBooksList);
+
+        books.forEach(book => Helper.removeFromArray(book.id, this.availableBooksList));
     }
 
-    returnBookCheckPenalty(booking: IBooking, actionAuthor: IUser): number {
+    returnBooksCheckPenalty(books: IBook[], booking: IBooking, actionAuthor: IUser): number {
         this._checkIfUserIsAllowedToPerformAction(actionAuthor);
-
-        const bookingRecord = this._findBookingRecord(booking);
-        bookingRecord.returnBook();
-        this._addBookToAvailableList(bookingRecord);
+        this._returnBook(books, booking);
 
         return booking.penalty;
     }
@@ -50,12 +48,12 @@ export class Library implements ILibrary {
         return booking.penalty;
     }
 
-    private _isAdmin(user: IUser) {
+    private _isEmployee(user: IUser) {
         return user.accessLevel === AccessLevels.Admin;
     }
 
     private _checkIfUserIsAllowedToPerformAction(actionAuthor: IUser) {
-        if (!this._isAdmin(actionAuthor)) {
+        if (!this._isEmployee(actionAuthor)) {
             throw new Error('Only admin is allowed to perform this action');
         }
     }
@@ -81,9 +79,23 @@ export class Library implements ILibrary {
         return bookingRecord;
     }
 
-    private _addBookToAvailableList(bookingRecord: IBooking) {
-        const book = this.bookList.find(b => b.id === bookingRecord.bookId);
-        if (book) {
+    private _addBooksToAvailableList(bookingRecord: IBooking) {
+        bookingRecord.bookIds.forEach(id => {
+            this._addBookIdToAvailableList(id);
+        })
+
+    }
+
+    private _returnBook(books: IBook[], booking: IBooking) {
+        const bookingRecord = this._findBookingRecord(booking);
+        bookingRecord.returnBooks(books);
+        this._addBooksToAvailableList(bookingRecord);
+    }
+
+
+    private _addBookIdToAvailableList(bookId: string) {
+        const book = this.bookList.find(b => b.id === bookId);
+        if(book) {
             this.availableBooksList.push(book);
         }
     }

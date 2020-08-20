@@ -20,6 +20,14 @@ export abstract class Helper {
         }
     }
 
+    static removeStringFromStringsArray(str: string, array: Array<string>) {
+        const index = array.findIndex(s => s === str);
+
+        if (index > -1) {
+            array.splice(index, 1);
+        }
+    }
+
     //FilterByPhrase
     static filterByPhrase<T extends object, U extends keyof T>(phrase : string, array : Array<T>, objKeyToFilterBy : U) : Array<T> {    
         const phraseLowerCase = phrase.toLowerCase();

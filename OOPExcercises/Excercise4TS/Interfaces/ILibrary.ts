@@ -6,8 +6,8 @@ interface ILibrary {
     availableBooksList: IBook[];
     addBook(book: IBook, actionAuthor: IUser): void;
     removeBook(book: IBook, actionAuthor: IUser): void;
-    rentBook(book: IBook, user: IUser, actionAuthor: IUser): void;
-    returnBookCheckPenalty(booking: IBooking, actionAuthor: IUser): number;
+    rentBooks(books: IBook[], user: IUser, actionAuthor: IUser): void;
+    returnBooksCheckPenalty(books: IBook[], booking: IBooking, actionAuthor: IUser): number;
     getPenaltyForBooking(booking: IBooking): number;
 }
 

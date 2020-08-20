@@ -24,7 +24,7 @@ export class Booking implements IBooking {
     }
 
     returnBooks(books: IBook[]): void {
-        books.forEach(book => Helper.removeFromIdsArray(book.id, this.bookIds));
+        books.forEach(book => Helper.removeStringFromStringsArray(book.id, this.bookIds));
 
         if(this.bookIds.length === 0) {
             this.returnedAt = moment().startOf('day');
