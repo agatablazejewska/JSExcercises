@@ -71,12 +71,12 @@ export class Library implements ILibrary {
     }
 
     private _findBookingRecord(booking: IBooking): IBooking {
-        const bookingRecord = this.bookingList.find(b => b.id === booking.id);
-        if(!bookingRecord) {
+        try {
+            const bookingRecord = Helper.findById(booking.id, this.bookingList);
+            return bookingRecord;
+        } catch {
             throw new Error("There is no such booking record.");
         }
-
-        return bookingRecord;
     }
 
     private _addBooksToAvailableList(bookingRecord: IBooking) {
@@ -91,12 +91,13 @@ export class Library implements ILibrary {
         bookingRecord.returnBooks(books);
         this._addBooksToAvailableList(bookingRecord);
     }
-
-
+    
     private _addBookIdToAvailableList(bookId: string) {
-        const book = this.bookList.find(b => b.id === bookId);
-        if(book) {
+        try {
+            const book = Helper.findById(bookId, this.bookList)
             this.availableBooksList.push(book);
+        } catch {
+            throw new Error("A book from this booking couldn't have been found in library's book list.");
         }
     }
 }

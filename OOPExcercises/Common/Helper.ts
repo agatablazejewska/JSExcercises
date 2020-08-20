@@ -105,4 +105,14 @@ export abstract class Helper {
             console.error(e);
         }
     }
+
+    //find
+    static findById<T extends IHasID>(id: string, array: Array<T>): T {
+        const element = array.find(elem => elem.id === id);
+        if(!element) {
+            throw new Error("Couldn't find element with provided ID.");
+        }
+
+        return element;
+    }
 }
