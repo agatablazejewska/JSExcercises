@@ -20,6 +20,14 @@ export abstract class Helper {
         }
     }
 
+    static removeStringFromStringsArray(str: string, array: Array<string>) {
+        const index = array.findIndex(s => s === str);
+
+        if (index > -1) {
+            array.splice(index, 1);
+        }
+    }
+
     //FilterByPhrase
     static filterByPhrase<T extends object, U extends keyof T>(phrase : string, array : Array<T>, objKeyToFilterBy : U) : Array<T> {    
         const phraseLowerCase = phrase.toLowerCase();
@@ -96,5 +104,15 @@ export abstract class Helper {
         catch (e) {
             console.error(e);
         }
+    }
+
+    //find
+    static findById<T extends IHasID>(id: string, array: Array<T>): T {
+        const element = array.find(elem => elem.id === id);
+        if(!element) {
+            throw new Error("Couldn't find element with provided ID.");
+        }
+
+        return element;
     }
 }
