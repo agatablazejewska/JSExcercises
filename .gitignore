@@ -360,11 +360,8 @@ MigrationBackup/
 /**/*.js
 *.js.map
 *.map
-OOPExcercises/Excercise1TS/ContactGroup/ContactGroup.js.map
-OOPExcercises/Excercise1TS/ContactGroup/ContactGroup.js.map
-OOPExcercises/Excercise1TS/ContactGroup/ContactGroup.js
-*.map
-OOPExcercises/Excercise1TS/ContactGroup/ContactGroup.js.map
-OOPExcercises/Excercise1TS/ContactGroup/ContactGroup.js.map
-OOPExcercises/Excercise1TS/ContactGroup/ContactGroup.js
-*.js
+
+OOPExcercises/**/*.js
+index.js
+package-lock.json
+dist/js/bundle.js
