@@ -357,8 +357,10 @@ MigrationBackup/
 !.vscode/extensions.json
 *.code-workspace
 
+/**/*.js
 *.js.map
 *.map
+
 OOPExcercises/**/*.js
 index.js
 package-lock.json
