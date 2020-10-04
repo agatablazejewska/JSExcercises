@@ -1,6 +1,6 @@
-import * as commonFunctions from '../commonFunctions.js';
+import * as commonFunctions from './commonFunctions.js';
 
-export const calculateAge = function(birthYear) {
+const calculateAge = function(birthYear) {
     birthYear = parseInt(birthYear);
     commonFunctions.validateNumber(birthYear);
 

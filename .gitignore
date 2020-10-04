@@ -357,7 +357,14 @@ MigrationBackup/
 !.vscode/extensions.json
 *.code-workspace
 
+/**/*.js
 *.js.map
 *.map
-OOPExcercises/**/*.js
-index.js
+OOPExcercises/Excercise1TS/ContactGroup/ContactGroup.js.map
+OOPExcercises/Excercise1TS/ContactGroup/ContactGroup.js.map
+OOPExcercises/Excercise1TS/ContactGroup/ContactGroup.js
+*.map
+OOPExcercises/Excercise1TS/ContactGroup/ContactGroup.js.map
+OOPExcercises/Excercise1TS/ContactGroup/ContactGroup.js.map
+OOPExcercises/Excercise1TS/ContactGroup/ContactGroup.js
+*.js
