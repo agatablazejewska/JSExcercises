@@ -363,3 +363,4 @@ OOPExcercises/**/*.js
 index.js
 package-lock.json
 dist/js/bundle.js
+.idea
