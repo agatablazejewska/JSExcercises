@@ -1,6 +1,6 @@
-import * as commonFunctions from './commonFunctions.js';
+import * as commonFunctions from '../commonFunctions.js';
 
-const canBuildRightAngledTraingle = function(sideA, sideB, sideC) {
+ export const canBuildRightAngledTriangle = function(sideA, sideB, sideC) {
     validate(sideA, sideB, sideC);
 
     const sideASquared = Math.pow(sideA, 2);
@@ -11,8 +11,8 @@ const canBuildRightAngledTraingle = function(sideA, sideB, sideC) {
 
     return sortedMinToMax[0] + sortedMinToMax[1] === sortedMinToMax[2];
 }
-console.log(canBuildRightAngledTraingle(3, 4, 5));
-console.log(canBuildRightAngledTraingle(3, 5, 5));
+console.log(canBuildRightAngledTriangle(3, 4, 5));
+console.log(canBuildRightAngledTriangle(3, 5, 5));
 
 function validate(sideA, sideB, sideC) {
     commonFunctions.validateNumber(sideA);
@@ -21,4 +21,7 @@ function validate(sideA, sideB, sideC) {
     commonFunctions.isNumberPositive(sideA);
     commonFunctions.isNumberPositive(sideB);
     commonFunctions.isNumberPositive(sideC);
+    if(sideA === 0 || sideB === 0 || sideC === 0) {
+        throw new Error(`You can't build right angled triangle with any side equal to 0.`);
+    }
 }
