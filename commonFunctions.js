@@ -16,7 +16,7 @@ export function validate(array, callback) {
 };
 
 export function validateNumber(number) {
-    if(typeof number !== 'number') {
+    if(typeof number !== 'number' || number !== number) {
         throw TypeError("Provided variable is not of type number");
     }
 };
