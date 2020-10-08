@@ -4,7 +4,7 @@ import * as commonFunctions from '../commonFunctions.js';
 export const arrayRandomValues = function(length) {
     commonFunctions.validateNumber(length);
     if(length < 0) {
-        throw new Exception("Array length can't be less than 0.");
+        throw new Error("Array length can't be less than 0.");
     }
     
     return Array.from({length: length}, () => Math.floor(Math.random() * 100)); 
