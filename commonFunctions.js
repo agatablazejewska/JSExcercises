@@ -16,7 +16,7 @@ export function validate(array, callback) {
 };
 
 export function validateNumber(number) {
-    if(typeof number !== 'number' || number !== number) {
+    if(typeof number !== 'number' || Number.isNaN(number)) {
         throw TypeError("Provided variable is not of type number");
     }
 };
