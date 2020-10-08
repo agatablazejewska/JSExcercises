@@ -41,7 +41,7 @@ test(`Some of arguments provided are strings. Should throw a TypeError.`, () => 
 
     sidesArray.forEach(sides =>
         expect( () => { canBuildRightAngledTriangle(sides.sideA, sides.sideB, sides.sideC) })
-            .toThrow(TypeError));
+            .toThrow(new TypeError(`Provided variable is not of type number`)));
 });
 
 test(`Some of arguments provided are negative values. Should throw an error.`, () => {
@@ -60,13 +60,13 @@ test(`Some of arguments provided are not of type number. Should throw a TypeErro
 
     typesArray.forEach(t =>
         expect( () => { canBuildRightAngledTriangle(t, 3, 5) })
-            .toThrow(TypeError));
+            .toThrow(new TypeError(`Provided variable is not of type number`)));
 
     typesArray.forEach(t =>
         expect( () => { canBuildRightAngledTriangle(2, t, 5) })
-            .toThrow(TypeError));
+            .toThrow(new TypeError(`Provided variable is not of type number`)));
 
     typesArray.forEach(t =>
         expect( () => { canBuildRightAngledTriangle(2, 3, t) })
-            .toThrow(TypeError));
+            .toThrow(new TypeError(`Provided variable is not of type number`)));
 });

@@ -46,13 +46,13 @@ test(`Provided array is empty. Should give message that phrase wasn't found in t
 test(`Provided argument is not of type array. Should throw TypeError.`, () => {
     const typesArray =[1234, 'array', NaN, null, undefined, true, {arr: []}];
 
-    typesArray.forEach(t => expect(() => { containsWordOrPhrase(t, 'phrase') }).toThrow(TypeError));
+    typesArray.forEach(t => expect(() => { containsWordOrPhrase(t, 'phrase') }).toThrow(new TypeError(`Provided array variable isn't of type array`)));
 });
 
 test(`Provided argument is not of type string. Should throw TypeError.`, () => {
     const typesArray =[1234, NaN, null, undefined, true, { phrase: 'some phrase' }, []];
 
-    typesArray.forEach(t => expect(() => { containsWordOrPhrase(wordsArray, t) }).toThrow(TypeError));
+    typesArray.forEach(t => expect(() => { containsWordOrPhrase(wordsArray, t) }).toThrow(new TypeError(`Provided variable is not of type string`)));
 });
 
 

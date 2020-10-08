@@ -17,8 +17,4 @@ export const calculateAge = function(birthYear) {
 
 
 
-console.log(calculateAge(1996));
-
-
-
 

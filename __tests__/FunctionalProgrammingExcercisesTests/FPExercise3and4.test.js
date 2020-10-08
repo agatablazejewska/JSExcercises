@@ -12,7 +12,7 @@ test('Should create few arrays with random values inside and with provided lengt
 test(`Provided length is not of type number. Should throw type error.`, () => {
     const typesArray = ['5', null, undefined, NaN, { length: 5 }, true, []];
 
-    typesArray.forEach(t => expect(() => { arrayRandomValues(t) }).toThrow(TypeError));
+    typesArray.forEach(t => expect(() => { arrayRandomValues(t) }).toThrow(new TypeError(`Provided variable is not of type number`)));
 });
 
 test(`Provided length is less than 0. Should throw an error.`, () => {
@@ -30,7 +30,7 @@ test(`Create array with nested arrays inside. Should be of length 10 and nested 
     const array = createArray10ArraysWithin();
 
     expect(array.length).toBe(10);
-    
+
     array.forEach((elem, index) => {
         expect(elem.length).toBe(10);
         if(index > 0) {
