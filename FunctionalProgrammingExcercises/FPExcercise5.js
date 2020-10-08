@@ -1,16 +1,14 @@
 import * as commonFunctions from '../commonFunctions.js';
 
-export const containsWordOrPhrase = function(array, phrase, caseSensitive = false) {
+export const containsWordOrPhrase = function(array, phrase) {
     commonFunctions.validateArrayType(array);
     commonFunctions.validateString(phrase);
-    commonFunctions.validateBoolean(caseSensitive);
-
-    const phraseConsideringCaseSensitivity = caseSensitive ? phrase : phrase.toLowerCase();
+    if(array.length === 0) {
+        throw new Error(`Array is empty and therefore it is impossible to find any phrases.`);
+    }
 
     const arrayWithObjectsContainingPhrase = array.reduce((acc, element, index, array) => {
-        const elemIncludesPhrase = caseSensitive 
-        ? element.includes(phraseConsideringCaseSensitivity) 
-        : element.toLowerCase().includes(phraseConsideringCaseSensitivity);
+        const elemIncludesPhrase = element.toLowerCase().includes(phrase.toLowerCase());
     
        if(elemIncludesPhrase) {
          acc.push({ value: element, index: index });
