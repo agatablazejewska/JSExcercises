@@ -35,7 +35,7 @@ export function validateBoolean(boolean) {
 
 export function isNumberPositive(number) {
     if(number < 0) {
-        throw Error(`Value should be positive and was: ${number}`);
+        throw Error(`Value should be positive.`);
     }
 }
 
