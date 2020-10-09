@@ -42,5 +42,5 @@ test('Birth year is not of type number. Should throw an error.', () => {
     const typesArray = [true, null, undefined, NaN, { year: 1995 }];
 
     typesArray.forEach(t => expect(() => { calculateAge(t) })
-        .toThrow(new TypeError(`Provided argument is not of type number nor of type date nor of type string.`)));
+        .toThrow(new TypeError(`Provided argument is not of type number nor valid date nor of type string.`)));
 });
