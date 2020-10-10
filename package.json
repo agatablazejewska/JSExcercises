@@ -40,5 +40,14 @@
     "url": "https://github.com/agatablazejewska/JSExcercises/issues"
   },
   "homepage": "https://github.com/agatablazejewska/JSExcercises#readme",
-  "description": ""
+  "description": "",
+  "jest": {
+    "moduleFileExtensions": [
+      "js",
+      "jsx"
+    ],
+    "moduleDirectories": [
+      "node_modules"
+    ]
+  }
 }

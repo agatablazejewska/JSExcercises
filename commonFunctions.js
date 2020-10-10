@@ -16,7 +16,7 @@ export function validate(array, callback) {
 };
 
 export function validateNumber(number) {
-    if(typeof number !== 'number') {
+    if(typeof number !== 'number' || Number.isNaN(number)) {
         throw TypeError("Provided variable is not of type number");
     }
 };
@@ -35,7 +35,7 @@ export function validateBoolean(boolean) {
 
 export function isNumberPositive(number) {
     if(number < 0) {
-        throw Error(`Value should be positive and was: ${number}`);
+        throw Error(`Value should be a positive number.`);
     }
 }
 
