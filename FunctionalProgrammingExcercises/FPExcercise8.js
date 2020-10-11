@@ -1,26 +1,28 @@
-import { v4 as uuidv4 } from "../npm/node_modules/uuid";
+import uuid4 from "uuid4";
 import * as commonFunctions from "../commonFunctions";
 import * as dataArrays from "./FPExcercise8Data.js";
-import { randomIntFromInterval } from "./AggregateAlphabetLettersExcercise";
 
-const takeRandomValue = function (array) {
+export const takeRandomValue = function (array) {
   commonFunctions.validateArrayType(array);
+  if(array.length === 0) {
+    throw new Error(`Provided array is empty.`);
+  }
 
-  const randomIndex = randomIntFromInterval(0, array.length - 1);
+  const randomIndex = commonFunctions.randomIntFromInterval(0, array.length - 1);
   return array[randomIndex];
 };
 
-const generateRandomAge = function () {
-  return randomIntFromInterval(18, 85);
+export const generateRandomAge = function () {
+  return commonFunctions.randomIntFromInterval(18, 85);
 };
 
-const generatePhoneNumber = function () {
-  return Array.from({ length: 9 }, () => randomIntFromInterval(0, 9)).join("");
+export const generatePhoneNumber = function () {
+  return Array.from({ length: 9 }, () => commonFunctions.randomIntFromInterval(0, 9)).join("");
 };
 
-const generateHuman = function () {
+export const generateHuman = function () {
   const human = {
-    _id: uuidv4(),
+    _id: uuid4(),
     name: takeRandomValue(dataArrays.firstNames),
     surname: takeRandomValue(dataArrays.surnames),
     age: generateRandomAge(),
@@ -31,5 +33,3 @@ const generateHuman = function () {
 
   return human;
 };
-
-export { generateHuman };
