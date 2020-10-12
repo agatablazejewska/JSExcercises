@@ -40,6 +40,7 @@ describe(`Tests for function that generates random age. Check if function return
     });
 });
 
+
 describe(`Tests for function that generates random phone number.Check if function returns correct results.`, () => {
     test(`Should generate random phone number as string.`, () => {
        const result = generateFunctions.generatePhoneNumber();
@@ -49,6 +50,7 @@ describe(`Tests for function that generates random phone number.Check if functio
        expect(isNaN(result) && isNaN(parseInt(result))).toBe(false);
     });
 });
+
 
 describe(`Tests for function that generates human object. Check if function returns correct results.`, () => {
     let takeRandomValueSpy = null;
