@@ -54,13 +54,23 @@ describe(`Tests for function that generates random phone number.Check if functio
 
 describe(`Tests for function that generates human object. Check if function returns correct results.`, () => {
     let takeRandomValueSpy = null;
+    let generateAgeSpy = null;
+    let generatePhoneNumberSpy = null;
     beforeAll(() => {
-        takeRandomValueSpy = jest.spyOn(generateFunctions, 'takeRandomValue');
-        takeRandomValueSpy.mockImplementation(() => 'mock');
+        takeRandomValueSpy = jest.spyOn(generateFunctions, 'takeRandomValue')
+            .mockImplementation(() => 'mock');
+
+        generateAgeSpy = jest.spyOn(generateFunctions, 'generateRandomAge')
+            .mockImplementation(() => 25);
+
+        generatePhoneNumberSpy = jest.spyOn(generateFunctions, 'generatePhoneNumber')
+            .mockImplementation(() => '123456789');
     });
 
     afterAll(() => {
         takeRandomValueSpy.mockRestore();
+        generateAgeSpy.mockRestore();
+        generatePhoneNumberSpy.mockRestore();
     });
 
     test(`Should generate a human object with all necessary properties that are not empty/undefined.
@@ -74,6 +84,9 @@ describe(`Tests for function that generates human object. Check if function retu
             expect(result[p]).not.toBe('');
         });
 
+        expect(result.name).toBe('mock');
+        expect(result.age).toBe(25);
+        expect(result.phoneNr).toBe('123456789');
         expect(result.email).toBe(`mockmock@gmail.com`);
     });
 });
