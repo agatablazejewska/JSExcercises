@@ -7,14 +7,7 @@ export const createArrayOfArrays = function (array) {
   const aggregatedArray = array.reduce((acc, element, index, arr) => {
     let howManyElements = commonFunctions.randomIntFromInterval(4, 7);
 
-    const expectedArrayLengthAfterSplice = arr.length - howManyElements;
-    if(expectedArrayLengthAfterSplice < 4 && expectedArrayLengthAfterSplice > 0) {
-      howManyElements -= (4 - expectedArrayLengthAfterSplice);
-
-      if(expectedArrayLengthAfterSplice < 0 || howManyElements < 4) {
-        howManyElements = arr.length;
-      }
-    }
+    howManyElements = makeSureLastElementLengthIsCorrect(arr, howManyElements);
 
     const arrayPart = arr.splice(0, howManyElements);
 
@@ -25,6 +18,18 @@ export const createArrayOfArrays = function (array) {
 
   return aggregatedArray;
 };
+
+function makeSureLastElementLengthIsCorrect(arr, howManyElements) {
+  const expectedArrayLengthAfterSplice = arr.length - howManyElements;
+  if (expectedArrayLengthAfterSplice < 4 && expectedArrayLengthAfterSplice > 0) {
+    howManyElements -= (4 - expectedArrayLengthAfterSplice);
+
+    if (expectedArrayLengthAfterSplice < 0 || howManyElements < 4) {
+      howManyElements = arr.length;
+    }
+  }
+  return howManyElements;
+}
 
 const validate = function (array) {
   commonFunctions.validateArrayType(array);
