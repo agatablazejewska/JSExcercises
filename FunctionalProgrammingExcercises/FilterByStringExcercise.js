@@ -1,60 +1,33 @@
 //Excercise:korzystając z funkcji .filter stwórz funkcję filterWith(arr, filter) filtrowanie arraya z obiektami po stringu (...)
-class Person {
-    constructor(name, age, animal) {
-    this.name = name;
-    this.age = age;
-    this.animal = animal;
-    }
-}
-
-const personsArray = [
-    new Person('Kait', 23, 'cat'), 
-    new Person('Marcus', 19, 'dog'), 
-    new Person('Merry', 10, 'hamster'), 
-    new Person('Gregory', 36, 'dolphin'), 
-    new Person('Savannah', 53, 'guinea pig'), 
-    new Person('Elise', 74, 'chinchilla'),
-    new Person('Mick', 29, 'hamster')
-];
-
-const valuesContainingPhrase = function(element, filter) {
-    return Object.values(element).filter(value => valueContainsString(value, filter));
-}
-
-const valueContainsString = function(value, filter) {
-    const valueAsString = value.toString();
-    return valueAsString.includes(filter);
-}
-
-
-const filterWith = function(arr, filter) {
+export const filterWith = function(arr, filter) {
+    filter = filter.toLowerCase();
     const filterLength = filter.length;
-    let filteredArray = [];
 
-    if(filterLength === 0) {
-       return arr;
-    }
-
-    if(filterLength <= 3) {
+    if(filterLength <= 2) {
         return [];
     }
-
-    if(filterLength > 3) {
-        return filteredArray = arr.reduce((acc, element) => {
-            const valuesContainingPhraseArray = valuesContainingPhrase(element, filter);
-
-            if(valuesContainingPhraseArray.length) {
-                acc.push(element);
-            }
-
-            return acc;
-        }, []);
+    else {
+        return getFilteredArray(arr, filter);
     }
 }
 
-const filterWholeArray = filterWith(personsArray, '');
-const filterNothing = filterWith(personsArray, 'no');
-const filterByObjectsKeys = filterWith(personsArray, 'ster');
-console.log(filterWholeArray);
-console.log(filterNothing);
-console.log(filterByObjectsKeys);
+export function getFilteredArray(array, filter) {
+    return array.reduce((acc, element) => {
+        if (containsFilter(element, filter)) {
+            acc.push(element);
+        }
+
+        return acc;
+    }, []);
+}
+
+export const containsFilter = function(element, filter) {
+    if(Array.isArray(element)) {
+        return element.filter(value => containsFilter(value, filter)).length !== 0;
+    } else if (typeof element === 'object' && element !== null) {
+        return Object.values(element).filter(value => containsFilter(value, filter)).length !== 0;
+    }
+
+    const valueAsString = element.toString().toLowerCase();
+    return valueAsString.includes(filter);
+}
