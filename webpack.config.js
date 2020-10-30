@@ -26,7 +26,8 @@ const config = {
             '.ts',
             '.js'
         ]
-    }
+    },
+    mode: 'development'
 };
 
 module.exports = config;

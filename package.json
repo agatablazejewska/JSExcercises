@@ -4,6 +4,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "webpack --config webpack.config.js",
+    "dev-watch": "webpack --watch",
     "test": "jest --watchAll"
   },
   "keywords": [],
