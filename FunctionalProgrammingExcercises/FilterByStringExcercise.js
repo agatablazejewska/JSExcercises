@@ -31,7 +31,7 @@ export const containsFilter = function(element, filter) {
 
     if(Array.isArray(element)) {
         return _searchThroughArray(element, filter);
-    } else if (typeof element === 'object' && element !== null) {
+    } else if (commonFunctions.isObject(element)) {
         return _searchThroughArray(Object.values(element), filter);
     }
 
@@ -51,7 +51,9 @@ const _validateFilter = function(filter) {
 }
 
 const _validateElement = function(element) {
-    const isNotArrayObjectStringOrNumber = !Array.isArray(element) && !is.object(element) && !is.string(element)
+    const isNotArrayObjectStringOrNumber = !Array.isArray(element)
+        && !commonFunctions.isObject(element)
+        && !is.string(element)
         && !is.number(element);
 
     if(isNotArrayObjectStringOrNumber || is.null(element)) {
