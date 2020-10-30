@@ -54,7 +54,7 @@ describe(`Tests for the function that checks if some particular element contains
 
     describe(`Check if function responds properly to encountered errors`, () => {
         test(`Provided data element is not an array, object, string or number. Should throw TypeError.`, () => {
-            const typesArray = [true, NaN, null, undefined];
+            const typesArray = [true, NaN, null, undefined, new Date()];
 
             typesArray.forEach(type => expect(() => containsFilter(type)
                 .toThrow(new TypeError(`Element is not a number, string, array, object or is null.`))));
