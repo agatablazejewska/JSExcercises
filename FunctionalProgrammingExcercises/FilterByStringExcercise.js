@@ -1,6 +1,9 @@
+import is from 'is_js';
 import * as commonFunctions from '../commonFunctions';
+
 //Excercise:korzystając z funkcji .filter stwórz funkcję filterWith(arr, filter) filtrowanie arraya z obiektami po stringu (...)
 export const filterWith = function(arr, filter) {
+    commonFunctions.validateArrayType(arr);
     _validateFilter(filter);
 
     const filterLength = filter.length;
@@ -8,11 +11,11 @@ export const filterWith = function(arr, filter) {
         return [];
     }
     else {
-        return getFilteredArray(arr, filter);
+        return _getFilteredArray(arr, filter);
     }
 }
 
-export function getFilteredArray(array, filter) {
+const _getFilteredArray = function(array, filter) {
     return array.reduce((acc, element) => {
         if (containsFilter(element, filter)) {
             acc.push(element);
@@ -23,27 +26,26 @@ export function getFilteredArray(array, filter) {
 }
 
 export const containsFilter = function(element, filter) {
+    _validateFilter(filter);
     _validateElement(element);
 
-    _lookForFilterIfArrayOrObject(element, filter);
+    if(Array.isArray(element)) {
+        return _searchThroughArray(element, filter);
+    } else if (typeof element === 'object' && element !== null) {
+        return _searchThroughArray(Object.values(element), filter);
+    }
 
     filter = filter.toString().toLowerCase();
     const valueAsString = element.toString().toLowerCase();
     return valueAsString.includes(filter);
 }
 
-const _lookForFilterIfArrayOrObject = function(element, filter) {
-    if(Array.isArray(element)) {
-        return element.filter(value => containsFilter(value, filter)).length !== 0;
-    } else if (typeof element === 'object' && element !== null) {
-        return Object.values(element).filter(value => containsFilter(value, filter)).length !== 0;
-    }
+const _searchThroughArray = function(array, filter) {
+    return array.filter(value => containsFilter(value, filter)).length !== 0;
 }
 
 const _validateFilter = function(filter) {
-    const isNotNumberOrString = (!is.number(filter) || is.NaN(filter)) && !is.string(filter);
-
-    if(isNotNumberOrString) {
+    if(!is.string(filter)) {
         throw new TypeError(`Provided filter is not a string neither a number.`);
     }
 }
