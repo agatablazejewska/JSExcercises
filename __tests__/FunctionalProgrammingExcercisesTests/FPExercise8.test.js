@@ -8,24 +8,27 @@ describe(`Tests for function that takes random values from an array.`, () => {
           Should return data that is present in the array.`, () => {
            const name = generateFunctions.takeRandomValue(data.firstNames);
            const surname = generateFunctions.takeRandomValue(data.surnames);
+           const doesFirstNamesArrayContainName = data.firstNames.includes(name);
+           const doesSurnamesArrayContainSurname = data.surnames.includes(surname);
 
-           expect(data.firstNames.includes(name)).toBe(true);
-           expect(data.surnames.includes(surname)).toBe(true);
+           expect(doesFirstNamesArrayContainName).toBe(true);
+           expect(doesSurnamesArrayContainSurname).toBe(true);
         });
     });
 
 
     describe(`Check if function responds properly to encountered errors`, () => {
         test(`Provided array is empty. Should throw an error.`, () => {
-            const arr = [];
+            const emptyArray = [];
 
-            expect(() => { generateFunctions.takeRandomValue(arr) }).toThrowError(`Provided array is empty.`);
+            expect(() => { generateFunctions.takeRandomValue(emptyArray) })
+                .toThrowError(`Provided array is empty.`);
         });
 
         test(`Provided argument is not an array. Should throw a TypeError.`, () => {
             const types = [null, undefined, 1234, 'arr', true, { array: [1,2,3] }, NaN];
 
-            types.forEach(t => expect(() => { generateFunctions.takeRandomValue(t) })
+            types.forEach(type => expect(() => { generateFunctions.takeRandomValue(type) })
                 .toThrow(new TypeError(`Provided array variable isn't of type array`)));
         });
     });
@@ -34,20 +37,23 @@ describe(`Tests for function that takes random values from an array.`, () => {
 
 describe(`Tests for function that generates random age. Check if function returns correct results. `, () => {
     test(`Should generate random numbers in the range 18 to 85.`, () => {
-       const resultsArray = Array.from({ length: 100 }, () => generateFunctions.generateRandomAge());
+        const generatedAgeBetween18And85Array = Array.from({ length: 100 }, () => generateFunctions.generateRandomAge());
+        const isAgeBetweenProperRange = function(age) {
+            return age >= 18 && age <= 85;
+        }
 
-       resultsArray.forEach(element => expect(element >= 18 && element <= 85).toBe(true));
+        expect(generatedAgeBetween18And85Array.every(age => isAgeBetweenProperRange(age))).toBe(true);
     });
 });
 
 
 describe(`Tests for function that generates random phone number.Check if function returns correct results.`, () => {
     test(`Should generate random phone number as string.`, () => {
-       const result = generateFunctions.generatePhoneNumber();
+       const generatedPhoneNumberString = generateFunctions.generatePhoneNumber();
 
-       expect(result.length).toBe(9);
-       expect(typeof result === 'string').toBe(true);
-       expect(isNaN(result) && isNaN(parseInt(result))).toBe(false);
+       expect(generatedPhoneNumberString.length).toBe(9);
+       expect(typeof generatedPhoneNumberString === 'string').toBe(true);
+       expect(isNaN(generatedPhoneNumberString) && isNaN(parseInt(generatedPhoneNumberString))).toBe(false);
     });
 });
 
@@ -76,18 +82,18 @@ describe(`Tests for function that generates human object. Check if function retu
     test(`Should generate a human object with all necessary properties that are not empty/undefined.
      Email should consist of name and surname combined.`, () => {
         const propertiesArray = ['_id', 'name', 'surname', 'age', 'country', 'phoneNr', 'email'];
-        const result = generateFunctions.generateHuman();
+        const generatedHuman = generateFunctions.generateHuman();
 
-        propertiesArray.forEach(p => {
-            expect(result[p]).not.toBe(undefined);
-            expect(result[p]).not.toBe(null);
-            expect(result[p]).not.toBe('');
+        propertiesArray.forEach(property => {
+            expect(generatedHuman[property]).not.toBe(undefined);
+            expect(generatedHuman[property]).not.toBe(null);
+            expect(generatedHuman[property]).not.toBe('');
         });
 
-        expect(result.name).toBe('mock');
-        expect(result.age).toBe(25);
-        expect(result.phoneNr).toBe('123456789');
-        expect(result.email).toBe(`mockmock@gmail.com`);
+        expect(generatedHuman.name).toBe('mock');
+        expect(generatedHuman.age).toBe(25);
+        expect(generatedHuman.phoneNr).toBe('123456789');
+        expect(generatedHuman.email).toBe(`mockmock@gmail.com`);
     });
 });
 
