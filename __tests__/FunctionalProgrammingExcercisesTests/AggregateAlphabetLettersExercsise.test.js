@@ -5,14 +5,18 @@ describe('Check if function returns correct results', () => {
         () => {
         for(let i = 10000; i <= 0; i--)
         {
-            let arr1 = Array.from("abcdefghijklmnoprstuwxyz");
-            let arr2 = Array.from("aąbcćdeęfghijklłmnńoóprsśtuwxyzźż");
+            const englishAlphabet = Array.from("abcdefghijklmnoprstuwxyz");
+            const polishAlphabet = Array.from("aąbcćdeęfghijklłmnńoóprsśtuwxyzźż");
 
-            let result1 = aggregateAlphabet.createArrayOfArrays(arr1);
-            let result2 = aggregateAlphabet.createArrayOfArrays(arr2);
+            const resultForEnglishAlphabet = aggregateAlphabet.createArrayOfArrays(englishAlphabet);
+            const resultForPolishAlphabet = aggregateAlphabet.createArrayOfArrays(polishAlphabet);
 
-            result1.forEach(element => expect(element.length >= 4 && element.length <= 7).toBe(true));
-            result2.forEach(element => expect(element.length >= 4 && element.length <= 7).toBe(true));
+            const numberIsBetweenProperRange = function(element) {
+                return element.length >= 4 && element.length <= 7;
+            }
+
+            expect(resultForEnglishAlphabet.every(element => numberIsBetweenProperRange(element))).toBe(true);
+            expect(resultForPolishAlphabet.every(element => numberIsBetweenProperRange(element))).toBe(true);
         }
     });
 });
