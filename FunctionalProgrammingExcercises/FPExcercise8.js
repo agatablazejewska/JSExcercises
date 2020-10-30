@@ -22,15 +22,17 @@ export const generatePhoneNumber = function () {
 };
 
 export const generateHuman = function () {
+  const name = thisModule.takeRandomValue(dataArrays.firstNames);
+  const surname = thisModule.takeRandomValue(dataArrays.surnames);
   const human = {
     _id: uuid4(),
-    name: thisModule.takeRandomValue(dataArrays.firstNames),
-    surname: thisModule.takeRandomValue(dataArrays.surnames),
+    name: name,
+    surname: surname,
+    email: `${name.toLowerCase()}${surname.toLowerCase()}@gmail.com`,
     age: thisModule.generateRandomAge(),
     country: thisModule.takeRandomValue(dataArrays.countries),
     phoneNr: thisModule.generatePhoneNumber(),
   };
-  human.email = `${human.name.toLowerCase()}${human.surname.toLowerCase()}@gmail.com`;
 
   return human;
 };
