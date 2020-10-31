@@ -1,18 +1,15 @@
 import * as commonFunctions from "../commonFunctions.js";
 
-const polishAlphabetArray = Array.from("aąbcćdeęfghijklłmnńoóprsśtuwxyzźż");
 // Excercise: korzystając z funkcji .reduce stwórz agregację liter alfabetu (...)
-const randomIntFromInterval = function (min, max) {
-  commonFunctions.isNumberPositive(min);
-  commonFunctions.isNumberPositive(max);
+export const createArrayOfArrays = function (array) {
+  validate(array);
 
-  return Math.floor(Math.random() * (max - min + 1) + min);
-};
+  const aggregatedArray = array.reduce((acc, element, index, arr) => {
+    let howManyElements = commonFunctions.randomIntFromInterval(4, 7);
 
-const createArrayOfArrays = function (array) {
-  const aggregatedArray = array.reduce((acc, element, index, array) => {
-    const howManyElements = randomIntFromInterval(4, 7);
-    const arrayPart = array.splice(0, howManyElements);
+    howManyElements = makeSureLastElementLengthIsCorrect(arr, howManyElements);
+
+    const arrayPart = arr.splice(0, howManyElements);
 
     acc.push(arrayPart);
 
@@ -22,4 +19,22 @@ const createArrayOfArrays = function (array) {
   return aggregatedArray;
 };
 
-export { randomIntFromInterval };
+function makeSureLastElementLengthIsCorrect(arr, howManyElements) {
+  const expectedArrayLengthAfterSplice = arr.length - howManyElements;
+  if (expectedArrayLengthAfterSplice < 4 && expectedArrayLengthAfterSplice > 0) {
+    howManyElements -= (4 - expectedArrayLengthAfterSplice);
+
+    if (expectedArrayLengthAfterSplice < 0 || howManyElements < 4) {
+      howManyElements = arr.length;
+    }
+  }
+  return howManyElements;
+}
+
+const validate = function (array) {
+  commonFunctions.validateArrayType(array);
+
+  if(array.length === 0) {
+    throw new Error(`Provided array's length is 0.`);
+  }
+}

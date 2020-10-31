@@ -1,7 +1,10 @@
-const numbers = [2, 5, 7, 10, 34, 16, 879, 1]
-const filterByEvenNumbers = function(array) {
+import * as commonFunctions from '../commonFunctions.js';
+
+export const filterByEvenNumbers = function(array) {
+    commonFunctions.validateArrayType(array);
+    if(array.length === 0) {
+        throw new Error(`Provided array is empty.`);
+    }
+
     return array.filter(element => element %2 === 0);
 }
-
-const arrayEvenNumbers = filterByEvenNumbers(numbers);
-console.log(arrayEvenNumbers);

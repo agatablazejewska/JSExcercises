@@ -45,3 +45,15 @@ export function validateEmail(email) {
          throw new Error("Provided value is not a valid e-mail");
      };
 }
+
+export const randomIntFromInterval = function (min, max) {
+    this.isNumberPositive(min);
+    this.isNumberPositive(max);
+
+    return Math.floor(Math.random() * (max - min + 1) + min);
+};
+
+export const isObject = function(value) {
+    const _toString = Object.prototype.toString;
+    return value !== null && _toString.call(value) === '[object Object]';
+}

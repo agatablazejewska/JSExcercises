@@ -1,35 +1,38 @@
-import { v4 as uuidv4 } from "../npm/node_modules/uuid";
+import uuid4 from "uuid4";
 import * as commonFunctions from "../commonFunctions";
 import * as dataArrays from "./FPExcercise8Data.js";
-import { randomIntFromInterval } from "./AggregateAlphabetLettersExcercise";
+import * as thisModule from './FPExcercise8';
 
-const takeRandomValue = function (array) {
+export const takeRandomValue = function (array) {
   commonFunctions.validateArrayType(array);
+  if(array.length === 0) {
+    throw new Error(`Provided array is empty.`);
+  }
 
-  const randomIndex = randomIntFromInterval(0, array.length - 1);
+  const randomIndex = commonFunctions.randomIntFromInterval(0, array.length - 1);
   return array[randomIndex];
 };
 
-const generateRandomAge = function () {
-  return randomIntFromInterval(18, 85);
+export const generateRandomAge = function () {
+  return commonFunctions.randomIntFromInterval(18, 85);
 };
 
-const generatePhoneNumber = function () {
-  return Array.from({ length: 9 }, () => randomIntFromInterval(0, 9)).join("");
+export const generatePhoneNumber = function () {
+  return Array.from({ length: 9 }, () => commonFunctions.randomIntFromInterval(0, 9)).join("");
 };
 
-const generateHuman = function () {
+export const generateHuman = function () {
+  const name = thisModule.takeRandomValue(dataArrays.firstNames);
+  const surname = thisModule.takeRandomValue(dataArrays.surnames);
   const human = {
-    _id: uuidv4(),
-    name: takeRandomValue(dataArrays.firstNames),
-    surname: takeRandomValue(dataArrays.surnames),
-    age: generateRandomAge(),
-    country: takeRandomValue(dataArrays.countries),
-    phoneNr: generatePhoneNumber(),
+    _id: uuid4(),
+    name: name,
+    surname: surname,
+    email: `${name.toLowerCase()}${surname.toLowerCase()}@gmail.com`,
+    age: thisModule.generateRandomAge(),
+    country: thisModule.takeRandomValue(dataArrays.countries),
+    phoneNr: thisModule.generatePhoneNumber(),
   };
-  human.email = `${human.name.toLowerCase()}${human.surname.toLowerCase()}@gmail.com`;
 
   return human;
 };
-
-export { generateHuman };
