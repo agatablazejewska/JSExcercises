@@ -1,4 +1,4 @@
-import { v4 as uuid4 } from 'uuid';
+import uuid4 from "uuid4";
 import { IChatRoom, IUser, IMessage } from "../Utilities";
 import { CommonValidator } from "../../Common/CommonValidator";
 import {Helper} from "../../Common/Helper";

@@ -1,4 +1,4 @@
-import { v4 as uuid4 } from 'uuid';
+import uuid4 from 'uuid4';
 import { CommonValidator } from '../Common/CommonValidator';
 import { AccessLevels } from '../Excercise3TS/Utilities';
 import { IUser } from './Interfaces';

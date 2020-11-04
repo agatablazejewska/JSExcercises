@@ -1,4 +1,4 @@
-import { v4 as uuid4 } from 'uuid';
+import uuid4 from "uuid4";
 import { IItem } from "../Utilities/Interfaces/Item/IItem";
 import { Categories } from "../Utilities/Enums/Categories";
 import { ItemPropertiesValidator } from "./ItemPropertiesValidator";
