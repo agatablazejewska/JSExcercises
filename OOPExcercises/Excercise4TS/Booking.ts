@@ -1,5 +1,5 @@
 import moment from 'moment';
-import uuid4 from 'uuid4';
+import { v4 as uuid4 } from 'uuid';
 import { Helper } from '../Common/Helper';
 import { IBook, IBooking, IUser } from './Interfaces';
 

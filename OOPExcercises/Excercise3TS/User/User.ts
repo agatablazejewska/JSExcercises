@@ -1,4 +1,4 @@
-import uuid4 from 'uuid4';
+import { v4 as uuid4 } from 'uuid';
 import { UserPropertiesValidator } from "./UserPropertiesValidator";
 import { CommonValidator } from "../../Common/CommonValidator";
 import {

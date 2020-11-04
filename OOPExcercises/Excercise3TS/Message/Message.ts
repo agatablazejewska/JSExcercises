@@ -1,4 +1,4 @@
-import uuid4 from "uuid4";
+import { v4 as uuid4 } from 'uuid';
 import moment from "moment";
 import {IMessage, IUser} from "../Utilities";
 
