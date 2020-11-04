@@ -1,5 +1,6 @@
 {
-  "presets": [["@babel/env", {"modules": false}]],
+  "presets": [["@babel/env", {"modules": false}],
+    "@babel/preset-typescript"],
 
   "env": {
     "test": {
