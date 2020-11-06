@@ -6,9 +6,9 @@ import { IContactGroupDataOptional } from "../Interfaces/ContactGroup/IContactGr
 import { CommonValidator } from "../../Common/CommonValidator";
 
 export class ContactGroup implements IContactGroup {
-    readonly name : string;
-    private _contactArray : Array<IContact>;
+    private readonly _contactArray : Array<IContact>;
     private readonly _id: string;
+    readonly name : string;
 
     constructor(name : string) {
         this._id = uuid4();
@@ -54,11 +54,11 @@ export class ContactGroup implements IContactGroup {
         this._contactArray.forEach((contact) => contact.show());
     }
 
-    _getMembersCount() : number {
+    private _getMembersCount() : number {
         return this._contactArray.length;
     }
     
-    _containsContact(contact : IContact) : boolean {
+    private _containsContact(contact : IContact) : boolean {
         return this._contactArray.some(c => c.firstName === contact.firstName 
             && c.surname === contact.surname 
             && c.email === contact.email);
