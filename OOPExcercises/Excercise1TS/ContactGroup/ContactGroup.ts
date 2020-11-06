@@ -27,7 +27,10 @@ export class ContactGroup implements IContactGroup {
     add(contact: IContact) : void {
         if (!this._containsContact(contact)) {
             this._contactArray.push(contact);
+            return;
         }
+
+        console.error(`Contact already exists in the group.`);
     }
 
     remove(id : string) : void {
@@ -59,7 +62,7 @@ export class ContactGroup implements IContactGroup {
     }
     
     private _containsContact(contact : IContact) : boolean {
-        return this._contactArray.some(c => c.firstName === contact.firstName 
+        return this._contactArray.some(c => c.firstName === contact.firstName
             && c.surname === contact.surname 
             && c.email === contact.email);
     }
