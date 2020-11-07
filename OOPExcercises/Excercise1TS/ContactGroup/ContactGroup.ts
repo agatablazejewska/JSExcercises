@@ -1,4 +1,4 @@
-import uuid4 from "uuid4";
+import { v4 as uuidv4 } from 'uuid';
 import { IContactGroup } from "../Interfaces/ContactGroup/IContactGroup";
 import { IContact } from "../Interfaces/Contact/IContact";
 import { Helper } from "../../Common/Helper";
@@ -11,7 +11,9 @@ export class ContactGroup implements IContactGroup {
     readonly name : string;
 
     constructor(name : string) {
-        this._id = uuid4();
+        CommonValidator.validateEmptyString(name);
+
+        this._id = uuidv4();
         this.name = name;
         this._contactArray = new Array<IContact>();
     }
@@ -34,7 +36,11 @@ export class ContactGroup implements IContactGroup {
     }
 
     remove(id : string) : void {
-        Helper.removeFromArray(id, this._contactArray);
+        try {
+            Helper.removeFromArray(id, this._contactArray);
+        } catch(e) {
+            console.error(e.message);
+        }
     }
 
     update(source: IContactGroupDataOptional) : void {
@@ -48,8 +54,8 @@ export class ContactGroup implements IContactGroup {
     }
 
     show() : void {
-        console.log(`Group name: ${this.name}`);
-        console.log(`Members: ${this._getMembersCount}`);
+        console.log(`Group name: ${this.name}
+        Members: ${this._getMembersCount()}`);
     }
 
     showAllInfo() : void {
