@@ -15,9 +15,11 @@ export abstract class Helper {
     static removeFromArray<T extends IHasID>(elementId: string, array : Array<T>) : void {
         const index = array.findIndex(element => element.id === elementId);
 
-        if (index > -1) {
-            array.splice(index, 1);
+        if (index === -1) {
+            throw new Error(`There is no such element in the array.`);
         }
+
+        array.splice(index, 1);
     }
 
     static removeStringFromStringsArray(str: string, array: Array<string>) {
