@@ -34,7 +34,11 @@ export class PhoneBook {
     }
 
     removeContact(contactId : string) : void {
-        Helper.removeFromArray(contactId, this._contactList);     
+        try {
+            Helper.removeFromArray(contactId, this._contactList);
+        } catch(e) {
+            console.error(e.message);
+        }
     }
 
     updateContact(contact : IContact, newContactData : IContactDataOptional) : void {
@@ -94,7 +98,7 @@ export class PhoneBook {
         }  
       }
 
-    private _containsContact(contact : IContact) : boolean {
+    private _containsContact(contact: IContact): boolean {
         return this._contactList.some(c => c.firstName === contact.firstName
             && c.surname === contact.surname
             && c.email === contact.email);
