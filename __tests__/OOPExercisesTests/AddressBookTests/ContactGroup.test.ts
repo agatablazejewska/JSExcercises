@@ -52,7 +52,7 @@ describe('Tests for the add method.', () => {
             const familyContactsToAdd = [mom, dad, brother];
             familyContactsToAdd.forEach(contact => familyContactGroup.add(contact));
 
-            const allContactsInTheGroup = familyContactGroup.contacts;
+            const allContactsInTheGroup = familyContactGroup.contactsListCopy;
 
             expect(allContactsInTheGroup).toEqual(familyContactsToAdd);
         });
@@ -78,7 +78,7 @@ describe('Tests for the remove method.', () => {
     describe('Check if method removes the element from the array.', () => {
         test(`Should remove contact from the contact list.`, () => {
             fullFamilyContactGroup.remove(brother.id);
-            const familyContactsAfterBrotherRemoval = fullFamilyContactGroup.contacts;
+            const familyContactsAfterBrotherRemoval = fullFamilyContactGroup.contactsListCopy;
             const familyContactsThatShouldRemainAfterBrotherRemoval = [mom, dad];
 
            expect(familyContactsAfterBrotherRemoval).not.toEqual(allFamilyContacts);

@@ -1,3 +1,4 @@
+import {cloneDeep} from 'lodash';
 import { v4 as uuidv4 } from 'uuid';
 import { IContactGroup } from "../Interfaces/ContactGroup/IContactGroup";
 import { IContact } from "../Interfaces/Contact/IContact";
@@ -22,8 +23,8 @@ export class ContactGroup implements IContactGroup {
         return this._id;
     }
 
-    get contacts() : Array<IContact> {
-        return this._contactArray;
+    get contactsListCopy() : Array<IContact> {
+        return cloneDeep(this._contactArray);
     }
 
     add(contact: IContact) : void {
