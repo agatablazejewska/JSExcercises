@@ -67,10 +67,8 @@ export class ContactGroup implements IContactGroup {
     private _getMembersCount() : number {
         return this._contactArray.length;
     }
-    
+
     private _containsContact(contact : IContact) : boolean {
-        return this._contactArray.some(c => c.firstName === contact.firstName
-            && c.surname === contact.surname 
-            && c.email === contact.email);
+        return this._contactArray.some(c => c.id === contact.id);
     }
 }

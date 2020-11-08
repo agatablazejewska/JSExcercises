@@ -1,3 +1,4 @@
+import { cloneDeep } from 'lodash';
 import { IContactGroupDataOptional } from "../Interfaces/ContactGroup/IContactGroupDataOptional";
 import { IContact } from "../Interfaces/Contact/IContact";
 import { IContactGroup } from "../Interfaces/ContactGroup/IContactGroup";
@@ -6,17 +7,30 @@ import { Helper } from "../../Common/Helper";
 import { CommonValidator } from "../../Common/CommonValidator";
 
 export class PhoneBook {
-    private _contactList : Array<IContact>;
-    private _contactGroupList : Array<IContactGroup>;
+    private readonly _contactList : Array<IContact>;
+    private readonly _contactGroupList : Array<IContactGroup>;
 
     constructor() {
         this._contactList = new Array<IContact>();
         this._contactGroupList = new Array<IContactGroup>();
     }
 
+    get contactsListCopy() {
+        return cloneDeep(this._contactList);
+    }
+
+    get contactGroupsListCopy() {
+        return cloneDeep(this._contactGroupList);
+    }
+
     //Handle contacts
     addContact(contact : IContact) : void {
-        this._contactList.push(contact);
+        if (!this._containsContact(contact)) {
+            this._contactList.push(contact);
+            return;
+        }
+
+        console.error(`Contact already exists.`);
     }
 
     removeContact(contactId : string) : void {
@@ -79,4 +93,10 @@ export class PhoneBook {
             console.error(e);
         }  
       }
+
+    private _containsContact(contact : IContact) : boolean {
+        return this._contactList.some(c => c.firstName === contact.firstName
+            && c.surname === contact.surname
+            && c.email === contact.email);
+    }
 }
