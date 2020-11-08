@@ -11,6 +11,9 @@ beforeEach(() => {
 });
 
 describe(`Tests regarding single contacts.`, () => {
+    const contactShowAllInfoSpy = jest.spyOn(Contact.prototype, 'showAllInfo');
+    const contactUpdateSpy = jest.spyOn(Contact.prototype, 'update');
+
     describe(`Test for the addContact method.`, () => {
         describe('Check if method returns correct results', () => {
             test(`Should add the new contact to the contacts' array.`, () => {
@@ -42,7 +45,7 @@ describe(`Tests regarding single contacts.`, () => {
         });
     });
 
-    describe(`Tests for the remove contact method.`, () => {
+    describe(`Tests for the removeContact method.`, () => {
         describe('Check if method returns correct results', () => {
             test(`Should remove contact from the contact list.`, () => {
                 const phoneBook = new PhoneBook();
@@ -68,6 +71,25 @@ describe(`Tests regarding single contacts.`, () => {
                 expect(consoleErrorSpy).toHaveBeenCalledTimes(1);
                 expect(consoleErrorSpy).toHaveBeenCalledWith(`There is no such element in the array.`);
             });
+        });
+    });
+
+    describe(`Tests for the updateContact and showContact methods.`, () => {
+        const phoneBook = new PhoneBook();
+        const newContact = new Contact('contact', 'c@gmail.com');
+        phoneBook.addContact(newContact);
+
+        test(`Should call the update method on contact instance.`, () => {
+            const contactUpdateObj = { firstName: 'updatedContact ' };
+
+            phoneBook.updateContact(newContact, contactUpdateObj);
+            expect(contactUpdateSpy).toHaveBeenCalledTimes(1);
+            expect(contactUpdateSpy).toHaveBeenCalledWith(contactUpdateObj);
+        });
+
+        test(`Should call the update method on contact instance.`, () => {
+            phoneBook.showContact(newContact);
+            expect(contactShowAllInfoSpy).toHaveBeenCalledTimes(1);
         });
     });
 });
