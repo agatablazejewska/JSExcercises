@@ -34,8 +34,8 @@ export abstract class Helper {
     static filterByPhrase<T extends object, U extends keyof T>(phrase : string, array : Array<T>, objKeyToFilterBy : U) : Array<T> {    
         const phraseLowerCase = phrase.toLowerCase();
 
-        return array.filter(element => {
-            this._filterByPhraseLogic<T, U>(element, objKeyToFilterBy, phraseLowerCase);      
+       return array.filter(element => {
+            return this._filterByPhraseLogic<T, U>(element, objKeyToFilterBy, phraseLowerCase);
         });
     }
 
