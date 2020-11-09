@@ -25,7 +25,7 @@ export class PhoneBook {
 
     //Handle contacts
     addContact(contact : IContact) : void {
-        if (!this._containsContact(contact)) {
+        if (!this._containsContact(contact, true)) {
             this._contactList.push(contact);
             return;
         }
@@ -42,16 +42,31 @@ export class PhoneBook {
     }
 
     updateContact(contact : IContact, newContactData : IContactDataOptional) : void {
-        contact.update(newContactData);
+        if(this._containsContact(contact)) {
+            contact.update(newContactData);
+            return;
+        }
+
+        console.error(`There is no such contact in the list.`);
     }
 
     showContact(contact : IContact) : void {
-        contact.showAllInfo();
+        if(this._containsContact(contact)) {
+            contact.showAllInfo();
+            return;
+        }
+
+        console.error(`There is no such contact in the list.`);
     }
 
     //Handle contacts group
     addContactGroup(group : IContactGroup) : void {
-        this._contactGroupList.push(group);
+        if(!this._containsContactGroup(group, true)) {
+            this._contactGroupList.push(group);
+            return;
+        }
+
+       console.error('Contact group with this name already exists.');
     }
 
     addContactToGroup(contact : IContact, group : IContactGroup) : void {
@@ -63,15 +78,29 @@ export class PhoneBook {
     }
 
     showContactGroup(group : IContactGroup) : void {
-        group.showAllInfo();
+        if(this._containsContactGroup(group)) {
+            group.showAllInfo();
+            return;
+        }
+
+        console.error('There is no such contact group in the list.');
     }
 
     updateContactGroup(group : IContactGroup, newGroupData : IContactGroupDataOptional) : void {
-        group.update(newGroupData);
+        if(this._containsContactGroup(group)) {
+            group.update(newGroupData);
+            return;
+        }
+
+        console.error('There is no such contact group in the list.');
     }
 
     removeContactGroup(groupId : string) : void {
-        Helper.removeFromArray(groupId, this._contactGroupList);
+        try {
+            Helper.removeFromArray(groupId, this._contactGroupList);
+        } catch {
+            console.error('There is no such contact group.');
+        }
     }
 
     //Show lists
@@ -98,9 +127,22 @@ export class PhoneBook {
         }  
       }
 
-    private _containsContact(contact: IContact): boolean {
-        return this._contactList.some(c => c.firstName === contact.firstName
-            && c.surname === contact.surname
-            && c.email === contact.email);
+    private _containsContact(contact: IContact, deepCheck: boolean = false): boolean {
+        if(deepCheck) {
+            return this._contactList.some(c => c.firstName === contact.firstName
+                && c.surname === contact.surname
+                && c.email === contact.email);
+
+        }
+
+        return this._contactList.some(c => c.id === contact.id);
+    }
+
+    private _containsContactGroup(contactGroup: IContactGroup, deepCheck: boolean = false): boolean {
+        if(deepCheck) {
+            return this._contactGroupList.some(cg => cg.name === contactGroup.name);
+        }
+
+        return this._contactGroupList.some(cg => cg.id === contactGroup.id);
     }
 }
