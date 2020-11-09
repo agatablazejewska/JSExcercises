@@ -11,9 +11,12 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@babel/preset-typescript": "^7.12.1",
+    "@types/lodash": "^4.14.165",
     "@types/moment": "^2.13.0",
     "@types/uuid": "^8.3.0",
     "is_js": "^0.9.0",
+    "lodash": "^4.17.20",
     "moment": "^2.29.0",
     "uuid": "^8.3.1",
     "uuid4": "^2.0.2",
@@ -27,6 +30,7 @@
     "babel-loader": "^8.1.0",
     "babel-plugin-transform-es2015-modules-commonjs": "^6.26.2",
     "jest": "^26.4.2",
+    "jest-mock-extended": "^1.0.10",
     "ts-jest": "^26.4.1",
     "ts-loader": "^8.0.4",
     "typescript": "^3.9.7",
@@ -46,7 +50,8 @@
   "jest": {
     "moduleFileExtensions": [
       "js",
-      "jsx"
+      "jsx",
+      "ts"
     ],
     "moduleDirectories": [
       "node_modules"

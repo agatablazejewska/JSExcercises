@@ -15,9 +15,11 @@ export abstract class Helper {
     static removeFromArray<T extends IHasID>(elementId: string, array : Array<T>) : void {
         const index = array.findIndex(element => element.id === elementId);
 
-        if (index > -1) {
-            array.splice(index, 1);
+        if (index === -1) {
+            throw new Error(`There is no such element in the array.`);
         }
+
+        array.splice(index, 1);
     }
 
     static removeStringFromStringsArray(str: string, array: Array<string>) {
@@ -32,8 +34,8 @@ export abstract class Helper {
     static filterByPhrase<T extends object, U extends keyof T>(phrase : string, array : Array<T>, objKeyToFilterBy : U) : Array<T> {    
         const phraseLowerCase = phrase.toLowerCase();
 
-        return array.filter(element => {
-            this._filterByPhraseLogic<T, U>(element, objKeyToFilterBy, phraseLowerCase);      
+       return array.filter(element => {
+            return this._filterByPhraseLogic<T, U>(element, objKeyToFilterBy, phraseLowerCase);
         });
     }
 

@@ -24,10 +24,10 @@ export abstract class CommonValidator {
     }
 
     static validateStringProperties<T>(obj: T) {
-        for(const value in obj) {
-            if(typeof value === "string") {
-                this.validateEmptyString(value);
-            }
-        }
+       Object.values(obj).forEach(value => {
+               if(typeof value === "string") {
+                   this.validateEmptyString(value);
+               }
+       });
     }
 }

@@ -6,12 +6,13 @@ import { CommonValidator } from '../../Common/CommonValidator';
 
 export class Contact implements IContact {
     private readonly _id: string;
+    private _modifyDate: Date;
     firstName: string;
     surname: string;
     email: string;
-    modifyDate: Date;
+
     
-    constructor(firstName : string, surname : string, email : string) {
+    constructor(firstName : string, email : string, surname : string = '') {
         CommonValidator.validateEmail(email);
 
         if (!firstName) {
@@ -22,7 +23,7 @@ export class Contact implements IContact {
         this.firstName = firstName;
         this.surname = surname;
         this.email = email;
-        this.modifyDate = new Date();
+        this._modifyDate = new Date();
     }
 
     get id() : string {
@@ -33,15 +34,22 @@ export class Contact implements IContact {
         return `${this.firstName} ${this.surname}`;
     }
 
+    get modifyDate() : Date {
+        return this._modifyDate;
+    }
+
     update(source : IContactDataOptional): void {
         try {
             CommonValidator.validateStringProperties(source);
+            if(source.email) {
+                CommonValidator.validateEmail(source.email);
+            }
         
             Object.assign(this, source); 
-            this.modifyDate = new Date();  
-        } catch {
-            console.error("One of data provided consists of white spaces. Update failed.");
-        }      
+            this._modifyDate = new Date();
+        } catch(e) {
+            console.error(e.message);
+        }
     }
 
     show(): void {

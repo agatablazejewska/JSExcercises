@@ -4,7 +4,7 @@ import { IHasID } from "../../../Common/IHasID";
 
 export interface IContactGroup extends IUpdatableAndReadable, IHasID {
     readonly name : string;
-    readonly contacts : Array<IContact>;
+    readonly contactsListCopy : Array<IContact>;
     add(contact : IContact) : void;
     remove(id : string) : void;
 }
