@@ -19,7 +19,7 @@ describe(`Tests regarding single contacts.`, () => {
     beforeEach(() => {
         contactShowAllInfoSpy.mockClear();
         contactUpdateSpy.mockClear();
-    })
+    });
 
     describe(`Test for the addContact method.`, () => {
         describe('Check if method returns correct results', () => {
@@ -132,7 +132,7 @@ describe(`Tests regarding contact groups.`, () => {
     beforeEach(() => {
         contactGroupUpdateSpy.mockClear();
         contactGroupShowAllInfoSpy.mockClear();
-    })
+    });
 
     const emptyContactGroupArray: IContactGroup[] = [];
 
@@ -252,6 +252,82 @@ describe(`Tests regarding contact groups.`, () => {
                 expect(contactGroupShowAllInfoSpy).toHaveBeenCalledTimes(0);
                 expect(consoleErrorSpy).toHaveBeenCalledTimes(1);
                 expect(consoleErrorSpy).toHaveBeenCalledWith('There is no such contact group in the list.');
+            });
+        });
+    });
+});
+
+describe(`Tests regarding interaction between Contacts and ContactGroups.`, () => {
+    const contactGroupAddSpy = jest.spyOn(ContactGroup.prototype, 'add');
+    const contactGroupRemoveSpy = jest.spyOn(ContactGroup.prototype, 'remove');
+
+    let phoneBook: PhoneBook;
+    let contactGroup: IContactGroup;
+    let contact: IContact;
+
+    beforeEach(() => {
+        contactGroupAddSpy.mockClear();
+        contactGroupRemoveSpy.mockClear();
+
+        phoneBook = new PhoneBook();
+        contactGroup = new ContactGroup('Group');
+        contact = new Contact('contact', 'con@gmail.com');
+
+        phoneBook.addContactGroup(contactGroup);
+    });
+
+
+    describe(`Test for the addContactToGroup method.`, () => {
+        describe('Check if method returns correct results', () => {
+            test(`Should call the add method from the group with provided contact as argument.`, () => {
+                phoneBook.addContact(contact);
+                phoneBook.addContactToGroup(contact, contactGroup);
+                expect(contactGroupAddSpy).toHaveBeenCalledTimes(1);
+                expect(contactGroupAddSpy).toHaveBeenCalledWith(contact);
+            });
+        });
+
+
+        describe(`Check if method responds properly to encountered errors`, () => {
+            test(`There is no such contact in the list. Should inform user through console.error.`, () => {
+
+                phoneBook.addContactToGroup(contact, contactGroup);
+                expect(contactGroupAddSpy).toHaveBeenCalledTimes(0);
+                expect(consoleErrorSpy).toHaveBeenCalledTimes(1);
+                expect(consoleErrorSpy).toHaveBeenCalledWith(`There is no such contact or contact group in the list.`);
+            });
+
+            test(`There is no such contact group in the list. Should inform user through console.error.`, () => {
+                phoneBook.removeContactGroup(contactGroup.id);
+
+                phoneBook.addContactToGroup(contact, contactGroup);
+                expect(contactGroupAddSpy).toHaveBeenCalledTimes(0);
+                expect(consoleErrorSpy).toHaveBeenCalledTimes(1);
+                expect(consoleErrorSpy).toHaveBeenCalledWith(`There is no such contact or contact group in the list.`);
+            });
+        });
+    });
+
+
+    describe(`Test for the removeContactFromGroup method.`, () => {
+        describe('Check if method returns correct results', () => {
+            test(`Should call the remove method from the group with provided contact as argument.`, () => {
+                phoneBook.addContact(contact);
+                phoneBook.removeContactFromGroup(contact.id, contactGroup);
+                expect(contactGroupRemoveSpy).toHaveBeenCalledTimes(1);
+                expect(contactGroupRemoveSpy).toHaveBeenCalledWith(contact.id);
+            });
+        });
+
+
+        describe(`Check if method responds properly to encountered errors`, () => {
+            test(`There is no such contact group in the list. Should inform user through console.error.`, () => {
+                phoneBook.removeContactGroup(contactGroup.id);
+
+                phoneBook.removeContactFromGroup(contact.id, contactGroup);
+                expect(contactGroupRemoveSpy).toHaveBeenCalledTimes(0);
+                expect(consoleErrorSpy).toHaveBeenCalledTimes(1);
+                expect(consoleErrorSpy).toHaveBeenCalledWith(`There is no such contact group in the list.`);
             });
         });
     });
