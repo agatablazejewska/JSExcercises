@@ -5,22 +5,30 @@ import { IContactGroup } from '../../../OOPExcercises/Excercise1TS/Interfaces/Co
 import { PhoneBook } from '../../../OOPExcercises/Excercise1TS/PhoneBook/PhoneBook';
 
 const consoleErrorSpy = jest.spyOn(console, 'error');
+const contactGroupUpdateSpy = jest.spyOn(ContactGroup.prototype, 'update');
+const contactGroupShowAllInfoSpy = jest.spyOn(ContactGroup.prototype, 'showAllInfo');
+const contactGroupShowSpy = jest.spyOn(ContactGroup.prototype, 'show');
+const contactGroupAddSpy = jest.spyOn(ContactGroup.prototype, 'add');
+const contactGroupRemoveSpy = jest.spyOn(ContactGroup.prototype, 'remove');
+const contactShowAllInfoSpy = jest.spyOn(Contact.prototype, 'showAllInfo');
+const contactShowSpy = jest.spyOn(Contact.prototype, 'show');
+const contactUpdateSpy = jest.spyOn(Contact.prototype, 'update');
 
 const emptyContactArray: IContact[] = [];
 
 beforeEach(() => {
     consoleErrorSpy.mockClear();
+    contactGroupUpdateSpy.mockClear();
+    contactGroupShowAllInfoSpy.mockClear();
+    contactGroupShowSpy.mockClear();
+    contactGroupAddSpy.mockClear();
+    contactGroupRemoveSpy.mockClear();
+    contactShowAllInfoSpy.mockClear();
+    contactUpdateSpy.mockClear();
+    contactShowSpy.mockClear();
 });
 
 describe(`Tests regarding single contacts.`, () => {
-    const contactShowAllInfoSpy = jest.spyOn(Contact.prototype, 'showAllInfo');
-    const contactUpdateSpy = jest.spyOn(Contact.prototype, 'update');
-
-    beforeEach(() => {
-        contactShowAllInfoSpy.mockClear();
-        contactUpdateSpy.mockClear();
-    });
-
     describe(`Test for the addContact method.`, () => {
         describe('Check if method returns correct results', () => {
             test(`Should add the new contact to the contacts' array.`, () => {
@@ -126,14 +134,6 @@ describe(`Tests regarding single contacts.`, () => {
 });
 
 describe(`Tests regarding contact groups.`, () => {
-    const contactGroupUpdateSpy = jest.spyOn(ContactGroup.prototype, 'update');
-    const contactGroupShowAllInfoSpy = jest.spyOn(ContactGroup.prototype, 'showAllInfo');
-
-    beforeEach(() => {
-        contactGroupUpdateSpy.mockClear();
-        contactGroupShowAllInfoSpy.mockClear();
-    });
-
     const emptyContactGroupArray: IContactGroup[] = [];
 
     describe(`Tests for the addContactGroup method`, () => {
@@ -258,17 +258,13 @@ describe(`Tests regarding contact groups.`, () => {
 });
 
 describe(`Tests regarding interaction between Contacts and ContactGroups.`, () => {
-    const contactGroupAddSpy = jest.spyOn(ContactGroup.prototype, 'add');
-    const contactGroupRemoveSpy = jest.spyOn(ContactGroup.prototype, 'remove');
+
 
     let phoneBook: PhoneBook;
     let contactGroup: IContactGroup;
     let contact: IContact;
 
     beforeEach(() => {
-        contactGroupAddSpy.mockClear();
-        contactGroupRemoveSpy.mockClear();
-
         phoneBook = new PhoneBook();
         contactGroup = new ContactGroup('Group');
         contact = new Contact('contact', 'con@gmail.com');
@@ -328,6 +324,68 @@ describe(`Tests regarding interaction between Contacts and ContactGroups.`, () =
                 expect(contactGroupRemoveSpy).toHaveBeenCalledTimes(0);
                 expect(consoleErrorSpy).toHaveBeenCalledTimes(1);
                 expect(consoleErrorSpy).toHaveBeenCalledWith(`There is no such contact group in the list.`);
+            });
+        });
+    });
+});
+
+describe(`Tests for the show all members methods.`, () => {
+    test(`showContacts method should call the show method on every contact instance.
+     Contacts should be sorted by full name.`, () => {
+        const phoneBook = new PhoneBook();
+        const adamBever = new Contact('Adam', 'ala@gmail.com', 'Bever');
+        const bobDylan = new Contact('Bob', 'bob@gmail.com', 'Dylan');
+        const andersMos = new Contact('Anders', 'anders@gmail.com', 'Mos');
+        const michelle = new Contact('Michelle', 'michelle@gmail.com');
+
+        const contactsToAddArray = [michelle, adamBever, bobDylan, andersMos];
+        const contactsSortedByFullName = [adamBever, andersMos, bobDylan, michelle];
+
+        contactsToAddArray.forEach(contact => phoneBook.addContact(contact));
+
+        phoneBook.showContacts();
+        expect(phoneBook.contactsListCopy).toEqual(contactsSortedByFullName);
+        expect(contactShowSpy).toHaveBeenCalledTimes(4);
+    });
+
+    test('showGroups method should call the show method on every ContactGroup instance.', () => {
+        const phoneBook = new PhoneBook();
+        const groupFamily = new ContactGroup('Family');
+        const groupFriends = new ContactGroup('Friends');
+        const groupWork = new ContactGroup('Work');
+        const groupsToAdd = [groupFamily, groupFriends, groupWork];
+
+        groupsToAdd.forEach(group => phoneBook.addContactGroup(group));
+
+        phoneBook.showGroups();
+        expect(contactGroupShowSpy).toHaveBeenCalledTimes(3);
+    });
+
+    describe(`Tests for showFilteredByPhrase method.`, () => {
+        const phoneBook = new PhoneBook();
+        const adamKiles = new Contact('Adam', 'ala@gmail.com', 'Kiles');
+        const andersMos = new Contact('Anders', 'anders@gmail.com', 'Mos');
+        const michelle = new Contact('Michelle', 'michelle@gmail.com');
+        const lukeCons = new Contact('Luke', 'luke@gmail.com', 'Cons');
+        const bobAdam = new Contact('Bob', 'bob@gmail.com', 'Adam');
+        const contactsToAdd = [adamKiles, andersMos, michelle, lukeCons, bobAdam];
+
+        contactsToAdd.forEach(contact => phoneBook.addContact(contact));
+
+        describe('Check if method returns correct results', () => {
+            test(`Should call show method only as many times as there are contacts left after filtering.`, () => {
+                phoneBook.showFilteredByPhrase('adam');
+                expect(contactShowSpy).toHaveBeenCalledTimes(2);
+            });
+        });
+
+
+        describe(`Check if method responds properly to encountered errors`, () => {
+            test(`Provided phrase is empty. Should inform user through console.error`, () => {
+                phoneBook.showFilteredByPhrase('');
+                expect(contactShowSpy).toHaveBeenCalledTimes(0);
+                expect(consoleErrorSpy).toHaveBeenCalledTimes(1);
+                expect(consoleErrorSpy).toHaveBeenCalledWith(`Provided text is empty or consists of white spaces`);
             });
         });
     });
