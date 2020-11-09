@@ -70,11 +70,21 @@ export class PhoneBook {
     }
 
     addContactToGroup(contact : IContact, group : IContactGroup) : void {
-        group.add(contact);
+        if(this._containsContact(contact) && this._containsContactGroup(group)) {
+            group.add(contact);
+            return;
+        }
+
+        console.error(`There is no such contact or contact group in the list.`);
     }
 
     removeContactFromGroup(contactId : string, group : IContactGroup) : void {
-        group.remove(contactId);
+        if(this._containsContactGroup(group)) {
+            group.remove(contactId);
+            return;
+        }
+
+        console.error(`There is no such contact group in the list.`);
     }
 
     showContactGroup(group : IContactGroup) : void {
