@@ -133,7 +133,7 @@ export class PhoneBook {
             filteredContactList.forEach(contact => contact.show());
         }
         catch(e) {
-            console.error(e);
+            console.error(e.message);
         }  
       }
 
