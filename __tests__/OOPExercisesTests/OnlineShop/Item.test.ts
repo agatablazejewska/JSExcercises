@@ -3,9 +3,15 @@ import { Categories } from '../../../OOPExcercises/Excercise2TS/Utilities/Enums/
 
 jest.mock('uuid', () => ({ v4: () => '00000000-0000-0000-0000-000000000000' }));
 
+const consoleErrorSpy = jest.spyOn(console, 'error');
+
 const itemName = 'item';
 const category = Categories.Food;
 const itemPrice = 10;
+
+beforeEach(() => {
+    consoleErrorSpy.mockClear();
+})
 
 describe('Tests for creating an item', () => {
     describe('Check if method returns correct results', () => {
@@ -49,7 +55,7 @@ describe('Tests for creating an item', () => {
         });
 
         test(`Provided discount is less than 0 or more than 100. 
-        Should set it to 0 - meaning there is no discount.`, () => {
+        Should set it to 0 - meaning there is no discount and console.error.`, () => {
             const itemWithNegativeDiscount = new Item(itemName, category, itemPrice, -5);
             const itemWithDiscountMoreThan100 = new Item(itemName, category, itemPrice, 105);
 
@@ -58,6 +64,8 @@ describe('Tests for creating an item', () => {
 
             expect(discountAfterNegativeValueProvided).toEqual(0);
             expect(discountAfterMoreThan100Provided).toEqual(0);
+            expect(consoleErrorSpy).toHaveBeenCalledTimes(2);
+            expect(consoleErrorSpy).toHaveBeenCalledWith('Provided discount is invalid and therefore discount is set to 0%.');
         });
     });
 });
@@ -148,8 +156,6 @@ describe(`Tests for the update method.`, () => {
 
 
     describe(`Check if method responds properly to encountered errors`, () => {
-        const consoleErrorSpy = jest.spyOn(console, 'error');
-
         test(`Some of the values provided are invalid. Should log an error.`, () => {
             const item = new Item(itemName, category, itemPrice);
             const newEmptyName = '';
