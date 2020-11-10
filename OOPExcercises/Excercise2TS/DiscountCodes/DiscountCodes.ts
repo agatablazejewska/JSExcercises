@@ -1,23 +1,24 @@
+import { cloneDeep } from 'lodash';
 import { IDiscountCodes, codeAndPercentageOffType } from "../Utilities/Interfaces/Discounts/IDiscountCodes";
 import { DiscountValidator } from "../Common/DiscountValidator";
 
 export class DiscountCodes implements IDiscountCodes {
     private readonly _discountCodes: Array<codeAndPercentageOffType>;
-    
+
     constructor() {
         this._discountCodes = new Array<codeAndPercentageOffType>();
     }
 
     get discountCodes() {
-        return this._discountCodes;
+        return cloneDeep(this._discountCodes);
     }
 
     add(codeAndPercentageOff: codeAndPercentageOffType) : void {
-        DiscountValidator.validateDiscountOrChangeToZero(codeAndPercentageOff.percentOff);
-        
-        if(!this._discountCodes.some(c => c.code === codeAndPercentageOff.code)) {
+        codeAndPercentageOff.percentOff = DiscountValidator.validateDiscountOrChangeToZero(codeAndPercentageOff.percentOff);
+
+        if(!this._isCodeAlreadyPresent(codeAndPercentageOff.code)) {
             this._discountCodes.push(codeAndPercentageOff);
-        }     
+        }
     }
 
     remove(code: string): void {
@@ -30,15 +31,10 @@ export class DiscountCodes implements IDiscountCodes {
 
     getPercentOff(code: string): number {
         const percentOff = this._discountCodes.find(c => c.code === code)?.percentOff;
-        return percentOff || 0; 
+        return percentOff || 0;
     }
 
-    _checkIfCodePresent(code: string) : boolean {
-        if(!this._discountCodes.find(c => c.code === code)) {
-            console.log(`Code ${code} is not valid`);
-            return false;
-        }
-        
-        return true;
+    _isCodeAlreadyPresent(code: string) : boolean {
+        return this._discountCodes.some(c => c.code === code);
     }
 }
