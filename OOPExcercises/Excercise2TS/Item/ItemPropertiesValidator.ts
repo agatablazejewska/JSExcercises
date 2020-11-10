@@ -19,4 +19,10 @@ export abstract class ItemPropertiesValidator {
     static validateDiscountOrChangeToZero(discount: number) {
         return DiscountValidator.validateDiscountOrChangeToZero(discount);
     }
+
+    static validateDiscountBeforeUpdate(discount: number) {
+        if(discount < 0 || discount > 100) {
+            throw new Error('Discount should be in the range of 0 and 100.');
+        }
+    }
 }
