@@ -1,4 +1,4 @@
-import { cloneDeep } from 'lodash'
+import { cloneDeep } from 'lodash';
 import { ICart, ItemAmountAndPrice } from "../Utilities/Interfaces/Cart/ICart";
 import { IItem } from "../Utilities/Interfaces/Item/IItem";
 import { DiscountCodes } from "../DiscountCodes/DiscountCodes";
@@ -47,12 +47,12 @@ export class Cart implements ICart {
         this._updateCartSummaryItemAdded(item);
     }
 
-    removeOneItemOfThisName(id: string) : void {
+    removeOneItemOfThisType(id: string) : void {
         const dataToRemove = this._findItemDataById(id);
 
         if(dataToRemove) {
             if(dataToRemove.amount === 1) {
-                this.removeAllItemsOfThisName(id);
+                this.removeAllItemsOfThisType(id);
                 return;
             }
 
@@ -61,13 +61,13 @@ export class Cart implements ICart {
         }   
     }
 
-    removeAllItemsOfThisName(id: string) : void {
+    removeAllItemsOfThisType(id: string) : void {
         const dataToRemove = this._findItemDataById(id);
         const dataToRemoveIndex = this._items.findIndex(i => i.item.id === id);
 
          if (dataToRemoveIndex > -1) {
-            this._items.splice(dataToRemoveIndex, 1);   
-            this._updateCartSummarySllItemsOfThisNameRemoved(dataToRemove!);
+            this._items.splice(dataToRemoveIndex, 1);
+            this._updateCartSummarySllItemsOfTypeRemoved(dataToRemove!);
         }     
     }
 
@@ -141,7 +141,7 @@ export class Cart implements ICart {
         this._sum.finalPrice = this._calculateFinalPrice();
     }
 
-    private _updateCartSummarySllItemsOfThisNameRemoved(data: ItemAmountAndPrice) {
+    private _updateCartSummarySllItemsOfTypeRemoved(data: ItemAmountAndPrice) {
         const itemsPriceAfterDiscount = data.finalPrice;
 
         this._sum.allItemsAmount =- data.amount;
