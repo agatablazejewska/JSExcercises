@@ -2,7 +2,7 @@ import { ICart, ItemAmountAndPrice } from "../Utilities/Interfaces/Cart/ICart";
 import { IItem } from "../Utilities/Interfaces/Item/IItem";
 import { DiscountCodes } from "../DiscountCodes/DiscountCodes";
 
-export type CartPricesDiscountsAmountsSumType = { 
+export type PricesAndDiscountsSumsForCart = { 
     finalPrice: number,
     cartDiscountPrice: number,
     cartPriceNoDiscountCode: number,
@@ -13,7 +13,7 @@ export type CartPricesDiscountsAmountsSumType = {
 export class Cart implements ICart {
     private readonly _items: Array<ItemAmountAndPrice>;
     private readonly _currentDiscountCodes : DiscountCodes;
-    private _sum: CartPricesDiscountsAmountsSumType;
+    private _sum: PricesAndDiscountsSumsForCart;
     discount: number;
 
     constructor() {
