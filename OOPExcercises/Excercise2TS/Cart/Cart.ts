@@ -1,3 +1,4 @@
+import { cloneDeep } from 'lodash';
 import { ICart, ItemAmountAndPrice } from "../Utilities/Interfaces/Cart/ICart";
 import { IItem } from "../Utilities/Interfaces/Item/IItem";
 import { DiscountCodes } from "../DiscountCodes/DiscountCodes";
@@ -30,7 +31,7 @@ export class Cart implements ICart {
     }
         
     get items() {
-        return this._items;
+        return cloneDeep(this._items);
     }
 
     addItem(item: IItem) : void {
