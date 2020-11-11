@@ -10,8 +10,8 @@ export type ItemAmountAndPrice = {
 export interface ICart {
     readonly items : Array<ItemAmountAndPrice>;
     addItem(item : IItem) : void;
-    removeItemOne(id : string) : void;
-    removeItemAll(id : string) : void;
+    removeOneItemOfThisType(id : string) : void;
+    removeAllItemsOfThisType(id : string) : void;
     applyDiscountCode(code : string) : void;
     getFinalPrice() : number;
     getAllItemsAmount() : number;
