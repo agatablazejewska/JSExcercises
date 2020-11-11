@@ -35,7 +35,7 @@ export class Cart implements ICart {
     }
 
     addItem(item: IItem) : void {
-        let itemAlreadyInCartData = this._items.find(i => i.item.name === item.name);
+        let itemAlreadyInCartData = this._items.find(i => i.item === item);
 
         if(itemAlreadyInCartData) {
             this._updateProductAdded(itemAlreadyInCartData, item);    
