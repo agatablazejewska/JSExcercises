@@ -35,7 +35,7 @@ export class Cart implements ICart {
     }
 
     addItem(item: IItem) : void {
-        let itemAlreadyInCartData = this._items.find(i => i.item === item);
+        let itemAlreadyInCartData = this._items.find(i => i.item.id === item.id);
 
         if(itemAlreadyInCartData) {
             this._updateProductAdded(itemAlreadyInCartData, item);    
@@ -50,25 +50,31 @@ export class Cart implements ICart {
     removeOneItemOfThisType(id: string) : void {
         const dataToRemove = this._findItemDataById(id);
 
-        if(dataToRemove) {
-            if(dataToRemove.amount === 1) {
-                this.removeAllItemsOfThisType(id);
-                return;
-            }
+        if(!dataToRemove) {
+            console.error(`There is no such item in this cart.`);
+            return;
+        }
 
-            this._updateProductRemoved(dataToRemove);
-            this._updateCartSummaryOneItemRemoved(dataToRemove);
-        }   
+        if(dataToRemove.amount === 1) {
+            this.removeAllItemsOfThisType(id);
+            return;
+        }
+
+        this._updateProductRemoved(dataToRemove);
+        this._updateCartSummaryOneItemRemoved(dataToRemove);
     }
 
     removeAllItemsOfThisType(id: string) : void {
         const dataToRemove = this._findItemDataById(id);
         const dataToRemoveIndex = this._items.findIndex(i => i.item.id === id);
 
-         if (dataToRemoveIndex > -1) {
-            this._items.splice(dataToRemoveIndex, 1);
-            this._updateCartSummarySllItemsOfTypeRemoved(dataToRemove!);
-        }     
+         if (dataToRemoveIndex === -1) {
+             console.error(`There are no such items in this cart.`);
+             return;
+        }
+
+        this._items.splice(dataToRemoveIndex, 1);
+        this._updateCartSummarySllItemsOfTypeRemoved(dataToRemove!);
     }
 
     applyDiscountCode(code: string) : void {
@@ -144,7 +150,7 @@ export class Cart implements ICart {
     private _updateCartSummarySllItemsOfTypeRemoved(data: ItemAmountAndPrice) {
         const itemsPriceAfterDiscount = data.finalPrice;
 
-        this._sum.allItemsAmount =- data.amount;
+        this._sum.allItemsAmount -= data.amount;
         this._sum.cartPriceNoDiscountCode -= itemsPriceAfterDiscount;
         this._sum.allDiscountsPrice -= data.priceNoDiscounts - data.finalPrice;
         this._sum.finalPrice = this._calculateFinalPrice();
