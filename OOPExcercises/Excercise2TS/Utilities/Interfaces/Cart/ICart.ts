@@ -16,5 +16,5 @@ export interface ICart {
     getFinalPrice() : number;
     getAllItemsAmount() : number;
     getPriceNoDiscountCode() : number;
-    getAllDiscountsSumPrice() : number;
+    getAllDiscountsSum() : number;
 }

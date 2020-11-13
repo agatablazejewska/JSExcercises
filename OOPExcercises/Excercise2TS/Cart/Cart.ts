@@ -1,7 +1,8 @@
 import { cloneDeep } from 'lodash';
+import { DiscountCodesSingletone } from '../DiscountCodes/DiscountCodesSingletone';
 import { ICart, ItemAmountAndPrice } from "../Utilities/Interfaces/Cart/ICart";
+import { IDiscountCodes } from '../Utilities/Interfaces/Discounts/IDiscountCodes';
 import { IItem } from "../Utilities/Interfaces/Item/IItem";
-import { DiscountCodes } from "../DiscountCodes/DiscountCodes";
 
 export type PricesAndDiscountsSumsForCart = {
     finalPrice: number,
@@ -13,13 +14,13 @@ export type PricesAndDiscountsSumsForCart = {
 
 export class Cart implements ICart {
     private readonly _items: Array<ItemAmountAndPrice>;
-    private readonly _currentDiscountCodes : DiscountCodes;
+    private readonly _currentDiscountCodes : IDiscountCodes;
     private _sum: PricesAndDiscountsSumsForCart;
     discount: number;
 
     constructor() {
         this._items = new Array<ItemAmountAndPrice>();
-        this._currentDiscountCodes = new DiscountCodes();
+        this._currentDiscountCodes = DiscountCodesSingletone.discountCodes;
         this.discount = 0;
         this._sum = { 
             finalPrice: 0,
@@ -74,11 +75,13 @@ export class Cart implements ICart {
         }
 
         this._items.splice(dataToRemoveIndex, 1);
-        this._updateCartSummarySllItemsOfTypeRemoved(dataToRemove!);
+        this._updateCartSummaryAllItemsOfTypeRemoved(dataToRemove!);
     }
 
     applyDiscountCode(code: string) : void {
         this.discount = this._currentDiscountCodes.getPercentOff(code);
+        this._calculateFinalPrice();
+        this._updateDiscountsSummaryAfterApplyingDiscountCode();
     }
 
     getFinalPrice(): number {
@@ -89,7 +92,7 @@ export class Cart implements ICart {
         return this._sum.cartPriceNoDiscountCode;
     }
 
-    getAllDiscountsSumPrice() : number {
+    getAllDiscountsSum() : number {
         return this._sum.allDiscountsPrice;
     }
 
@@ -103,11 +106,16 @@ export class Cart implements ICart {
    
     private _calculateFinalPrice() : number {
         const priceNoDiscountCode = this._sum.cartPriceNoDiscountCode;
-        const finalPrice = (100 - this.discount) / 100 * priceNoDiscountCode;
+        const finalPrice = ((100 - this.discount) / 100) * priceNoDiscountCode;
 
         this._updateCartDiscountPrice(priceNoDiscountCode, finalPrice);
+        this._sum.finalPrice = finalPrice;
 
         return finalPrice;
+    }
+
+    private _updateDiscountsSummaryAfterApplyingDiscountCode() {
+        this._sum.allDiscountsPrice += this._sum.cartDiscountPrice;
     }
 
     private _updateCartDiscountPrice(priceNoDiscountCode: number, finalPrice: number) {
@@ -147,7 +155,7 @@ export class Cart implements ICart {
         this._sum.finalPrice = this._calculateFinalPrice();
     }
 
-    private _updateCartSummarySllItemsOfTypeRemoved(data: ItemAmountAndPrice) {
+    private _updateCartSummaryAllItemsOfTypeRemoved(data: ItemAmountAndPrice) {
         const itemsPriceAfterDiscount = data.finalPrice;
 
         this._sum.allItemsAmount -= data.amount;
