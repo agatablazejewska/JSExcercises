@@ -36,14 +36,13 @@ export class DiscountCodes implements IDiscountCodes {
     }
 
     getPercentOff(code: string): number {
-        const percentOff = this._discountCodes.find(c => c.code === code)?.percentOff;
+        const foundCode = this._discountCodes.find(c => c.code === code);
 
-        if(!percentOff) {
-            console.error('There is no such discount code in the list.');
-            return 0;
+        if(!foundCode) {
+            throw new Error('There is no such discount code in the list.');
         }
 
-        return percentOff;
+        return foundCode.percentOff;
     }
 
     _isCodeAlreadyPresent(code: string) : boolean {

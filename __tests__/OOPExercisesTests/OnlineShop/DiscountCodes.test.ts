@@ -95,10 +95,11 @@ describe(`Tests for the getPercentOff method.`, () => {
     describe(`Check if method responds properly to encountered errors`, () => {
         test(`The code provided doesn't exist in the list.
         Should inform a user with console.error`, () => {
-            discountCodes.getPercentOff(discountCode.code);
-
-            expect(consoleErrorSpy).toHaveBeenCalledTimes(1);
-            expect(consoleErrorSpy).toHaveBeenCalledWith('There is no such discount code in the list.');
+            const tryToGetCodeWhichDoesntExist = () => {
+                discountCodes.getPercentOff(discountCode.code);
+            }
+            
+            expect(tryToGetCodeWhichDoesntExist).toThrowError('There is no such discount code in the list.');
         });
     });
 });
