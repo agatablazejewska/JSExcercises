@@ -3,7 +3,7 @@ import { Cart } from '../../../OOPExcercises/Excercise2TS/Cart/Cart';
 import { DiscountCodesSingletone } from '../../../OOPExcercises/Excercise2TS/DiscountCodes/DiscountCodesSingletone';
 import { Item } from '../../../OOPExcercises/Excercise2TS/Item/Item';
 import { Categories } from '../../../OOPExcercises/Excercise2TS/Utilities/Enums/Categories';
-import { ItemAmountAndPrice } from '../../../OOPExcercises/Excercise2TS/Utilities/Interfaces/Cart/ICart';
+import { ItemInCartSummary } from '../../../OOPExcercises/Excercise2TS/Utilities/Interfaces/Cart/ICart';
 import { IItem } from '../../../OOPExcercises/Excercise2TS/Utilities/Interfaces/Item/IItem';
 
 const consoleErrorSpy = jest.spyOn(console, 'error');
@@ -81,7 +81,7 @@ describe(`Tests for the removeOneItemOfThisType method.`, () => {
         test(`There is only one item with this id in the cart. 
         Items list length should be back to 0.`, () => {
             cart.addItem(item50PercentDiscount);
-            cart.removeOneItemWithThisId(item50PercentDiscount.id);
+            cart.removeOneItemById(item50PercentDiscount.id);
 
             expect(cart.items).toHaveLength(0);
         });
@@ -93,7 +93,7 @@ describe(`Tests for the removeOneItemOfThisType method.`, () => {
             const correctDiscountsSumWhenCartIsEmptied  = 0;
 
             cart.addItem(item50PercentDiscount);
-            cart.removeOneItemWithThisId(item50PercentDiscount.id);
+            cart.removeOneItemById(item50PercentDiscount.id);
 
             expect(cart.getAllItemsAmount()).toBe(correctAmountOfItemsAfterItemRemoval);
             expect(cart.getFinalPrice()).toBe(correctFinalPriceWhenTheCartIsEmptied);
@@ -101,7 +101,7 @@ describe(`Tests for the removeOneItemOfThisType method.`, () => {
         });
 
 
-        test(`There are 3 items of this type in the cart. Should update cart's summary.`, () => {
+        test(`There are 3 items with this id in the cart. Should update cart's summary.`, () => {
             const otherItemToBeAdded = new Item('other', Categories.Alcohol, 23);
             const correctItemListAllItemsAndAfterRemoval = [item50PercentDiscount, otherItemToBeAdded];
             const correctItemsAmountAfterRemovingOnlyOneOfItemsWithThisId = 2;
@@ -111,7 +111,8 @@ describe(`Tests for the removeOneItemOfThisType method.`, () => {
             cart.addItem(item50PercentDiscount);
             cart.addItem(item50PercentDiscount);
             cart.addItem(otherItemToBeAdded);
-            cart.removeOneItemWithThisId(item50PercentDiscount.id);
+
+            cart.removeOneItemById(item50PercentDiscount.id);
 
             expect(cart.getAllItemsAmount()).toBe(correctItemsAmountAfterRemovingOnlyOneOfItemsWithThisId);
             expect(cart.getFinalPrice()).toBe(correctFinalPriceAfterRemovingOnlyOneOfItemsWithThisId);
@@ -124,10 +125,11 @@ describe(`Tests for the removeOneItemOfThisType method.`, () => {
     describe(`Check if method responds properly to encountered errors`, () => {
         test(`The item can't be located in the cart. 
         Should inform user through console.error.`, () => {
-            cart.removeOneItemWithThisId(item50PercentDiscount.id);
+            const removeOneItemThatDoesntExistInCart = () => {
+                cart.removeOneItemById(item50PercentDiscount.id);
+            }
 
-            expect(consoleErrorSpy).toHaveBeenCalledTimes(1);
-            expect(consoleErrorSpy).toHaveBeenCalledWith(`There is no such item in this cart.`);
+            expect(removeOneItemThatDoesntExistInCart).toThrowError(`There is no such item in this cart.`);
         });
     });
 });
@@ -145,7 +147,7 @@ describe(`Tests for the removeAllItemsOfThisType method.`, () => {
             cart.addItem(item50PercentDiscount);
             cart.addItem(item50PercentDiscount);
             cart.addItem(otherItemToBeAdded);
-            cart.removeAllItemsWithThisId(item50PercentDiscount.id);
+            cart.removeAllItemsById(item50PercentDiscount.id);
 
             expect(cart.getAllItemsAmount()).toBe(correctItemsAmountAfterRemovingAllOfItemsWithThisId);
             expect(cart.getFinalPrice()).toBe(correctFinalPriceAfterRemovingAllOfItemsWithThisId);
@@ -160,10 +162,9 @@ describe(`Tests for the removeAllItemsOfThisType method.`, () => {
     describe(`Check if method responds properly to encountered errors`, () => {
         test(`There are no items of this type in the list. 
         Should inform user through console.error.`, () => {
-            cart.removeAllItemsWithThisId(item50PercentDiscount.id);
+            const removeAllItemsByIdThatCantBeFoundInCart = () =>  cart.removeAllItemsById(item50PercentDiscount.id);
 
-            expect(consoleErrorSpy).toHaveBeenCalledTimes(1);
-            expect(consoleErrorSpy).toHaveBeenCalledWith(`There are no such items in this cart.`);
+            expect(removeAllItemsByIdThatCantBeFoundInCart).toThrowError(`There is no such item in this cart.`);
         });
     });
 });
@@ -195,7 +196,7 @@ describe(`Tests for getters.`, () => {
     });
 });
 
-function expectItemsToBeEqual(product: ItemAmountAndPrice, index: number, arrayWithItemsToCompare: IItem[]) {
+function expectItemsToBeEqual(product: ItemInCartSummary, index: number, arrayWithItemsToCompare: IItem[]) {
     const areItemsEqual = _.isEqual(product.item, arrayWithItemsToCompare[index]);
     expect(areItemsEqual).toBe(true);
 }

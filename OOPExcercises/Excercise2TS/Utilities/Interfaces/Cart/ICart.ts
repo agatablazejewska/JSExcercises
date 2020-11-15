@@ -1,6 +1,6 @@
 import { IItem } from "../Item/IItem";
 
-export type ItemAmountAndPrice = {
+export type ItemInCartSummary = {
     item: IItem,
     amount: number,
     finalPrice: number,
@@ -8,10 +8,10 @@ export type ItemAmountAndPrice = {
 }
 
 export interface ICart {
-    readonly items : Array<ItemAmountAndPrice>;
+    readonly items : Array<ItemInCartSummary>;
     addItem(item : IItem) : void;
-    removeOneItemWithThisId(id : string) : void;
-    removeAllItemsWithThisId(id : string) : void;
+    removeOneItemById(id : string) : void;
+    removeAllItemsById(id : string) : void;
     applyDiscountCode(code : string) : void;
     getFinalPrice() : number;
     getAllItemsAmount() : number;
