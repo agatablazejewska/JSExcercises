@@ -11,7 +11,7 @@ const itemPrice = 10;
 
 beforeEach(() => {
     consoleErrorSpy.mockClear();
-})
+});
 
 describe('Tests for creating an item', () => {
     describe('Check if method returns correct results', () => {
@@ -55,17 +55,19 @@ describe('Tests for creating an item', () => {
         });
 
         test(`Provided discount is less than 0 or more than 100. 
-        Should set it to 0 - meaning there is no discount and console.error.`, () => {
-            const itemWithNegativeDiscount = new Item(itemName, category, itemPrice, -5);
-            const itemWithDiscountMoreThan100 = new Item(itemName, category, itemPrice, 105);
+        Should inform user through console.error.`, () => {
+            const createItemWithNegativeDiscount = () => {
+                new Item(itemName, category, itemPrice, -5);
+            };
+            const createItemWithDiscountMoreThan100 = () => {
+                new Item(itemName, category, itemPrice, 105);
+            };
 
-            const discountAfterNegativeValueProvided = itemWithNegativeDiscount.discount;
-            const discountAfterMoreThan100Provided = itemWithDiscountMoreThan100.discount;
+            createItemWithNegativeDiscount();
+            createItemWithDiscountMoreThan100();
 
-            expect(discountAfterNegativeValueProvided).toEqual(0);
-            expect(discountAfterMoreThan100Provided).toEqual(0);
             expect(consoleErrorSpy).toHaveBeenCalledTimes(2);
-            expect(consoleErrorSpy).toHaveBeenCalledWith('Provided discount is invalid and therefore discount is set to 0%.');
+            expect(consoleErrorSpy).toHaveBeenCalledWith('Provided discount is invalid. Discount should be in the range of 0-100.');
         });
     });
 });
@@ -93,64 +95,23 @@ describe(`Tests for the update method.`, () => {
             const newPrice = 100;
             const newDiscount = 50;
 
-            expect(item).toEqual(
-                expect.objectContaining({
+            const dataForUpdate = [
+                { name: newName },
+                { category: newCategory },
+                { price: newPrice },
+                { discount: newDiscount },
+                {
                     name: itemName,
                     category: category,
                     price: itemPrice,
                     discount: 0,
-                }));
+                }];
 
-            item.update({ name: newName });
-            expect(item).toEqual(
-                expect.objectContaining({
-                    name: newName,
-                    category: category,
-                    price: itemPrice,
-                    discount: 0,
-                }));
-
-            item.update({ category: newCategory });
-            expect(item).toEqual(
-                expect.objectContaining({
-                    name: newName,
-                    category: newCategory,
-                    price: itemPrice,
-                    discount: 0,
-                }));
-
-            item.update({ price: newPrice });
-            expect(item).toEqual(
-                expect.objectContaining({
-                    name: newName,
-                    category: newCategory,
-                    price: newPrice,
-                    discount: 0,
-                }));
-
-            item.update({ discount: newDiscount });
-            expect(item).toEqual(
-                expect.objectContaining({
-                    name: newName,
-                    category: newCategory,
-                    price: newPrice,
-                    discount: newDiscount,
-                }));
-
-            item.update({
-                name: itemName,
-                category: category,
-                price: itemPrice,
-                discount: 0,
+            dataForUpdate.forEach(updateData => {
+                item.update(updateData);
+                expect(item).toEqual(
+                    expect.objectContaining(updateData));
             });
-
-            expect(item).toEqual(
-                expect.objectContaining({
-                    name: itemName,
-                    category: category,
-                    price: itemPrice,
-                    discount: 0,
-                }));
         });
     });
 
@@ -169,7 +130,7 @@ describe(`Tests for the update method.`, () => {
             expect(consoleErrorSpy).toHaveBeenCalledWith(`Price can't be a negative value`);
 
             item.update({ discount: newNegativeDiscount });
-            expect(consoleErrorSpy).toHaveBeenCalledWith(`Discount should be in the range of 0 and 100.`);
+            expect(consoleErrorSpy).toHaveBeenCalledWith(`Provided discount is invalid. Discount should be in the range of 0-100.`);
         });
     });
 });
@@ -179,7 +140,7 @@ describe(`Tests for the show methods.`, () => {
 
     beforeEach(() => {
         consoleLogSpy.mockClear();
-    })
+    });
 
     test(`Test for the showAllInfo method. Should console.log all info about item.`, () => {
         const item = new Item(itemName, category, itemPrice);
@@ -190,7 +151,7 @@ describe(`Tests for the show methods.`, () => {
          Price: ${item.price} $
          Category: ${item.category}
          Discount: ${item.discount}%`);
-    })
+    });
 
     test(`Test for the show method. Should console.log short info about item.`, () => {
         const item = new Item(itemName, category, itemPrice);
@@ -199,5 +160,5 @@ describe(`Tests for the show methods.`, () => {
         expect(consoleLogSpy).toHaveBeenCalledTimes(1);
         expect(consoleLogSpy).toHaveBeenCalledWith(`${item.name}
          ${item.price} $`);
-    })
-})
+    });
+});
