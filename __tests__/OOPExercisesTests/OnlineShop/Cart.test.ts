@@ -182,7 +182,7 @@ describe(`Tests for the applyDiscountCode method.`, () => {
     });
 });
 
-describe(`Tests for getters.`, () => {
+describe(`Tests for the cart summary calculation that hasn't been tested in any other test.`, () => {
     test(`Test for getPriceNoDiscountCode. Should get price without the discount applied.`, () => {
         const discount50Percent = { code: '50Percent', percentOff: 50 };
         const correctPriceWithoutDiscountCodeApplied = 2 * item0PercentDiscount.getPriceAfterDiscount();
