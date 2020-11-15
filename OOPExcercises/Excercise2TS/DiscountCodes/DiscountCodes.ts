@@ -16,7 +16,7 @@ export class DiscountCodes implements IDiscountCodes {
     add(codeAndPercentageOff: codeAndPercentageOffType) : void {
         DiscountValidator.validateDiscount(codeAndPercentageOff.percentOff);
 
-        if(this._isCodeAlreadyPresent(codeAndPercentageOff.code)) {
+        if(this._isCodeAlreadyAdded(codeAndPercentageOff.code)) {
             console.error('The code already exists.');
             return;
         }
@@ -45,7 +45,7 @@ export class DiscountCodes implements IDiscountCodes {
         return foundCode.percentOff;
     }
 
-    _isCodeAlreadyPresent(code: string) : boolean {
+    _isCodeAlreadyAdded(code: string) : boolean {
         return this._discountCodes.some(c => c.code === code);
     }
 }
