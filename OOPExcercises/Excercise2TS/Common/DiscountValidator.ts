@@ -3,7 +3,7 @@ export abstract class DiscountValidator {
         const isProvidedDiscountValid = (discount >= 0 && discount <= 100);
 
         if(!isProvidedDiscountValid) {
-            console.error('Provided discount is invalid. Discount should be in the range of 0-100.');
+            throw new Error('Provided discount is invalid. Discount should be in the range of 0-100.');
         }
     }
 }

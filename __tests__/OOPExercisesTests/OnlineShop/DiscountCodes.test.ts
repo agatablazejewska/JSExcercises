@@ -26,24 +26,35 @@ describe(`Tests for the add method.`, () => {
 
 
     describe(`Check if method responds properly to encountered errors`, () => {
-        test(`Discount provided with the code is invalid (negative or over 100). 
-        Should change the discount to 0 and inform the user through console.error. 
-        Should add the code.`, () => {
+        test(`Discount provided with the code is negative. 
+        Should throw an error.`, () => {
             const discountCodeNegativeDiscount = {
                 code: 'discountNegative',
                 percentOff: -5,
             };
+
+            const addCodeWithNegativeDiscountValue = () => {
+                discountCodes.add(discountCodeNegativeDiscount);
+            }
+
+            expect(addCodeWithNegativeDiscountValue())
+                .toThrowError(`Provided discount is invalid. Discount should be in the range of 0-100.'`);
+        });
+
+        test(`Discount provided with the code is invalid - over 100. 
+        Should throw an error.`, () => {
             const discountCodeDiscountOver100 = {
                 code: 'discountOver100',
                 percentOff: 105,
             };
 
-            discountCodes.add(discountCodeNegativeDiscount);
-            discountCodes.add(discountCodeDiscountOver100);
+            const addCodeWithOver100DiscountValue = () => {
+                discountCodes.add(discountCodeDiscountOver100);
+            }
 
-            expect(consoleErrorSpy).toHaveBeenCalledTimes(2);
-            expect(consoleErrorSpy)
-                .toHaveBeenCalledWith('Provided discount is invalid. Discount should be in the range of 0-100.');
+
+            expect(addCodeWithOver100DiscountValue())
+                .toThrowError(`Provided discount is invalid. Discount should be in the range of 0-100.'`);
         });
 
         test(`The code already exists in the list.`, () => {
@@ -98,7 +109,7 @@ describe(`Tests for the getPercentOff method.`, () => {
             const tryToGetCodeWhichDoesntExist = () => {
                 discountCodes.getPercentOff(discountCode.code);
             }
-            
+
             expect(tryToGetCodeWhichDoesntExist).toThrowError('There is no such discount code in the list.');
         });
     });

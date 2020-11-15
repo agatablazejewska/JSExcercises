@@ -63,11 +63,8 @@ describe('Tests for creating an item', () => {
                 new Item(itemName, category, itemPrice, 105);
             };
 
-            createItemWithNegativeDiscount();
-            createItemWithDiscountMoreThan100();
-
-            expect(consoleErrorSpy).toHaveBeenCalledTimes(2);
-            expect(consoleErrorSpy).toHaveBeenCalledWith('Provided discount is invalid. Discount should be in the range of 0-100.');
+            expect(createItemWithNegativeDiscount()).toThrowError('Provided discount is invalid. Discount should be in the range of 0-100.');
+            expect(createItemWithDiscountMoreThan100()).toThrowError('Provided discount is invalid. Discount should be in the range of 0-100.');
         });
     });
 });
