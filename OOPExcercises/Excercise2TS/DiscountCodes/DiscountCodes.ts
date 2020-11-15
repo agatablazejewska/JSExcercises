@@ -14,7 +14,7 @@ export class DiscountCodes implements IDiscountCodes {
     }
 
     add(codeAndPercentageOff: codeAndPercentageOffType) : void {
-        codeAndPercentageOff.percentOff = DiscountValidator.validateDiscountOrChangeToZero(codeAndPercentageOff.percentOff);
+        DiscountValidator.validateDiscount(codeAndPercentageOff.percentOff);
 
         if(this._isCodeAlreadyPresent(codeAndPercentageOff.code)) {
             console.error('The code already exists.');

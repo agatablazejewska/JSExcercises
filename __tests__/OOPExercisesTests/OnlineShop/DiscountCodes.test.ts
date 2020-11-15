@@ -19,8 +19,6 @@ describe(`Tests for the add method.`, () => {
         test(`Should add new discount code.`, () => {
             const discountCodesArrayWithCodeAdded = [discountCode];
 
-            expect(discountCodes.discountCodes).toEqual(emptyArray);
-
             discountCodes.add(discountCode);
             expect(discountCodes.discountCodes).toEqual(discountCodesArrayWithCodeAdded);
         });
@@ -41,25 +39,17 @@ describe(`Tests for the add method.`, () => {
             };
 
             discountCodes.add(discountCodeNegativeDiscount);
-            expect(consoleErrorSpy)
-                .toHaveBeenCalledWith('Provided discount is invalid and therefore discount is set to 0%.');
-
             discountCodes.add(discountCodeDiscountOver100);
-            expect(consoleErrorSpy)
-                .toHaveBeenCalledWith('Provided discount is invalid and therefore discount is set to 0%.');
-            expect(consoleErrorSpy).toHaveBeenCalledTimes(2);
 
-            expect(discountCodes.discountCodes).toEqual([discountCodeNegativeDiscount, discountCodeDiscountOver100]);
-            expect(discountCodeNegativeDiscount.percentOff).toBe(0);
-            expect(discountCodeDiscountOver100.percentOff).toBe(0);
+            expect(consoleErrorSpy).toHaveBeenCalledTimes(2);
+            expect(consoleErrorSpy)
+                .toHaveBeenCalledWith('Provided discount is invalid. Discount should be in the range of 0-100.');
         });
 
         test(`The code already exists in the list.`, () => {
             const codeToBeAddedTwice = { code: 'addTwice', percentOff: 10 };
 
             discountCodes.add(codeToBeAddedTwice);
-            expect(consoleErrorSpy).toHaveBeenCalledTimes(0);
-
             discountCodes.add(codeToBeAddedTwice);
             expect(consoleErrorSpy).toHaveBeenCalledTimes(1);
             expect(consoleErrorSpy).toHaveBeenCalledWith('The code already exists.');
@@ -70,13 +60,9 @@ describe(`Tests for the add method.`, () => {
 describe(`Tests for the remove method.`, () => {
     describe('Check if method returns correct results', () => {
         test(`Should remove code from the list.`, () => {
-            const arrayWithCodeAdded: codeAndPercentageOffType[] = [discountCode];
-
-
             discountCodes.add(discountCode);
-            expect(discountCodes.discountCodes).toEqual(arrayWithCodeAdded);
-
             discountCodes.remove(discountCode.code);
+
             expect(discountCodes.discountCodes).toEqual(emptyArray);
         });
     });
@@ -86,6 +72,7 @@ describe(`Tests for the remove method.`, () => {
         test(`The provided code doesn't exist in the list.
         Should inform a user.`, () => {
             discountCodes.remove(discountCode.code);
+
             expect(consoleErrorSpy).toHaveBeenCalledTimes(1);
             expect(consoleErrorSpy).toHaveBeenCalledWith('There is no such code in the list.');
         });
@@ -96,6 +83,7 @@ describe(`Tests for the getPercentOff method.`, () => {
     describe('Check if method returns correct results', () => {
         test(`Should get the discount associated with the code.`, () => {
             discountCodes.add(discountCode);
+
             const correctDiscountAmount = discountCode.percentOff;
             const discountAmountReturned = discountCodes.getPercentOff(discountCode.code);
 
