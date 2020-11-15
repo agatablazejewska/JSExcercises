@@ -48,7 +48,7 @@ export class Cart implements ICart {
         this._updateCartSummaryItemAdded(item);
     }
 
-    removeOneItemOfThisType(id: string) : void {
+    removeOneItemWithThisId(id: string) : void {
         const dataToRemove = this._findItemDataById(id);
 
         if(!dataToRemove) {
@@ -57,7 +57,7 @@ export class Cart implements ICart {
         }
 
         if(dataToRemove.amount === 1) {
-            this.removeAllItemsOfThisType(id);
+            this.removeAllItemsWithThisId(id);
             return;
         }
 
@@ -65,7 +65,7 @@ export class Cart implements ICart {
         this._updateCartSummaryOneItemRemoved(dataToRemove);
     }
 
-    removeAllItemsOfThisType(id: string) : void {
+    removeAllItemsWithThisId(id: string) : void {
         const dataToRemove = this._findItemDataById(id);
         const dataToRemoveIndex = this._items.findIndex(i => i.item.id === id);
 
