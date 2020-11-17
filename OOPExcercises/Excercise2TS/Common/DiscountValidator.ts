@@ -1,5 +1,9 @@
 export abstract class DiscountValidator {
-    static validateDiscountOrChangeToZero(discount : number) : number {
-        return (discount >= 0 && discount <= 100) ? discount : 0;
+    static validateDiscount(discount : number) : void {
+        const isProvidedDiscountValid = (discount >= 0 && discount <= 100);
+
+        if(!isProvidedDiscountValid) {
+            throw new Error('Provided discount is invalid. Discount should be in the range of 0-100.');
+        }
     }
 }

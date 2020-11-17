@@ -1,4 +1,5 @@
-import uuid4 from "uuid4";
+import { v4 as uuidv4 } from 'uuid';
+import { DiscountValidator } from '../Common/DiscountValidator';
 import { IItem } from "../Utilities/Interfaces/Item/IItem";
 import { Categories } from "../Utilities/Enums/Categories";
 import { ItemPropertiesValidator } from "./ItemPropertiesValidator";
@@ -16,12 +17,13 @@ export class Item implements IItem {
     constructor(name: string, category : Categories, price : number, discount = 0) {
         ItemPropertiesValidator.validateName(name);
         ItemPropertiesValidator.validatePrice(price);
+        DiscountValidator.validateDiscount(discount);
 
-        this._id = uuid4();
+        this._id = uuidv4();
         this.category = category;
         this.name = name;
         this.price = price;
-        this.discount = ItemPropertiesValidator.validateDiscountOrChangeToZero(discount);        
+        this.discount = discount;
     }
 
     get id() {
@@ -34,11 +36,24 @@ export class Item implements IItem {
 
     update(source: IItemDataOptional) : void {
         try {
-            CommonValidator.validateStringProperties(source);
+            this._validateBeforeUpdate(source);
+
             Object.assign(this, source);
-        } catch {
-            console.error("One of data provided consists of white spaces. Update failed.");
+        } catch(e) {
+            console.error(e.message);
         }     
+    }
+
+    private _validateBeforeUpdate(source: IItemDataOptional) {
+        CommonValidator.validateStringProperties(source);
+
+        if (source.price) {
+            ItemPropertiesValidator.validatePrice(source.price);
+        }
+
+        if (source.discount) {
+            DiscountValidator.validateDiscount(source.discount);
+        }
     }
 
     show() : void {

@@ -1,77 +1,77 @@
-import { ICart, ItemAmountAndPrice } from "../Utilities/Interfaces/Cart/ICart";
+import { cloneDeep } from 'lodash';
+import { DiscountCodesSingletone } from '../DiscountCodes/DiscountCodesSingletone';
+import { ICart, ItemInCartSummary } from "../Utilities/Interfaces/Cart/ICart";
+import { IDiscountCodes } from '../Utilities/Interfaces/Discounts/IDiscountCodes';
 import { IItem } from "../Utilities/Interfaces/Item/IItem";
-import { DiscountCodes } from "../DiscountCodes/DiscountCodes";
 
-export type CartPricesDiscountsAmountsSumType = { 
+export type CartSummary = {
     finalPrice: number,
-    cartDiscountPrice: number,
+    cartDiscountAmount: number,
     cartPriceNoDiscountCode: number,
     allItemsAmount: number,
-    allDiscountsPrice: number
+    cartAndItemsDiscountsAmount: number
 }
 
 export class Cart implements ICart {
-    private readonly _items: Array<ItemAmountAndPrice>;
-    private readonly _currentDiscountCodes : DiscountCodes;
-    private _sum: CartPricesDiscountsAmountsSumType;
+    private readonly _items: Array<ItemInCartSummary>;
+    private readonly _currentDiscountCodes : IDiscountCodes;
+    private _sum: CartSummary;
     discount: number;
 
     constructor() {
-        this._items = new Array<ItemAmountAndPrice>();
-        this._currentDiscountCodes = new DiscountCodes();
+        this._items = new Array<ItemInCartSummary>();
+        this._currentDiscountCodes = DiscountCodesSingletone.discountCodes;
         this.discount = 0;
         this._sum = { 
             finalPrice: 0,
-            cartDiscountPrice: 0,
+            cartDiscountAmount: 0,
             cartPriceNoDiscountCode: 0,
             allItemsAmount: 0,
-            allDiscountsPrice: 0
+            cartAndItemsDiscountsAmount: 0
         };    
     }
         
     get items() {
-        return this._items;
+        return cloneDeep(this._items);
     }
 
     addItem(item: IItem) : void {
-        let itemAlreadyInCartData = this._items.find(i => i.item.name === item.name);
+        let itemAlreadyInCartData = this._items.find(i => i.item.id === item.id);
 
         if(itemAlreadyInCartData) {
-            this._updateProductAdded(itemAlreadyInCartData, item);    
+            this._updateItemInCartSummaryWhenItemAdded(itemAlreadyInCartData, item);
         }
         else {
             this._items.push({item: item, amount: 1, finalPrice: item.getPriceAfterDiscount(), priceNoDiscounts: item.price});
         }
 
-        this._updateCartSummaryItemAdded(item);
+        this._updateCartSummary();
     }
 
-    removeItemOne(id: string) : void {
-        const dataToRemove = this._findItemDataById(id);
+    removeOneItemById(id: string) : void {
+        const dataToRemove = this._findItemToRemove(id);
 
-        if(dataToRemove) {
-            if(dataToRemove.amount === 1) {
-                this.removeItemAll(id);
-                return;
-            }
+        if(dataToRemove.amount === 1) {
+            this.removeAllItemsById(id);
+            return;
+        }
 
-            this._updateProductRemoved(dataToRemove);
-            this._updateCartSummaryOneItemRemoved(dataToRemove);
-        }   
+        this._updateItemInCartSummaryWhenItemRemoved(dataToRemove);
+        this._updateCartSummary();
     }
 
-    removeItemAll(id: string) : void {
-        const dataToRemove = this._findItemDataById(id);
-        const dataToRemoveIndex = this._items.findIndex(i => i.item.id === id);
+    removeAllItemsById(id: string) : void {
+        const dataToRemove = this._findItemToRemove(id);
+        const dataToRemoveIndex = this._items.findIndex(i => i === dataToRemove);
 
-         if (dataToRemoveIndex > -1) {
-            this._items.splice(dataToRemoveIndex, 1);
-            this._updateCartSummaryItemRemovedAll(dataToRemove!);
-        }     
+        this._items.splice(dataToRemoveIndex, 1);
+
+        this._updateCartSummary();
     }
 
     applyDiscountCode(code: string) : void {
         this.discount = this._currentDiscountCodes.getPercentOff(code);
+        this._updateCartSummary();
     }
 
     getFinalPrice(): number {
@@ -82,38 +82,39 @@ export class Cart implements ICart {
         return this._sum.cartPriceNoDiscountCode;
     }
 
-    getAllDiscountsSumPrice() : number {
-        return this._sum.allDiscountsPrice;
+    getAllDiscountsSum() : number {
+        return this._sum.cartAndItemsDiscountsAmount;
     }
 
     getAllItemsAmount() : number {
         return this._sum.allItemsAmount;
     }
 
-    private _findItemDataById(id: string) : ItemAmountAndPrice | undefined {
+    private _findItemDataById(id: string) : ItemInCartSummary | undefined {
         return this._items.find(i => i.item.id === id);
     }
    
     private _calculateFinalPrice() : number {
         const priceNoDiscountCode = this._sum.cartPriceNoDiscountCode;
-        const finalPrice = (100 - this.discount) / 100 * priceNoDiscountCode;
+        const finalPrice = ((100 - this.discount) / 100) * priceNoDiscountCode;
 
-        this._updateCartDiscountPrice(priceNoDiscountCode, finalPrice);
+
+        this._sum.finalPrice = finalPrice;
 
         return finalPrice;
     }
 
-    private _updateCartDiscountPrice(priceNoDiscountCode: number, finalPrice: number) {
-        this._sum.cartDiscountPrice = priceNoDiscountCode - finalPrice;
+    private _calculateCartsDiscountAmount(priceNoDiscountCode: number, finalPrice: number) {
+        return priceNoDiscountCode - finalPrice;
     }
 
-    private _updateProductAdded(presentData: ItemAmountAndPrice, item: IItem) {
+    private _updateItemInCartSummaryWhenItemAdded(presentData: ItemInCartSummary, item: IItem) {
         presentData.amount++;
         presentData.finalPrice += item.getPriceAfterDiscount();
         presentData.priceNoDiscounts += item.price;
     }
 
-    private _updateProductRemoved(dataToModify: ItemAmountAndPrice) {
+    private _updateItemInCartSummaryWhenItemRemoved(dataToModify: ItemInCartSummary) {
         const item = dataToModify.item;
         
         dataToModify.amount--;
@@ -121,31 +122,47 @@ export class Cart implements ICart {
         dataToModify.priceNoDiscounts -= item.price;
     }
 
-    private _updateCartSummaryItemAdded(item: IItem) {
-        const itemPriceAfterDiscount = item.getPriceAfterDiscount();
+    private _updateCartSummary() {
+        const allItemsPriceNoDiscounts = this._loopThroughAllItemsAndSumProperty('priceNoDiscounts');
+        const allItemsFinalPrice = this._loopThroughAllItemsAndSumProperty('finalPrice');
+        const allItemsDiscountAmount = allItemsPriceNoDiscounts - allItemsFinalPrice;
 
-        this._sum.allItemsAmount++;
-        this._sum.cartPriceNoDiscountCode += itemPriceAfterDiscount;
-        this._sum.allDiscountsPrice += item.price - itemPriceAfterDiscount;
+        this._sum.allItemsAmount = this._loopThroughAllItemsAndSumProperty('amount');
+        this._sum.cartPriceNoDiscountCode = allItemsFinalPrice;
         this._sum.finalPrice = this._calculateFinalPrice();
+        this._sum.cartDiscountAmount = this._calculateCartsDiscountAmount(allItemsFinalPrice, this._sum.finalPrice);
+        this._sum.cartAndItemsDiscountsAmount = this._calculateCartAndItemsDiscountsAmount(allItemsDiscountAmount);
     }
 
-    private _updateCartSummaryOneItemRemoved(data: ItemAmountAndPrice) {
-        const item = data.item;
-        const itemPriceAfterDiscount = item.getPriceAfterDiscount();
-
-        this._sum.allItemsAmount--;
-        this._sum.cartPriceNoDiscountCode -= itemPriceAfterDiscount;
-        this._sum.allDiscountsPrice -= item.price - itemPriceAfterDiscount;
-        this._sum.finalPrice = this._calculateFinalPrice();
+    private _calculateCartAndItemsDiscountsAmount(allItemsDiscountAmount: number) {
+        return this._sum.cartDiscountAmount + allItemsDiscountAmount;
     }
 
-    private _updateCartSummaryItemRemovedAll(data: ItemAmountAndPrice) {
-        const itemsPriceAfterDiscount = data.finalPrice;
+    private _loopThroughAllItemsAndSumProperty<T extends keyof ItemInCartSummary>(property: T) {
+        const allItemsGroupsById = this.items;
 
-        this._sum.allItemsAmount =- data.amount;
-        this._sum.cartPriceNoDiscountCode -= itemsPriceAfterDiscount;
-        this._sum.allDiscountsPrice -= data.priceNoDiscounts - data.finalPrice;
-        this._sum.finalPrice = this._calculateFinalPrice();
+            const calculatedByProperty = allItemsGroupsById.reduce((acc, element) => {
+                const propValue = element[property];
+
+                if(typeof propValue === 'number' && !Number.isNaN(propValue)) {
+                    return acc += propValue;
+                }
+
+                return acc;
+            }, 0);
+
+        return calculatedByProperty;
+    }
+
+
+
+    private _findItemToRemove(id: string): ItemInCartSummary {
+        const dataToRemove = this._findItemDataById(id);
+
+        if(!dataToRemove) {
+            throw new Error(`There is no such item in this cart.`);
+        }
+
+        return dataToRemove;
     }
 }
