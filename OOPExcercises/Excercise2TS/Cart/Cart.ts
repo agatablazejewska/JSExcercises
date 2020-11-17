@@ -45,7 +45,7 @@ export class Cart implements ICart {
             this._items.push({item: item, amount: 1, finalPrice: item.getPriceAfterDiscount(), priceNoDiscounts: item.price});
         }
 
-        this._updateCartSummaryItemAdded(item);
+        this._updateCartSummary();
     }
 
     removeOneItemById(id: string) : void {
@@ -57,22 +57,21 @@ export class Cart implements ICart {
         }
 
         this._updateItemInCartSummaryWhenItemRemoved(dataToRemove);
-        this._updateCartSummaryAfterRemove(dataToRemove);
+        this._updateCartSummary();
     }
 
     removeAllItemsById(id: string) : void {
         const dataToRemove = this._findItemToRemove(id);
-        const dataToRemoveIndex = this._items.findIndex(i => i.item.id === id);
+        const dataToRemoveIndex = this._items.findIndex(i => i === dataToRemove);
 
         this._items.splice(dataToRemoveIndex, 1);
 
-        this._updateCartSummaryAfterRemove(dataToRemove);
+        this._updateCartSummary();
     }
 
     applyDiscountCode(code: string) : void {
         this.discount = this._currentDiscountCodes.getPercentOff(code);
-        this._calculateFinalPrice();
-        this._updateDiscountsSummaryWhenDiscountCodeApplied();
+        this._updateCartSummary();
     }
 
     getFinalPrice(): number {
@@ -99,18 +98,14 @@ export class Cart implements ICart {
         const priceNoDiscountCode = this._sum.cartPriceNoDiscountCode;
         const finalPrice = ((100 - this.discount) / 100) * priceNoDiscountCode;
 
-        this._updateCartDiscountPrice(priceNoDiscountCode, finalPrice);
+
         this._sum.finalPrice = finalPrice;
 
         return finalPrice;
     }
 
-    private _updateDiscountsSummaryWhenDiscountCodeApplied() {
-        this._sum.cartAndItemsDiscountsAmount += this._sum.cartDiscountAmount;
-    }
-
-    private _updateCartDiscountPrice(priceNoDiscountCode: number, finalPrice: number) {
-        this._sum.cartDiscountAmount = priceNoDiscountCode - finalPrice;
+    private _calculateCartsDiscountAmount(priceNoDiscountCode: number, finalPrice: number) {
+        return priceNoDiscountCode - finalPrice;
     }
 
     private _updateItemInCartSummaryWhenItemAdded(presentData: ItemInCartSummary, item: IItem) {
@@ -127,23 +122,39 @@ export class Cart implements ICart {
         dataToModify.priceNoDiscounts -= item.price;
     }
 
-    private _updateCartSummaryItemAdded(item: IItem) {
-        const itemPriceAfterDiscount = item.getPriceAfterDiscount();
+    private _updateCartSummary() {
+        const allItemsPriceNoDiscounts = this._loopThroughAllItemsAndSumProperty('priceNoDiscounts');
+        const allItemsFinalPrice = this._loopThroughAllItemsAndSumProperty('finalPrice');
+        const allItemsDiscountAmount = allItemsPriceNoDiscounts - allItemsFinalPrice;
 
-        this._sum.allItemsAmount++;
-        this._sum.cartPriceNoDiscountCode += itemPriceAfterDiscount;
-        this._sum.cartAndItemsDiscountsAmount += item.price - itemPriceAfterDiscount;
+        this._sum.allItemsAmount = this._loopThroughAllItemsAndSumProperty('amount');
+        this._sum.cartPriceNoDiscountCode = allItemsFinalPrice;
         this._sum.finalPrice = this._calculateFinalPrice();
+        this._sum.cartDiscountAmount = this._calculateCartsDiscountAmount(allItemsFinalPrice, this._sum.finalPrice);
+        this._sum.cartAndItemsDiscountsAmount = this._calculateCartAndItemsDiscountsAmount(allItemsDiscountAmount);
     }
 
-    private _updateCartSummaryAfterRemove(data: ItemInCartSummary) {
-        const itemsPriceAfterDiscount = data.finalPrice;
-
-        this._sum.allItemsAmount -= data.amount;
-        this._sum.cartPriceNoDiscountCode -= itemsPriceAfterDiscount;
-        this._sum.cartAndItemsDiscountsAmount -= data.priceNoDiscounts - data.finalPrice;
-        this._sum.finalPrice = this._calculateFinalPrice();
+    private _calculateCartAndItemsDiscountsAmount(allItemsDiscountAmount: number) {
+        return this._sum.cartDiscountAmount + allItemsDiscountAmount;
     }
+
+    private _loopThroughAllItemsAndSumProperty<T extends keyof ItemInCartSummary>(property: T) {
+        const allItemsGroupsById = this.items;
+
+            const calculatedByProperty = allItemsGroupsById.reduce((acc, element) => {
+                const propValue = element[property];
+
+                if(typeof propValue === 'number' && !Number.isNaN(propValue)) {
+                    return acc += propValue;
+                }
+
+                return acc;
+            }, 0);
+
+        return calculatedByProperty;
+    }
+
+
 
     private _findItemToRemove(id: string): ItemInCartSummary {
         const dataToRemove = this._findItemDataById(id);
