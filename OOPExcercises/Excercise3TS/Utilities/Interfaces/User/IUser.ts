@@ -9,7 +9,6 @@ interface IUser extends IUpdatableAndReadable, IHasID {
     readonly dateOfBirth: DateOfBirth;
     readonly gender: Gender;
     accessLevel: AccessLevels;
-    canLogin(email: string, password: string): boolean;
     updatePassword(password: string): void;
 }
 
