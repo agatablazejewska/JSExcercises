@@ -1,6 +1,6 @@
-import { ChatRoom } from '../../../../OOPExcercises/Excercise3TS/ChatRoom/ChatRoom';
-import { ChatRoomStorageHandler } from '../../../../OOPExcercises/Excercise3TS/ChatRoomStorage/ChatRoomStorageHandler';
-import { IChatRoom } from '../../../../OOPExcercises/Excercise3TS/Utilities';
+import { ChatRoom } from '../../../OOPExcercises/Excercise3TS/ChatRoom/ChatRoom';
+import { ChatRoomStorageHandler } from '../../../OOPExcercises/Excercise3TS/ChatRoomStorage/ChatRoomStorageHandler';
+import { IChatRoom } from '../../../OOPExcercises/Excercise3TS/Utilities';
 
 const consoleLogSpy = jest.spyOn(console, 'log');
 let chatRoom: IChatRoom;
