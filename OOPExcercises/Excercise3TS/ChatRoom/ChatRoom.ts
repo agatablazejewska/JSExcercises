@@ -1,7 +1,8 @@
-import uuid4 from "uuid4";
-import { IChatRoom, IUser, IMessage } from "../Utilities";
-import { CommonValidator } from "../../Common/CommonValidator";
-import {Helper} from "../../Common/Helper";
+import { cloneDeep } from 'lodash';
+import { v4 as uuid4 } from 'uuid';
+import { IChatRoom, IUser, IMessage } from '../Utilities';
+import { CommonValidator } from '../../Common/CommonValidator';
+import { Helper } from '../../Common/Helper';
 
 export class ChatRoom implements IChatRoom {
     private readonly _users: IUser[];
@@ -24,15 +25,15 @@ export class ChatRoom implements IChatRoom {
     }
 
     getUsersList(): IUser[] {
-        return this._users;
+        return cloneDeep(this._users);
     }
 
     getBannedUsersIDs(): string[] {
-        return this._bannedUsersIDs;
+        return cloneDeep(this._bannedUsersIDs);
     }
 
     getAllMessages(): IMessage[] {
-        return this._messages;
+        return cloneDeep(this._messages);
     }
 
     addMessage(messageObj: IMessage): void {
@@ -44,9 +45,11 @@ export class ChatRoom implements IChatRoom {
     }
 
     addUser(user: IUser): void {
-        if(!this.containsUser(user.id)) {
-            this._users.push(user);
+        if (this.containsUser(user.id)) {
+            throw new Error('This user is already present in the room.');
         }
+
+        this._users.push(user);
     }
 
     removeUser(id: string): void {
@@ -56,9 +59,11 @@ export class ChatRoom implements IChatRoom {
     banUser(id: string): void {
         const usersIndex = this._users.findIndex(u => u.id === id);
 
-        if(usersIndex > -1) {
-            this._bannedUsersIDs.push(id);
+        if (usersIndex === -1) {
+            throw new Error("There is no such user in the chat room.");
         }
+
+        this._bannedUsersIDs.push(id);
     }
 
     containsUser(userId: string): boolean {

@@ -9,7 +9,7 @@ export abstract class UserPropertiesValidator {
             CommonValidator.validateEmptyString(surname);
         }
         catch {
-            console.error("Name and surname must have a value and can not constist of white spaces");
+            console.error("Name and surname must have a value and can not consist of white spaces");
         }
     }
 
